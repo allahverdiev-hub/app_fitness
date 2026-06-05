@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { MobileFrame } from "@/shell/MobileFrame/MobileFrame";
-import {
-  BottomTabNav,
-  type AppTabId,
-} from "@/shell/BottomTabNav/BottomTabNav";
+import { BottomTabNav, type AppTabId } from "@/shell/BottomTabNav";
 import { TabPlaceholder } from "@/shell/TabPlaceholder/TabPlaceholder";
 import {
   WorkoutsFlow,
@@ -14,10 +11,10 @@ import styles from "./App.module.css";
 export function App() {
   const [activeTab, setActiveTab] = useState<AppTabId>("workouts");
   const [workoutsScreen, setWorkoutsScreen] =
-    useState<WorkoutsScreen>("list");
+    useState<WorkoutsScreen>("program");
 
   const showBottomTabNav =
-    activeTab !== "workouts" || workoutsScreen === "list";
+    activeTab !== "workouts" || workoutsScreen !== "exercise";
 
   return (
     <MobileFrame>

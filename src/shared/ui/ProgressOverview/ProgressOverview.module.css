@@ -1,0 +1,35 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.spacingSection {
+  margin-top: var(--workout-progress-gap);
+  margin-bottom: var(--workout-progress-gap);
+  overflow: hidden;
+}
+
+.spacingSectionTop {
+  margin-top: var(--workout-progress-gap);
+  overflow: hidden;
+}
+
+.label {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--color-text-secondary);
+}
+
+.labelMuted {
+  color: inherit;
+}

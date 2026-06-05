@@ -97,6 +97,7 @@ export function WorkoutListActions({
             aria-hidden={!workoutActive || editing}
           >
             <WorkoutActiveBar
+              className={styles.activeBarSurface}
               elapsed={workoutElapsed}
               isPaused={workoutPaused}
               onFinish={onFinishWorkout}

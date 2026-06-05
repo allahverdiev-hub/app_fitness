@@ -126,4 +126,7 @@ export const exerciseDescriptionsById: Record<string, ExerciseDescription> = {
   "ex-6": seatedDumbbellPress,
   "ex-7": reverseCableFly,
   "ex-8": dumbbellRow,
+  "replace-1": rearDeltFly,
+  "replace-2": barbellRow,
+  "replace-3": seatedDumbbellPress,
 };

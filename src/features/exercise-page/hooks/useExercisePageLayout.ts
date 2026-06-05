@@ -1,5 +1,6 @@
 import { useLayoutEffect, type RefObject } from "react";
 import {
+  CONTENT_SHEET_OVERLAP_PX,
   getContentScrollSpacerPx,
   HERO_BOTTOM_GAP_PX,
   HERO_TOP_OFFSET_PX,
@@ -80,10 +81,13 @@ export function useExercisePageLayout(
     const applyLayout = () => {
       const width = body.clientWidth;
       const measuredStack = measureMediaStackHeight();
-      const spacerHeight =
+      const rawSpacer =
         measuredStack > 0 ? measuredStack : getContentScrollSpacerPx(width);
+      const spacerHeight = Math.max(0, rawSpacer - CONTENT_SHEET_OVERLAP_PX);
       const spacerPx = `${spacerHeight}px`;
+      const overlapPx = `${CONTENT_SHEET_OVERLAP_PX}px`;
       body.style.setProperty("--content-scroll-spacer", spacerPx);
+      body.style.setProperty("--content-sheet-overlap", overlapPx);
       scroller.style.setProperty("--content-scroll-spacer", spacerPx);
       const spacer = getSpacer();
       if (spacer) spacer.style.height = spacerPx;
@@ -139,6 +143,7 @@ export function useExercisePageLayout(
       getSpacer()?.style.removeProperty("height");
       scroller.style.removeProperty("--content-scroll-spacer");
       body.style.removeProperty("--hero-dim-progress");
+      body.style.removeProperty("--content-sheet-overlap");
     };
   }, [bodyRef, contentScrollRef, contentSheetRef, scrollResetKey]);
 }

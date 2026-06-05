@@ -111,18 +111,37 @@
   min-height: var(--bottom-bar-control-height);
 }
 
-.addSet {
+.addSetMorphTrack {
+  --add-set-slot-width: 100%;
+  --add-set-content-duration: 0.28s;
+  --add-set-content-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
   position: relative;
   z-index: 1;
-  width: 100%;
-  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--add-set-slot-width);
+  min-height: var(--bottom-bar-control-height);
   transition: width var(--next-drop-duration) var(--next-drop-ease);
 }
 
-.addSetClusterSplit .addSet {
-  width: calc(100% - var(--bottom-bar-control-height) - var(--bottom-bar-gap));
-  transition-timing-function: var(--next-drop-ease);
-  transition-duration: var(--next-drop-duration);
+.addSetClusterSplit .addSetMorphTrack {
+  --add-set-slot-width: calc(
+    100% - var(--bottom-bar-control-height) - var(--bottom-bar-gap)
+  );
+}
+
+.addSet {
+  width: 100%;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.addSetInner {
+  display: grid;
+  place-items: center;
+  width: 100%;
 }
 
 .nextExercise {
@@ -197,12 +216,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .addSet {
+  .addSetMorphTrack {
     transition: none;
   }
 
-  .addSetClusterSplit .addSet {
-    width: calc(100% - var(--bottom-bar-control-height) - var(--bottom-bar-gap));
+  .addSetClusterSplit .addSetMorphTrack {
+    --add-set-slot-width: calc(
+      100% - var(--bottom-bar-control-height) - var(--bottom-bar-gap)
+    );
   }
 
   .addSetClusterSplit .nextExercise {
@@ -217,6 +238,23 @@
     opacity: 1;
     transform: none;
   }
+}
+
+.addSetLabel,
+.addSetSpinner,
+.addSetCheckIcon {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: scale(0.94);
+  transition:
+    opacity var(--add-set-content-duration) var(--add-set-content-ease),
+    transform var(--add-set-content-duration) var(--add-set-content-ease);
+  pointer-events: none;
+}
+
+.addSetContentVisible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .addSetLabel {
@@ -243,6 +281,11 @@
   animation: addSetSpin 0.65s linear infinite;
 }
 
+.addSetCheckIcon {
+  flex-shrink: 0;
+  color: var(--color-primary-btn-text);
+}
+
 @keyframes addSetSpin {
   to {
     transform: rotate(360deg);
@@ -252,5 +295,16 @@
 @media (prefers-reduced-motion: reduce) {
   .finishWorkout {
     animation: none;
+  }
+
+  .addSetLabel,
+  .addSetSpinner,
+  .addSetCheckIcon {
+    transition: none;
+  }
+
+  .addSetContentVisible {
+    opacity: 1;
+    transform: none;
   }
 }

@@ -5,6 +5,10 @@
   --color-surface-muted: #323234;
   --color-accent: #d4ff00;
   --color-accent-on: #000000;
+  --color-difficulty-medium: #fff200;
+  --color-difficulty-heavy: #ff8a00;
+  --color-workout-card: #242424;
+  --color-workout-card-done: #1d1d1d;
   --color-text-primary: #ffffff;
   --color-text-secondary: #8e8e93;
   --color-text-tertiary: #636366;
@@ -39,6 +43,16 @@
   --page-title-line-height: 1.12;
   --page-title-letter-spacing: -0.03em;
   --page-title-gap-below: 6px;
+  --page-title-hero-size: 24px;
+  --page-title-hero-line-height: 1;
+  --page-title-hero-letter-spacing: -0.02em;
+  --page-title-hero-gap-below: 16px;
+
+  --segmented-progress-gap: 6px;
+  --segmented-progress-height-md: 6px;
+  --segmented-progress-height-sm: 4px;
+  --segmented-progress-pending: var(--color-surface-elevated);
+  --segmented-progress-done: var(--color-accent);
 
   --phone-width: 390px;
   --phone-height: 844px;
@@ -108,7 +122,7 @@
   --hero-bottom-gap: 40px;
   --timer-to-hero-gap: 40px;
   --content-scroll-spacer: 100%;
-  --content-sheet-overlap: 0px;
+  --content-sheet-overlap: 28px;
   --sheet-top-radius: 28px;
   --content-sheet-radius: 28px;
   --sheet-popup-top-radius: 22px;
@@ -167,13 +181,21 @@
 
   /* Панель кнопок без подложки — высота = высота самой кнопки */
   --workout-actions-island-height: var(--action-control-height);
-  --workout-actions-island-gap: var(--floating-island-gap);
-  /* Таб-бар плавающий (overlay); панель действий поднята над ним на 6px */
+  --workout-actions-island-gap: 10px;
+  /* Таб-бар плавающий (overlay); панель действий поднята над ним на 10px */
   --workout-actions-bottom: calc(
     var(--tab-nav-island-clearance) + var(--safe-bottom) +
-      var(--floating-island-gap)
+      var(--workout-actions-island-gap)
   );
   --workout-list-bottom-inset: calc(
     var(--workout-actions-bottom) + var(--workout-actions-island-height)
   );
+  /* Прогресс: одинаковый зазор от подписи сверху и до «Разминочные» снизу */
+  --workout-progress-gap: var(--space-xl);
+
+  /* Страница программы (недели и тренировки) */
+  --program-weeks-bottom-inset: calc(
+    var(--tab-nav-island-clearance) + var(--safe-bottom) + var(--space-lg)
+  );
+  --program-week-picker-height: 76px;
 }

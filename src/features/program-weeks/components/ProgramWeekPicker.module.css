@@ -1,0 +1,68 @@
+.wrap {
+  flex-shrink: 0;
+}
+
+.track {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  gap: 0;
+  padding: 4px;
+  border: 1px solid var(--tab-nav-border-color);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  box-sizing: border-box;
+  isolation: isolate;
+}
+
+.indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  z-index: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-btn-bg);
+  transform: translateX(0);
+  transition:
+    transform 0.28s cubic-bezier(0.33, 1, 0.68, 1),
+    width 0.28s cubic-bezier(0.33, 1, 0.68, 1);
+  pointer-events: none;
+  will-change: transform, width;
+}
+
+.item {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 36px;
+  padding: 0 10px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    color 0.22s ease,
+    flex 0.28s cubic-bezier(0.33, 1, 0.68, 1),
+    padding 0.28s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.itemActive {
+  flex: 0 0 auto;
+  padding: 0 16px;
+  color: var(--color-primary-btn-text);
+  font-weight: 600;
+}
+
+.item:active {
+  opacity: 0.88;
+}

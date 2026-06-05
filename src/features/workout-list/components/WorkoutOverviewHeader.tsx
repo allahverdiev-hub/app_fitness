@@ -1,6 +1,6 @@
 import type { WorkoutOverview } from "@/features/workout-list/types/workoutOverview";
-import { SegmentedExerciseProgress } from "@/features/workout-list/components/SegmentedExerciseProgress";
 import { PageTitle } from "@/shared/ui/PageTitle/PageTitle";
+import { ProgressOverview } from "@/shared/ui/ProgressOverview";
 import styles from "./WorkoutOverviewHeader.module.css";
 
 type WorkoutOverviewHeaderProps = {
@@ -22,12 +22,12 @@ export function WorkoutOverviewHeader({ overview }: WorkoutOverviewHeaderProps) 
       </p>
       <PageTitle>{overview.title}</PageTitle>
       <p className={styles.hint}>{overview.hint}</p>
-      <div className={styles.progressBlock}>
-        <p className={styles.progressLabel}>
-          {done} из {total}
-        </p>
-        <SegmentedExerciseProgress completed={done} total={total} />
-      </div>
+      <ProgressOverview
+        completed={done}
+        total={total}
+        spacing="section"
+        ariaLabel={`Выполнено упражнений: ${done} из ${total}`}
+      />
     </div>
   );
 }

@@ -1,14 +1,26 @@
+import { useMemo } from "react";
+
 import { IconReorder } from "@/shared/icons";
 import { Level2ActionButton } from "@/shared/ui/ActionButton";
 import type { WorkoutListExerciseItem } from "@/features/workout-list/types/workoutOverview";
 import { useDragReorder } from "@/features/workout-list/hooks/useDragReorder";
-import { buildExerciseSections } from "@/features/workout-list/utils/buildExerciseSections";
+import {
+  buildExerciseSections,
+  buildVisualExerciseOrder,
+  reorderExercisesWithSections,
+} from "@/features/workout-list/utils/buildExerciseSections";
 import { WorkoutExerciseCard } from "@/features/workout-list/components/WorkoutExerciseCard";
+import { DeleteAnimatedListItem } from "@/features/workout-list/components/DeleteAnimatedListItem";
+import { ThanosDissolve } from "@/shared/ui/ThanosDissolve";
 import styles from "./WorkoutExerciseList.module.css";
 
 type WorkoutExerciseListProps = {
   exercises: WorkoutListExerciseItem[];
   editing: boolean;
+  dissolvingId?: string | null;
+  collapsingId?: string | null;
+  onDissolveComplete?: (exerciseId: string) => void;
+  onCollapseComplete?: (exerciseId: string) => void;
   onReorder: (exercises: WorkoutListExerciseItem[]) => void;
   onOpenExercise?: (exerciseId: string) => void;
   onMenu?: (exercise: WorkoutListExerciseItem) => void;
@@ -18,6 +30,10 @@ type WorkoutExerciseListProps = {
 export function WorkoutExerciseList({
   exercises,
   editing,
+  dissolvingId = null,
+  collapsingId = null,
+  onDissolveComplete,
+  onCollapseComplete,
   onReorder,
   onOpenExercise,
   onMenu,
@@ -35,7 +51,13 @@ export function WorkoutExerciseList({
     isDragging,
     draggingIndex,
     releasingIndex,
-  } = useDragReorder(exercises, onReorder);
+  } = useDragReorder(exercises, onReorder, {
+    visualOrder: useMemo(
+      () => buildVisualExerciseOrder(exercises),
+      [exercises],
+    ),
+    commitReorder: reorderExercisesWithSections,
+  });
 
   const sections = buildExerciseSections(exercises);
 
@@ -52,55 +74,73 @@ export function WorkoutExerciseList({
             aria-hidden
           />
         ) : null}
-        <ul
-          className={`${styles.list} ${editing ? styles.listEditing : ""}`}
-        >
-        {sections.map((group, groupIndex) => (
-          <li
-            key={group.title ?? `main-${groupIndex}`}
-            className={`${styles.section} ${group.title ? styles.sectionLabeled : ""}`}
-          >
-            {group.title ? (
-              <h2 className={styles.sectionTitle}>{group.title}</h2>
-            ) : null}
-            <ul className={styles.sectionList}>
-              {group.entries.map(({ exercise, index }) => (
-                <li
-                  key={exercise.id}
-                  ref={setItemRef(index)}
-                  className={`${styles.listItem} ${editing ? styles.listItemEditing : ""} ${draggingIndex === index ? styles.listItemActive : ""} ${releasingIndex === index ? styles.listItemReleasing : ""}`}
-                  style={getItemStyle(index)}
-                >
-                  <div
-                    className={`${styles.dragHandleSlot} ${editing ? styles.dragHandleSlotVisible : ""}`}
-                    aria-hidden={!editing}
-                  >
-                    <button
-                      type="button"
-                      className={styles.dragHandle}
-                      aria-label={`Переместить: ${exercise.title}`}
-                      tabIndex={editing ? 0 : -1}
-                      disabled={!editing}
-                      onPointerDown={(event) => startDrag(event, index)}
-                      onPointerMove={updateDrag}
-                      onPointerUp={finishDrag}
-                      onPointerCancel={finishDrag}
+        <ul className={`${styles.list} ${editing ? styles.listEditing : ""}`}>
+          {sections.map((group, groupIndex) => (
+            <li
+              key={group.title ?? `main-${groupIndex}`}
+              className={`${styles.section} ${group.title ? styles.sectionLabeled : ""}`}
+            >
+              {group.title ? (
+                <h2 className={styles.sectionTitle}>{group.title}</h2>
+              ) : null}
+              <ul className={styles.sectionList}>
+                {group.entries.map(({ exercise, index }) => {
+                  const isDeleting =
+                    dissolvingId === exercise.id ||
+                    collapsingId === exercise.id;
+
+                  return (
+                    <DeleteAnimatedListItem
+                      key={exercise.id}
+                      itemKey={exercise.id}
+                      isCollapsing={collapsingId === exercise.id}
+                      mergeRef={setItemRef(index)}
+                      className={`${styles.listItem} ${editing ? styles.listItemEditing : ""} ${draggingIndex === index ? styles.listItemActive : ""} ${releasingIndex === index ? styles.listItemReleasing : ""} ${dissolvingId === exercise.id ? styles.listItemDissolving : ""}`}
+                      style={getItemStyle(index)}
+                      onCollapseComplete={() =>
+                        onCollapseComplete?.(exercise.id)
+                      }
                     >
-                      <IconReorder size={20} />
-                    </button>
-                  </div>
-                  <WorkoutExerciseCard
-                    exercise={exercise}
-                    onPress={
-                      editing ? undefined : () => onOpenExercise?.(exercise.id)
-                    }
-                    onMenu={() => onMenu?.(exercise)}
-                  />
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
+                      <div
+                        className={`${styles.dragHandleSlot} ${editing ? styles.dragHandleSlotVisible : ""}`}
+                        aria-hidden={!editing}
+                      >
+                        <button
+                          type="button"
+                          className={styles.dragHandle}
+                          aria-label={`Переместить: ${exercise.title}`}
+                          tabIndex={editing ? 0 : -1}
+                          disabled={!editing || isDeleting}
+                          onPointerDown={(event) => startDrag(event, index)}
+                          onPointerMove={updateDrag}
+                          onPointerUp={finishDrag}
+                          onPointerCancel={finishDrag}
+                        >
+                          <IconReorder size={20} />
+                        </button>
+                      </div>
+                      <ThanosDissolve
+                        active={dissolvingId === exercise.id}
+                        onComplete={() => onDissolveComplete?.(exercise.id)}
+                      >
+                        <WorkoutExerciseCard
+                          exercise={exercise}
+                          onPress={
+                            editing || isDeleting
+                              ? undefined
+                              : () => onOpenExercise?.(exercise.id)
+                          }
+                          onMenu={
+                            isDeleting ? undefined : () => onMenu?.(exercise)
+                          }
+                        />
+                      </ThanosDissolve>
+                    </DeleteAnimatedListItem>
+                  );
+                })}
+              </ul>
+            </li>
+          ))}
         </ul>
       </div>
 

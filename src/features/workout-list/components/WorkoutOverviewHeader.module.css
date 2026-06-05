@@ -3,7 +3,7 @@
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  padding: 0 var(--page-gutter) 20px;
+  padding: 0 var(--page-gutter);
 }
 
 .meta {
@@ -21,27 +21,8 @@
 }
 
 .hint {
-  margin: 0 0 34px;
+  margin: 0;
   font-size: 14px;
   line-height: 1.35;
   color: var(--color-text-secondary);
-}
-
-.progressBlock {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-.progressLabel {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.25;
-  color: var(--color-text-primary);
 }

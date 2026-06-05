@@ -2,10 +2,15 @@ import { exerciseImages } from "@/features/exercise-page/config/media";
 import { defaultTechniqueVideoUrl } from "@/features/exercise-page/config/techniqueVideo";
 import { exerciseDescriptionsById } from "@/features/exercise-page/mocks/descriptions";
 import type {
+  ExerciseDescription,
   ExerciseItem,
   WorkoutSession,
 } from "@/features/exercise-page/types/exercise";
-import type { WorkoutOverview } from "@/features/workout-list/types/workoutOverview";
+import type {
+  WorkoutListExerciseItem,
+  WorkoutOverview,
+} from "@/features/workout-list/types/workoutOverview";
+import { WARMUP_SECTION_TITLE } from "@/features/workout-list/utils/buildExerciseSections";
 
 export type WorkoutSessionExerciseDef = {
   id: string;
@@ -21,6 +26,7 @@ export type WorkoutSessionExerciseDef = {
   imageAlt: string;
   completed: boolean;
   status?: ExerciseItem["status"];
+  description?: ExerciseDescription;
 };
 
 /** Единый порядок и содержание: листинг тренировки ↔ карусель на странице упражнения */
@@ -29,7 +35,7 @@ export const workoutSessionExercises: WorkoutSessionExerciseDef[] = [
     id: "ex-1",
     title: "Ходьба на беговой дорожке",
     listSubtitle: "5 мин.",
-    listSection: "Разминочные",
+    listSection: WARMUP_SECTION_TITLE,
     muscles: "Разминка",
     sets: 1,
     repsRange: "5 мин",
@@ -139,7 +145,7 @@ export const workoutSessionExercises: WorkoutSessionExerciseDef[] = [
   },
 ];
 
-function toExerciseItem(def: WorkoutSessionExerciseDef): ExerciseItem {
+export function toExerciseItem(def: WorkoutSessionExerciseDef): ExerciseItem {
   return {
     id: def.id,
     title: def.title,
@@ -150,10 +156,48 @@ function toExerciseItem(def: WorkoutSessionExerciseDef): ExerciseItem {
     thumbnailSrc: def.thumbnailSrc,
     heroSrc: exerciseImages.hero,
     imageAlt: def.imageAlt,
-    description: exerciseDescriptionsById[def.id],
+    description:
+      def.description ?? exerciseDescriptionsById[def.id] ?? exerciseDescriptionsById["ex-3"],
     techniqueVideoUrl: defaultTechniqueVideoUrl,
     status: def.status ?? (def.completed ? "completed" : "upcoming"),
   };
+}
+
+export function toListExerciseItem(
+  def: WorkoutSessionExerciseDef,
+): WorkoutListExerciseItem {
+  return {
+    id: def.id,
+    title: def.title,
+    subtitle: def.listSubtitle,
+    section: def.listSection,
+    muscleGroup: def.muscleGroup,
+    thumbnailSrc: def.thumbnailSrc,
+    imageAlt: def.imageAlt,
+    completed: def.completed,
+  };
+}
+
+export function toExerciseItems(
+  defs: WorkoutSessionExerciseDef[],
+): ExerciseItem[] {
+  return defs.map(toExerciseItem);
+}
+
+export function toListExerciseItems(
+  defs: WorkoutSessionExerciseDef[],
+) {
+  return defs.map(toListExerciseItem);
+}
+
+export function buildWorkoutExerciseSetsById(
+  defs: WorkoutSessionExerciseDef[],
+): Record<string, number> {
+  return Object.fromEntries(defs.map((def) => [def.id, def.sets]));
+}
+
+export function cloneWorkoutSessionExercises(): WorkoutSessionExerciseDef[] {
+  return workoutSessionExercises.map((def) => ({ ...def }));
 }
 
 export function buildMockWorkoutSession(): WorkoutSession {

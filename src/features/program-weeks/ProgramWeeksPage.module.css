@@ -1,0 +1,56 @@
+.page {
+  --program-accent: #c4ff62;
+  --program-picker-bg: #1c1c1e;
+  --program-segment-pending: #242424;
+  --program-ring-track: #2a2a2a;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  background: var(--color-bg);
+  overflow: hidden;
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: var(--space-md) var(--page-gutter)
+    calc(var(--program-weeks-bottom-inset) + var(--space-lg));
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.weekProgress {
+  margin-bottom: var(--workout-progress-gap);
+}
+
+.weeks {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}

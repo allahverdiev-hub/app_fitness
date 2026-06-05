@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
-import { IconChevronRight } from "@/shared/icons";
+import { IconCheck, IconChevronRight } from "@/shared/icons";
 import {
   PrimaryActionButton,
   SecondaryActionButton,
@@ -82,7 +82,7 @@ export function BottomBar({
     addSetPhase === "loading"
       ? "Добавление подхода"
       : addSetPhase === "success"
-        ? "ПОДХОД ДОБАВЛЕН"
+        ? "Подход добавлен"
         : getAddSetButtonAriaLabel(completedSets, targetSets);
 
   return (
@@ -103,27 +103,37 @@ export function BottomBar({
           <div
             className={`${styles.addSetCluster} ${allSetsComplete ? styles.addSetClusterSplit : ""}`}
           >
-            <PrimaryActionButton
-              className={`${styles.addSet} ${isAddSetBusy ? styles.addSetBusy : ""}`}
-              onClick={handleAddClick}
-              onPointerDown={handleAddPointerDown}
-              onPointerUp={handleAddPointerUp}
-              onPointerLeave={handleAddPointerUp}
-              onPointerCancel={handleAddPointerUp}
-              disabled={isAddSetBusy}
-              aria-label={ariaLabel}
-              aria-busy={addSetPhase === "loading"}
-            >
-              {addSetPhase === "loading" && (
-                <span className={styles.addSetSpinner} aria-hidden />
-              )}
-              {addSetPhase === "success" && (
-                <span className={styles.addSetLabel}>ПОДХОД ДОБАВЛЕН</span>
-              )}
-              {addSetPhase === "idle" && (
-                <span className={styles.addSetLabel}>{addSetButtonLabel}</span>
-              )}
-            </PrimaryActionButton>
+            <div className={styles.addSetMorphTrack}>
+              <PrimaryActionButton
+                className={`${styles.addSet} ${isAddSetBusy ? styles.addSetBusy : ""}`}
+                onClick={handleAddClick}
+                onPointerDown={handleAddPointerDown}
+                onPointerUp={handleAddPointerUp}
+                onPointerLeave={handleAddPointerUp}
+                onPointerCancel={handleAddPointerUp}
+                disabled={isAddSetBusy}
+                aria-label={ariaLabel}
+                aria-busy={addSetPhase === "loading"}
+              >
+                <span className={styles.addSetInner}>
+                  <span
+                    className={`${styles.addSetLabel} ${addSetPhase === "idle" ? styles.addSetContentVisible : ""}`}
+                    aria-hidden={addSetPhase !== "idle"}
+                  >
+                    {addSetButtonLabel}
+                  </span>
+                  <span
+                    className={`${styles.addSetSpinner} ${addSetPhase === "loading" ? styles.addSetContentVisible : ""}`}
+                    aria-hidden={addSetPhase !== "loading"}
+                  />
+                  <IconCheck
+                    className={`${styles.addSetCheckIcon} ${addSetPhase === "success" ? styles.addSetContentVisible : ""}`}
+                    size={22}
+                    aria-hidden={addSetPhase !== "success"}
+                  />
+                </span>
+              </PrimaryActionButton>
+            </div>
             <button
               type="button"
               className={`${actionStyles.primaryCircle} ${styles.nextExercise}`}

@@ -1,0 +1,47 @@
+.track {
+  display: grid;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  column-gap: var(--segmented-progress-gap, 6px);
+  align-items: stretch;
+  box-sizing: border-box;
+}
+
+.segment,
+.segmentDone {
+  min-width: 0;
+  border-radius: var(--radius-pill);
+}
+
+.sizeMd .segment,
+.sizeMd .segmentDone {
+  height: var(--segmented-progress-height-md, 6px);
+}
+
+.sizeSm .segment,
+.sizeSm .segmentDone {
+  height: var(--segmented-progress-height-sm, 4px);
+}
+
+.variantDefault .segment {
+  background: var(--segmented-progress-pending, var(--color-surface-elevated));
+}
+
+.variantDefault .segmentDone {
+  background: var(--segmented-progress-done, var(--color-accent));
+}
+
+.variantProgram .segment {
+  background: var(
+    --segmented-progress-pending-program,
+    var(--program-segment-pending, var(--color-workout-card))
+  );
+}
+
+.variantProgram .segmentDone {
+  background: var(
+    --segmented-progress-done-program,
+    var(--program-accent, var(--color-accent))
+  );
+}

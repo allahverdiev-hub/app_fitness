@@ -7,8 +7,9 @@
   --bar-morph-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --bar-fade-duration: 0.42s;
   --bar-fade-ease: cubic-bezier(0.4, 0, 0.2, 1);
-  --icon-morph-duration: 0.38s;
+  --icon-morph-duration: 0.42s;
   --icon-morph-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --slot-right-surface: var(--color-primary-btn-bg);
 
   display: flex;
   align-items: center;
@@ -32,10 +33,25 @@
 .slotRight {
   flex: 1 1 0;
   min-width: 0;
+  border-radius: var(--radius-pill);
   transition:
     flex-grow var(--bar-morph-duration) var(--bar-morph-ease),
     flex-shrink var(--bar-morph-duration) var(--bar-morph-ease),
     flex-basis var(--bar-morph-duration) var(--bar-morph-ease);
+}
+
+.slotRight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--slot-right-surface);
+  transition: background var(--bar-fade-duration) var(--bar-fade-ease);
+  z-index: 0;
+}
+
+.clusterWorkoutActive:not(.clusterEditing) {
+  --slot-right-surface: var(--color-surface-elevated);
 }
 
 .leftCircleBtn {
@@ -61,7 +77,7 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transform: scale(0.72) rotate(-24deg);
+  transform: scale(0.88) rotate(-16deg);
   pointer-events: none;
   transition:
     opacity var(--icon-morph-duration) var(--icon-morph-ease),
@@ -75,11 +91,11 @@
 
 .clusterEditing .iconLayerDefault {
   opacity: 0;
-  transform: scale(0.72) rotate(24deg);
+  transform: scale(0.88) rotate(16deg);
 }
 
 .iconLayerEdit {
-  transform: scale(0.72) rotate(24deg);
+  transform: scale(0.88) rotate(16deg);
 }
 
 .clusterEditing .iconLayerEdit {
@@ -90,6 +106,7 @@
 .layer {
   position: absolute;
   inset: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -104,7 +121,6 @@
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
-  z-index: 0;
   transition: opacity var(--bar-fade-duration) var(--bar-fade-ease);
   -webkit-tap-highlight-color: transparent;
 }
@@ -112,47 +128,49 @@
 .layerStart {
   opacity: 1;
   pointer-events: auto;
-  z-index: 1;
 }
 
 .layerActiveBar {
   opacity: 0;
   pointer-events: none;
-  z-index: 0;
 }
 
 .clusterWorkoutActive .layerStart {
   opacity: 0;
   pointer-events: none;
-  z-index: 0;
 }
 
 .clusterWorkoutActive .layerActiveBar {
   opacity: 1;
   pointer-events: auto;
-  z-index: 1;
 }
 
 .clusterEditing .layerStart,
 .clusterEditing .layerActiveBar {
   opacity: 0;
   pointer-events: none;
-  z-index: 0;
 }
 
 .clusterEditing .layerEdit {
   opacity: 1;
   pointer-events: auto;
-  z-index: 1;
 }
 
-.layer:active {
+.cluster:not(.clusterEditing):not(.clusterWorkoutActive) .layerStart:active {
   opacity: 0.88;
 }
 
-.clusterEditing .layerStart:active,
-.layerEdit:active {
+.clusterEditing .layerEdit:active {
   opacity: 0.88;
+}
+
+.clusterWorkoutActive:not(.clusterEditing) .activeBarSurface :is(button):active {
+  opacity: 0.88;
+}
+
+.layerStart,
+.layerEdit {
+  background: transparent;
 }
 
 .startBtn {
@@ -165,8 +183,13 @@
   transform: none;
 }
 
+.activeBarSurface {
+  background: transparent;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .slotRight,
+  .slotRight::before,
   .layer,
   .iconLayer {
     transition: none;

@@ -9,7 +9,7 @@ import {
 } from "react";
 import { exerciseImages } from "@/features/exercise-page/config/media";
 import type { LoadFilter } from "@/features/exercise-page/mocks/progress-chart";
-import { mockWorkout } from "@/features/workouts/mocks/workoutSession";
+import type { ExerciseItem } from "@/features/exercise-page/types/exercise";
 import { useExercisePageLayout } from "@/features/exercise-page/hooks/useExercisePageLayout";
 import { useRestTimer } from "@/features/exercise-page/hooks/useRestTimer";
 import {
@@ -34,11 +34,12 @@ import {
 } from "@/features/exercise-page/components/bottom-bar/BottomBar";
 import { AddSetSheet } from "@/features/exercise-page/components/add-set-sheet/AddSetSheet";
 import { TechniqueVideoSheet } from "@/features/exercise-page/components/technique-video-sheet/TechniqueVideoSheet";
+import { ReplaceExerciseSheet } from "@/features/exercise-page/components/replace-exercise-sheet/ReplaceExerciseSheet";
 import { defaultTechniqueVideoUrl } from "@/features/exercise-page/config/techniqueVideo";
 import styles from "./ExercisePage.module.css";
 
 const ADD_SET_LOADER_MS = 700;
-const ADD_SET_SUCCESS_MS = 1400;
+const ADD_SET_CHECK_HOLD_MS = 800;
 
 export type WorkoutSessionTimer = {
   elapsed: string;
@@ -48,27 +49,34 @@ export type WorkoutSessionTimer = {
 
 type ExercisePageProps = {
   initialExerciseId?: string;
+  sessionExercises: ExerciseItem[];
   sessionTimer: WorkoutSessionTimer;
   completedSetsById: Record<string, number>;
   onCompletedSetsChange: Dispatch<SetStateAction<Record<string, number>>>;
+  onReplaceExercise: (targetId: string, suggestionId: string) => void;
   onBack?: () => void;
 };
 
 export function ExercisePage({
-  initialExerciseId = mockWorkout.activeExerciseId,
+  initialExerciseId,
+  sessionExercises,
   sessionTimer,
   completedSetsById,
   onCompletedSetsChange,
+  onReplaceExercise,
   onBack,
 }: ExercisePageProps) {
   const bodyRef = useRef<HTMLDivElement>(null);
   const contentScrollRef = useRef<HTMLDivElement>(null);
   const contentSheetRef = useRef<HTMLElement>(null);
   const addSetTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
-  const [activeId, setActiveId] = useState(initialExerciseId);
+  const [activeId, setActiveId] = useState(
+    () => initialExerciseId ?? sessionExercises[0]?.id ?? "",
+  );
   const [loadFilter, setLoadFilter] = useState<LoadFilter>("light");
   const [addSetOpen, setAddSetOpen] = useState(false);
   const [techniqueOpen, setTechniqueOpen] = useState(false);
+  const [replaceOpen, setReplaceOpen] = useState(false);
   const [addSetBarPhase, setAddSetBarPhase] = useState<AddSetBarPhase>("idle");
   const { elapsed, isPaused, onTogglePause } = sessionTimer;
   const [loggedSetsById, setLoggedSetsById] = useState<
@@ -82,11 +90,11 @@ export function ExercisePage({
   const exercises = useMemo(
     () =>
       mapExercisesWithProgress(
-        mockWorkout.exercises,
+        sessionExercises,
         activeId,
         completedSetsById,
       ),
-    [activeId, completedSetsById],
+    [sessionExercises, activeId, completedSetsById],
   );
 
   const active = exercises.find((e) => e.id === activeId) ?? exercises[0];
@@ -122,7 +130,7 @@ export function ExercisePage({
     clearAddSetTimers();
     scheduleAddSetTimer(() => {
       setAddSetBarPhase("success");
-      scheduleAddSetTimer(() => setAddSetBarPhase("idle"), ADD_SET_SUCCESS_MS);
+      scheduleAddSetTimer(() => setAddSetBarPhase("idle"), ADD_SET_CHECK_HOLD_MS);
     }, ADD_SET_LOADER_MS);
   }, [clearAddSetTimers, scheduleAddSetTimer]);
 
@@ -180,12 +188,20 @@ export function ExercisePage({
   const handleOpenAddSet = useCallback(() => {
     if (addSetBarPhase !== "idle") return;
     setTechniqueOpen(false);
+    setReplaceOpen(false);
     setAddSetOpen(true);
   }, [addSetBarPhase]);
 
   const handleOpenTechnique = useCallback(() => {
     setAddSetOpen(false);
+    setReplaceOpen(false);
     setTechniqueOpen(true);
+  }, []);
+
+  const handleOpenReplace = useCallback(() => {
+    setAddSetOpen(false);
+    setTechniqueOpen(false);
+    setReplaceOpen(true);
   }, []);
 
   const activeExerciseIndex = exercises.findIndex((e) => e.id === activeId);
@@ -193,8 +209,8 @@ export function ExercisePage({
     activeExerciseIndex >= 0 && activeExerciseIndex < exercises.length - 1;
 
   const workoutComplete = useMemo(
-    () => isWorkoutComplete(mockWorkout.exercises, completedSetsById),
-    [completedSetsById],
+    () => isWorkoutComplete(sessionExercises, completedSetsById),
+    [sessionExercises, completedSetsById],
   );
 
   const handleFinishWorkout = useCallback(() => {
@@ -257,7 +273,12 @@ export function ExercisePage({
           aria-label="Контент упражнения"
         >
           <div className={styles.contentScrollSpacer} aria-hidden />
-          <section ref={contentSheetRef} className={styles.contentSheet}>
+          <section
+            key={initialExerciseId}
+            ref={contentSheetRef}
+            className={styles.contentSheet}
+            aria-label="Панель упражнения"
+          >
             <div className={styles.contentSheetHandle} aria-hidden />
             <div className={styles.contentSheetBody}>
               <div className={styles.thumbsAboveTitle}>
@@ -276,7 +297,7 @@ export function ExercisePage({
               <ActionButtonRow
                 description={active.description}
                 onTechnique={handleOpenTechnique}
-                onReplace={() => console.log("replace", active.id)}
+                onReplace={handleOpenReplace}
               />
               <ExerciseProgressChart
                 exerciseId={active.id}
@@ -317,6 +338,15 @@ export function ExercisePage({
         videoUrl={techniqueVideoUrl}
         title={`Техника · ${active.title}`}
         onClose={() => setTechniqueOpen(false)}
+      />
+      <ReplaceExerciseSheet
+        open={replaceOpen}
+        exerciseId={active.id}
+        onClose={() => setReplaceOpen(false)}
+        onSelect={(suggestionId) =>
+          onReplaceExercise(active.id, suggestionId)
+        }
+        onViewAll={() => console.log("view all exercises", active.id)}
       />
     </div>
   );

@@ -20,6 +20,9 @@ export const HERO_ASPECT_HEIGHT = 3;
 /** Верхние скругления контентной панели (синхрон с --sheet-top-radius) */
 export const SHEET_TOP_RADIUS_PX = 28;
 
+/** Насколько панель наезжает на hero в покое — эффект выдвижного окна */
+export const CONTENT_SHEET_OVERLAP_PX = 28;
+
 /** Доля прокрутки до «прилипания» панели, за которую радиус уходит в 0 */
 export const SHEET_RADIUS_COLLAPSE_RATIO = 1;
 

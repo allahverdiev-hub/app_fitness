@@ -21,6 +21,16 @@
   white-space: nowrap;
 }
 
+.headerWrap {
+  align-items: flex-start;
+}
+
+.titleWrap {
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+}
+
 .closeBtn {
   flex-shrink: 0;
   display: flex;

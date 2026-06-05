@@ -7,3 +7,10 @@
   color: var(--color-text-primary);
   word-wrap: break-word;
 }
+
+.hero {
+  font-size: var(--page-title-hero-size, 24px);
+  line-height: var(--page-title-hero-line-height, 1);
+  letter-spacing: var(--page-title-hero-letter-spacing, -0.02em);
+  margin-bottom: var(--page-title-hero-gap-below, var(--space-lg));
+}

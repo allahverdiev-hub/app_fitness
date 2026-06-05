@@ -1,0 +1,70 @@
+.card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  border: none;
+  border-radius: 16px;
+  background: var(--color-workout-card);
+  color: var(--color-text-primary);
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cardDone {
+  background: var(--color-workout-card-done);
+}
+
+.card:active {
+  opacity: 0.9;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-height: 56px;
+}
+
+.bodySingleLine {
+  gap: 0;
+}
+
+.bodyDone {
+  color: var(--color-text-secondary);
+}
+
+.title {
+  font-size: var(--text-exercise-list-title-size);
+  font-weight: var(--text-exercise-list-title-weight);
+  line-height: var(--text-exercise-list-title-line-height);
+  letter-spacing: var(--text-exercise-list-title-letter-spacing);
+  text-transform: uppercase;
+}
+
+.dayLabel {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-text-secondary);
+}
+
+.dayLabelPrimary {
+  font-size: var(--text-exercise-list-title-size);
+  font-weight: var(--text-exercise-list-title-weight);
+  line-height: var(--text-exercise-list-title-line-height);
+  letter-spacing: var(--text-exercise-list-title-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.bodyDone .title,
+.bodyDone .dayLabel {
+  color: inherit;
+}

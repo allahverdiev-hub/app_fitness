@@ -7,47 +7,55 @@ const RELEASE_COMMIT_MS = RELEASE_MS + 30;
 type Baseline = { top: number; height: number };
 
 type DragSession = {
-  fromIndex: number;
-  targetIndex: number;
+  fromArrayIndex: number;
+  fromVisual: number;
+  targetVisual: number;
   pointerId: number;
   startY: number;
   currentY: number;
 };
 
-type Releasing = { fromIndex: number; targetIndex: number };
+type Releasing = { fromArrayIndex: number; fromVisual: number; targetVisual: number };
 
 export type DropIndicator = { top: number; height: number };
 
-function reorderIndices<T>(list: T[], from: number, to: number): T[] {
-  if (from === to) return list;
-  const next = [...list];
-  const [item] = next.splice(from, 1);
-  next.splice(to, 0, item);
-  return next;
-}
+type UseDragReorderOptions<T> = {
+  visualOrder?: number[];
+  commitReorder?: (items: T[], fromVisual: number, toVisual: number) => T[];
+};
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
 }
 
 function shiftFor(
-  index: number,
-  fromIndex: number,
-  targetIndex: number,
+  visualIndex: number,
+  fromVisual: number,
+  targetVisual: number,
   stride: number,
 ): number {
-  if (fromIndex < targetIndex && index > fromIndex && index <= targetIndex) {
+  if (fromVisual < targetVisual && visualIndex > fromVisual && visualIndex <= targetVisual) {
     return -stride;
   }
-  if (fromIndex > targetIndex && index >= targetIndex && index < fromIndex) {
+  if (fromVisual > targetVisual && visualIndex >= targetVisual && visualIndex < fromVisual) {
     return stride;
   }
   return 0;
 }
 
+function median(values: number[]): number {
+  if (values.length === 0) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 0
+    ? (sorted[mid - 1] + sorted[mid]) / 2
+    : sorted[mid];
+}
+
 export function useDragReorder<T extends { id: string }>(
   items: T[],
   onReorder: (items: T[]) => void,
+  options: UseDragReorderOptions<T> = {},
 ) {
   const [drag, setDrag] = useState<DragSession | null>(null);
   const [releasing, setReleasing] = useState<Releasing | null>(null);
@@ -58,8 +66,15 @@ export function useDragReorder<T extends { id: string }>(
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
   const baselineRef = useRef<Baseline[]>([]);
   const strideRef = useRef(0);
+  const visualOrderRef = useRef<number[]>([]);
   const releaseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rafRef = useRef<number | null>(null);
+
+  const visualOrder =
+    options.visualOrder ??
+    items.map((_, index) => index);
+
+  visualOrderRef.current = visualOrder;
 
   useEffect(
     () => () => {
@@ -69,21 +84,25 @@ export function useDragReorder<T extends { id: string }>(
     [],
   );
 
-  // Снимок статичной раскладки (offsetTop игнорирует CSS-трансформы),
-  // поэтому расчёт целевой позиции не зависит от уже сдвинутых карточек.
   const captureBaseline = useCallback(() => {
     const listEl = listRef.current;
     const listTop = listEl?.getBoundingClientRect().top ?? 0;
-    const refs = itemRefs.current;
-    const baseline: Baseline[] = refs.map((node) => {
+    const order = visualOrderRef.current;
+    const baseline: Baseline[] = order.map((arrayIndex) => {
+      const node = itemRefs.current[arrayIndex];
       if (!node) return { top: 0, height: 0 };
       const rect = node.getBoundingClientRect();
       return { top: rect.top - listTop, height: rect.height };
     });
     baselineRef.current = baseline;
 
-    if (baseline.length >= 2) {
-      strideRef.current = baseline[1].top - baseline[0].top;
+    const gaps: number[] = [];
+    for (let i = 1; i < baseline.length; i += 1) {
+      gaps.push(baseline[i].top - baseline[i - 1].top);
+    }
+
+    if (gaps.length > 0) {
+      strideRef.current = median(gaps);
     } else if (baseline.length === 1) {
       strideRef.current = baseline[0].height + LIST_GAP_PX;
     } else {
@@ -98,28 +117,46 @@ export function useDragReorder<T extends { id: string }>(
     [],
   );
 
-  const computeTargetIndex = useCallback(
-    (fromIndex: number, offsetY: number) => {
-      const stride = strideRef.current;
-      if (!stride) return fromIndex;
-      const steps = Math.round(offsetY / stride);
-      return clamp(fromIndex + steps, 0, items.length - 1);
+  const computeTargetVisual = useCallback(
+    (fromVisual: number, offsetY: number) => {
+      const baseline = baselineRef.current;
+      if (!baseline.length) return fromVisual;
+
+      const draggedCenter =
+        baseline[fromVisual].top +
+        offsetY +
+        baseline[fromVisual].height / 2;
+
+      let targetVisual = 0;
+      for (let i = 0; i < baseline.length; i += 1) {
+        const slotCenter = baseline[i].top + baseline[i].height / 2;
+        if (draggedCenter > slotCenter) {
+          targetVisual = i;
+        }
+      }
+
+      return clamp(targetVisual, 0, baseline.length - 1);
     },
-    [items.length],
+    [],
   );
 
   const startDrag = useCallback(
-    (event: React.PointerEvent<HTMLButtonElement>, index: number) => {
+    (event: React.PointerEvent<HTMLButtonElement>, arrayIndex: number) => {
       if (event.button !== 0) return;
-      // Не перехватываем новый жест, пока предыдущая карточка приземляется.
       if (releasing) return;
+
+      const fromVisual = visualOrderRef.current.indexOf(arrayIndex);
+      if (fromVisual < 0) return;
+
       event.preventDefault();
       event.stopPropagation();
       event.currentTarget.setPointerCapture(event.pointerId);
       captureBaseline();
+
       const session: DragSession = {
-        fromIndex: index,
-        targetIndex: index,
+        fromArrayIndex: arrayIndex,
+        fromVisual,
+        targetVisual: fromVisual,
         pointerId: event.pointerId,
         startY: event.clientY,
         currentY: event.clientY,
@@ -134,23 +171,25 @@ export function useDragReorder<T extends { id: string }>(
     (event: React.PointerEvent) => {
       const session = dragRef.current;
       if (!session || event.pointerId !== session.pointerId) return;
+
       const offsetY = event.clientY - session.startY;
-      const targetIndex = computeTargetIndex(session.fromIndex, offsetY);
+      const targetVisual = computeTargetVisual(session.fromVisual, offsetY);
       if (
-        targetIndex === session.targetIndex &&
+        targetVisual === session.targetVisual &&
         event.clientY === session.currentY
       ) {
         return;
       }
+
       const next: DragSession = {
         ...session,
         currentY: event.clientY,
-        targetIndex,
+        targetVisual,
       };
       dragRef.current = next;
       setDrag(next);
     },
-    [computeTargetIndex],
+    [computeTargetVisual],
   );
 
   const finishDrag = useCallback(
@@ -159,19 +198,25 @@ export function useDragReorder<T extends { id: string }>(
       if (!session || event.pointerId !== session.pointerId) return;
       dragRef.current = null;
 
-      const { fromIndex, targetIndex } = session;
+      const { fromArrayIndex, fromVisual, targetVisual } = session;
 
-      // Фаза приземления: плавно доводим карточку до слота, и только
-      // после завершения анимации фиксируем новый порядок — без скачка.
       setDrag(null);
-      setReleasing({ fromIndex, targetIndex });
+      setReleasing({ fromArrayIndex, fromVisual, targetVisual });
 
       releaseTimer.current = setTimeout(() => {
-        if (fromIndex !== targetIndex) {
-          onReorder(reorderIndices(items, fromIndex, targetIndex));
+        if (fromVisual !== targetVisual) {
+          const commit =
+            options.commitReorder ??
+            ((list, from, to) => {
+              const order = visualOrderRef.current;
+              const nextOrder = [...order];
+              const [item] = nextOrder.splice(from, 1);
+              nextOrder.splice(to, 0, item);
+              return nextOrder.map((arrayIndex) => list[arrayIndex]);
+            });
+          onReorder(commit(items, fromVisual, targetVisual));
         }
-        // На кадр коммита глушим переходы, чтобы сброс transform не
-        // дал паразитный сдвиг при смене порядка в DOM.
+
         setSuppressTransitions(true);
         setReleasing(null);
         rafRef.current = requestAnimationFrame(() => {
@@ -182,39 +227,43 @@ export function useDragReorder<T extends { id: string }>(
         releaseTimer.current = null;
       }, RELEASE_COMMIT_MS);
     },
-    [items, onReorder],
+    [items, onReorder, options.commitReorder],
   );
 
   const getItemStyle = useCallback(
-    (index: number): React.CSSProperties | undefined => {
+    (arrayIndex: number): React.CSSProperties | undefined => {
+      const visualIndex = visualOrderRef.current.indexOf(arrayIndex);
+      if (visualIndex < 0) return undefined;
+
       const stride = strideRef.current;
       if (!stride) return undefined;
 
       if (drag) {
-        const { fromIndex, targetIndex, currentY, startY } = drag;
-        if (index === fromIndex) {
+        const { fromArrayIndex, fromVisual, targetVisual, currentY, startY } =
+          drag;
+        if (arrayIndex === fromArrayIndex) {
           return {
             transform: `translateY(${currentY - startY}px)`,
             zIndex: 3,
             position: "relative",
           };
         }
-        const shift = shiftFor(index, fromIndex, targetIndex, stride);
+        const shift = shiftFor(visualIndex, fromVisual, targetVisual, stride);
         return shift === 0 ? undefined : { transform: `translateY(${shift}px)` };
       }
 
       if (releasing) {
-        const { fromIndex, targetIndex } = releasing;
+        const { fromArrayIndex, fromVisual, targetVisual } = releasing;
         const settle = `transform ${RELEASE_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
-        if (index === fromIndex) {
+        if (arrayIndex === fromArrayIndex) {
           return {
-            transform: `translateY(${(targetIndex - fromIndex) * stride}px)`,
+            transform: `translateY(${(targetVisual - fromVisual) * stride}px)`,
             transition: settle,
             zIndex: 3,
             position: "relative",
           };
         }
-        const shift = shiftFor(index, fromIndex, targetIndex, stride);
+        const shift = shiftFor(visualIndex, fromVisual, targetVisual, stride);
         return shift === 0 ? undefined : { transform: `translateY(${shift}px)` };
       }
 
@@ -226,8 +275,8 @@ export function useDragReorder<T extends { id: string }>(
   const dropIndicator: DropIndicator | null = (() => {
     if (!drag) return null;
     const baseline = baselineRef.current;
-    const slot = baseline[drag.targetIndex];
-    const source = baseline[drag.fromIndex];
+    const slot = baseline[drag.targetVisual];
+    const source = baseline[drag.fromVisual];
     if (!slot || !source) return null;
     return { top: slot.top, height: source.height };
   })();
@@ -242,7 +291,7 @@ export function useDragReorder<T extends { id: string }>(
     dropIndicator,
     suppressTransitions,
     isDragging: drag !== null,
-    draggingIndex: drag?.fromIndex ?? null,
-    releasingIndex: releasing?.fromIndex ?? null,
+    draggingIndex: drag?.fromArrayIndex ?? null,
+    releasingIndex: releasing?.fromArrayIndex ?? null,
   };
 }

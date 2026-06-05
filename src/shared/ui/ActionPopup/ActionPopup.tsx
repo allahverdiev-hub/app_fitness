@@ -13,6 +13,8 @@ export type ActionPopupProps = {
   children: ReactNode;
   /** Для aria-labelledby; по умолчанию генерируется */
   titleId?: string;
+  /** Заголовок в несколько строк без сокращения */
+  titleWrap?: boolean;
 };
 
 export function ActionPopup({
@@ -21,6 +23,7 @@ export function ActionPopup({
   onClose,
   children,
   titleId: titleIdProp,
+  titleWrap = false,
 }: ActionPopupProps) {
   const autoTitleId = useId();
   const titleId = titleIdProp ?? autoTitleId;
@@ -60,7 +63,12 @@ export function ActionPopup({
         aria-labelledby={titleId}
         onTransitionEnd={handleSheetTransitionEnd}
       >
-        <SheetPopupHeader title={title} titleId={titleId} onClose={onClose} />
+        <SheetPopupHeader
+          title={title}
+          titleId={titleId}
+          onClose={onClose}
+          titleWrap={titleWrap}
+        />
         <div className={styles.body}>{children}</div>
       </div>
     </div>

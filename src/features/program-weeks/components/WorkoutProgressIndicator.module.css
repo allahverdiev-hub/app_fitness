@@ -1,0 +1,48 @@
+.ringWrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+}
+
+.track {
+  stroke: var(--program-ring-track, #2a2a2a);
+}
+
+.progress {
+  transition: stroke-dashoffset 0.35s ease;
+}
+
+.label {
+  position: relative;
+  z-index: 1;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.done {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--program-accent, var(--color-accent));
+  color: var(--color-accent-on);
+}
+
+.doneIcon {
+  flex-shrink: 0;
+}
