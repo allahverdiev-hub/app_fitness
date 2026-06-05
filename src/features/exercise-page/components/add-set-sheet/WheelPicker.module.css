@@ -62,7 +62,11 @@
   list-style: none;
   overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
   scroll-snap-type: y mandatory;
+  scroll-behavior: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -78,6 +82,7 @@
   height: 44px;
   flex-shrink: 0;
   scroll-snap-align: center;
+  scroll-snap-stop: always;
   font-size: var(--wheel-item-font-size);
   font-weight: 500;
   line-height: 1;

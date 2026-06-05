@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   BOTTOM_SHEET_DURATION_MS,
-  BOTTOM_SHEET_WHEELS_DELAY_MS,
   useBottomSheetMotion,
 } from "@/shared/ui/bottom-sheet";
 import { SheetPopupHeader } from "@/shared/ui/SheetPopupHeader";
@@ -59,6 +58,7 @@ export function AddSetSheet({
     BOTTOM_SHEET_DURATION_MS,
   );
   const [wheelsReady, setWheelsReady] = useState(false);
+  const wheelsFallbackRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const resetForm = useCallback(() => {
     setReps(defaults.reps);
@@ -74,17 +74,35 @@ export function AddSetSheet({
     resetForm();
   }, [open, resetForm]);
 
+  const enableWheels = useCallback(() => {
+    if (wheelsFallbackRef.current) {
+      window.clearTimeout(wheelsFallbackRef.current);
+      wheelsFallbackRef.current = null;
+    }
+    setWheelsReady(true);
+  }, []);
+
   useEffect(() => {
     if (!shown) {
+      if (wheelsFallbackRef.current) {
+        window.clearTimeout(wheelsFallbackRef.current);
+        wheelsFallbackRef.current = null;
+      }
       setWheelsReady(false);
       return undefined;
     }
-    const id = window.setTimeout(
-      () => setWheelsReady(true),
-      BOTTOM_SHEET_WHEELS_DELAY_MS,
+
+    wheelsFallbackRef.current = window.setTimeout(
+      enableWheels,
+      BOTTOM_SHEET_DURATION_MS + 32,
     );
-    return () => window.clearTimeout(id);
-  }, [shown]);
+    return () => {
+      if (wheelsFallbackRef.current) {
+        window.clearTimeout(wheelsFallbackRef.current);
+        wheelsFallbackRef.current = null;
+      }
+    };
+  }, [shown, enableWheels]);
 
   useEffect(() => {
     if (!shouldRender) return undefined;
@@ -97,6 +115,7 @@ export function AddSetSheet({
 
   const handleSheetTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
     if (e.target !== sheetRef.current || e.propertyName !== "transform") return;
+    if (open && shown) enableWheels();
     if (!open && !shown) unmount();
   };
 
