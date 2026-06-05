@@ -59,7 +59,7 @@ export function WorkoutListActions({
     .join(" ");
 
   return (
-    <FloatingIsland className={styles.island}>
+    <FloatingIsland bare className={styles.island}>
       <div className={clusterClass}>
         <div className={`${styles.slot} ${styles.slotLeft}`}>
           <button

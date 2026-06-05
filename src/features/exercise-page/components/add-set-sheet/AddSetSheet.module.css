@@ -100,10 +100,6 @@
   }
 }
 
-.sheetKeyboard {
-  padding-bottom: 0;
-}
-
 .pickers {
   display: flex;
   gap: 10px;
@@ -129,10 +125,6 @@
 .pickerCardWeight {
   flex: 1 1 auto;
   min-width: 0;
-}
-
-.pickerCardActive .pickerCardTitle {
-  color: var(--color-accent);
 }
 
 .pickerCardTitle {
@@ -194,11 +186,6 @@
   min-width: calc(3 * 1ch + 24px);
   display: flex;
   justify-content: center;
-  cursor: pointer;
-}
-
-.weightColActive {
-  --wheel-highlight-border: #636366;
 }
 
 .noteWrap {
@@ -232,10 +219,6 @@
 
 .footer {
   flex-shrink: 0;
-}
-
-.sheetKeyboard .footer {
-  margin-bottom: var(--space-sm);
 }
 
 .submitBtn {

@@ -41,7 +41,7 @@ export function BottomTabNav({ active, onChange }: BottomTabNavProps) {
                   aria-current={isActive ? "page" : undefined}
                   onClick={() => onChange(tab.id)}
                 >
-                  <Icon size={24} className={styles.tabIcon} />
+                  <Icon size={22} className={styles.tabIcon} />
                   <span className={styles.label}>{tab.label}</span>
                 </button>
               </li>

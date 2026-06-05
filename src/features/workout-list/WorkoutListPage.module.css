@@ -34,6 +34,24 @@
   z-index: 12;
   padding: 0 var(--page-gutter);
   pointer-events: none;
+  isolation: isolate;
+}
+
+/* Тёмная заливка с размытием фона под кнопками */
+.actions::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(-1 * var(--footer-scrim-rise));
+  bottom: calc(-1 * var(--workout-actions-bottom));
+  z-index: -1;
+  pointer-events: none;
+  background: var(--footer-scrim-bg);
+  backdrop-filter: blur(var(--footer-scrim-blur));
+  -webkit-backdrop-filter: blur(var(--footer-scrim-blur));
+  -webkit-mask-image: var(--footer-scrim-mask);
+  mask-image: var(--footer-scrim-mask);
 }
 
 .actions > * {

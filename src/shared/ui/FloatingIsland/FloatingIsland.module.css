@@ -12,3 +12,16 @@
   gap: var(--bottom-bar-gap);
   padding: var(--floating-island-padding);
 }
+
+/* Закреплённые панели кнопок: без подложки, тени и внутренних отступов */
+.bare {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+/* Прозрачный островок с сохранением отступов (таб-бар) */
+.transparent {
+  background: transparent;
+  box-shadow: none;
+}

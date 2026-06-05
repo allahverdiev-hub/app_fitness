@@ -129,8 +129,31 @@
   --floating-island-inset-bottom: 12px;
   --floating-island-gap: 6px;
 
+  /* Тёмная заливка под закреплёнными кнопками + размытие фона */
+  --footer-scrim-bg: rgba(0, 0, 0, 0.65);
+  --footer-scrim-blur: 20px;
+  /* Мягкое растворение верхнего края (без резкой границы) */
+  --footer-scrim-rise: 32px;
+  --footer-scrim-fade-top: 80px;
+  --footer-scrim-mask: linear-gradient(
+    to bottom,
+    transparent 0px,
+    rgb(0 0 0 / 0.06) calc(var(--footer-scrim-rise) * 0.3),
+    rgb(0 0 0 / 0.22) calc(var(--footer-scrim-rise) * 0.62),
+    rgb(0 0 0 / 0.44) var(--footer-scrim-rise),
+    rgb(0 0 0 / 0.7) calc(var(--footer-scrim-rise) + var(--footer-scrim-fade-top) * 0.38),
+    rgb(0 0 0 / 0.92) calc(var(--footer-scrim-rise) + var(--footer-scrim-fade-top) * 0.72),
+    #000 calc(var(--footer-scrim-rise) + var(--footer-scrim-fade-top))
+  );
+
   --tab-nav-inactive: #868686;
-  --tab-nav-island-height: 52px;
+  --tab-nav-border-color: rgba(255, 255, 255, 0.16);
+  --tab-nav-border-gradient: linear-gradient(
+    to bottom,
+    var(--tab-nav-border-color),
+    transparent
+  );
+  --tab-nav-island-height: 44px;
   /* Внешняя высота капсулы таб-бара (контент + вертикальный padding островка) */
   --tab-nav-island-outer-height: calc(
     var(--tab-nav-island-height) + 2 * var(--floating-island-padding)
@@ -142,12 +165,14 @@
   /* Страница упражнения: без таб-бара, нижняя панель у края экрана */
   --exercise-page-footer-bottom: var(--floating-island-inset-bottom);
 
-  --workout-actions-island-height: calc(
-    var(--action-control-height) + 2 * var(--floating-island-padding)
-  );
+  /* Панель кнопок без подложки — высота = высота самой кнопки */
+  --workout-actions-island-height: var(--action-control-height);
   --workout-actions-island-gap: var(--floating-island-gap);
-  /* Таб-бар в потоке layout; 6px между панелью действий и таб-баром */
-  --workout-actions-bottom: var(--floating-island-gap);
+  /* Таб-бар плавающий (overlay); панель действий поднята над ним на 6px */
+  --workout-actions-bottom: calc(
+    var(--tab-nav-island-clearance) + var(--safe-bottom) +
+      var(--floating-island-gap)
+  );
   --workout-list-bottom-inset: calc(
     var(--workout-actions-bottom) + var(--workout-actions-island-height)
   );

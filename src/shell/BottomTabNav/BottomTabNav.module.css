@@ -1,7 +1,9 @@
 .nav {
-  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 40;
-  flex-shrink: 0;
   padding: 0 var(--page-gutter)
     calc(var(--floating-island-inset-bottom) + var(--safe-bottom));
   pointer-events: none;
@@ -9,10 +11,30 @@
 }
 
 .islandShell {
+  position: relative;
   width: 100%;
   pointer-events: auto;
   padding: var(--floating-island-padding) 10px;
   gap: 0;
+}
+
+/* Бордер: сверху прозрачный → снизу непрозрачный */
+.islandShell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--tab-nav-border-gradient);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .list {
@@ -35,9 +57,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 2px;
   min-height: var(--tab-nav-island-height);
-  padding: 4px 6px 2px;
+  padding: 2px 6px;
   border: none;
   background: transparent;
   color: var(--tab-nav-inactive);

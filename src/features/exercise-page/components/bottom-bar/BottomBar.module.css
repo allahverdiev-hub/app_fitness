@@ -11,6 +11,23 @@
   isolation: isolate;
 }
 
+/* Тёмная заливка с размытием фона под кнопками */
+.footer::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(-1 * var(--footer-scrim-rise));
+  bottom: calc(-1 * var(--exercise-page-footer-bottom));
+  z-index: -1;
+  pointer-events: none;
+  background: var(--footer-scrim-bg);
+  backdrop-filter: blur(var(--footer-scrim-blur));
+  -webkit-backdrop-filter: blur(var(--footer-scrim-blur));
+  -webkit-mask-image: var(--footer-scrim-mask);
+  mask-image: var(--footer-scrim-mask);
+}
+
 .footer > * {
   pointer-events: auto;
   width: 100%;

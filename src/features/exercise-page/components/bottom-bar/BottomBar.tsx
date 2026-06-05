@@ -88,6 +88,7 @@ export function BottomBar({
   return (
     <footer className={styles.footer}>
       <FloatingIsland
+        bare
         className={showFinishWorkout ? styles.islandStack : styles.island}
       >
         {showFinishWorkout ? (
