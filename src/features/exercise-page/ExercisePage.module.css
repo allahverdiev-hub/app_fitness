@@ -62,7 +62,7 @@
 .timerInMedia {
   flex-shrink: 0;
   z-index: 1;
-  margin-bottom: var(--timer-to-hero-gap, 60px);
+  margin-bottom: var(--timer-to-hero-gap, 40px);
   --timer-hero-label-color: color-mix(
     in srgb,
     var(--color-text-secondary) calc(var(--hero-dim-progress, 0) * 100%),
@@ -82,7 +82,7 @@
 
 .mediaHero {
   flex-shrink: 0;
-  margin-bottom: var(--hero-bottom-gap, 60px);
+  margin-bottom: var(--hero-bottom-gap, 40px);
 }
 
 /* Зона 2: контент поверх media при скролле, без боковых отступов */

@@ -20,7 +20,6 @@ import { getAddSetDefaults } from "@/features/exercise-page/utils/getAddSetDefau
 import { parseRestDuration } from "@/shared/lib/parseRestDuration";
 import type { DiaryLoad } from "@/features/exercise-page/mocks/diary";
 import type { AddSetFormValues, LoggedSet } from "@/features/exercise-page/types/set";
-import { StatusBar } from "@/shell/StatusBar/StatusBar";
 import { HeaderNav } from "@/features/exercise-page/components/chrome/HeaderNav";
 import { TimerBar } from "@/features/exercise-page/components/chrome/TimerBar";
 import { ExerciseCarousel } from "@/features/exercise-page/components/carousel/ExerciseCarousel";
@@ -214,7 +213,12 @@ export function ExercisePage({
     setActiveId(initialExerciseId);
   }, [initialExerciseId]);
 
-  useExercisePageLayout(bodyRef, contentScrollRef, contentSheetRef, activeId);
+  useExercisePageLayout(
+    bodyRef,
+    contentScrollRef,
+    contentSheetRef,
+    initialExerciseId,
+  );
 
   useEffect(() => {
     setTechniqueOpen(false);
@@ -225,10 +229,9 @@ export function ExercisePage({
 
   return (
     <div className={styles.page}>
-      <StatusBar />
       <div ref={bodyRef} className={styles.body}>
         <section className={styles.mediaZone} aria-label="Медиа упражнения">
-          <div className={styles.mediaContent}>
+          <div className={styles.mediaContent} data-exercise-media-stack>
             <div className={styles.timerInMedia}>
               <TimerBar
                 elapsed={elapsed}

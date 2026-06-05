@@ -5,11 +5,14 @@
  */
 
 export const HERO_TOP_OFFSET_PX = 60;
-export const HERO_BOTTOM_GAP_PX = 60;
 
-/** Карточка таймера в зоне 1 (над видео) */
+/** Вертикальные зазоры: таймер ↔ видео и видео ↔ контентная панель */
+export const HERO_MEDIA_GAP_PX = 40;
+export const TIMER_TO_HERO_GAP_PX = HERO_MEDIA_GAP_PX;
+export const HERO_BOTTOM_GAP_PX = HERO_MEDIA_GAP_PX;
+
+/** Карточка таймера в зоне 1 (над видео), для fallback-расчёта spacer */
 export const TIMER_IN_MEDIA_HEIGHT_PX = 44;
-export const TIMER_TO_HERO_GAP_PX = 60;
 
 export const HERO_ASPECT_WIDTH = 4;
 export const HERO_ASPECT_HEIGHT = 3;

@@ -1,7 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 
-import { StatusBar } from "@/shell/StatusBar/StatusBar";
-
 import {
   mockWorkoutOverview,
   workoutExerciseSetsById,
@@ -129,7 +127,6 @@ export function WorkoutListPage({
 
   return (
     <div className={styles.page}>
-      <StatusBar />
       <WorkoutListTopBar onBack={onBack} />
       <div className={styles.scroll}>
         <WorkoutOverviewHeader overview={overviewWithProgress} />

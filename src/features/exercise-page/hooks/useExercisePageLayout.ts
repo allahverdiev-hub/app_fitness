@@ -32,7 +32,8 @@ export function useExercisePageLayout(
   bodyRef: RefObject<HTMLElement | null>,
   contentScrollRef: RefObject<HTMLElement | null>,
   contentSheetRef: RefObject<HTMLElement | null>,
-  resetKey?: string,
+  /** Сброс скролла только при входе на страницу (не при смене упражнения в карусели) */
+  scrollResetKey?: string,
 ) {
   useLayoutEffect(() => {
     const body = bodyRef.current;
@@ -71,9 +72,16 @@ export function useExercisePageLayout(
       sheet.style.borderTopRightRadius = radiusPx;
     };
 
-    const apply = () => {
+    const measureMediaStackHeight = () => {
+      const stack = body.querySelector<HTMLElement>("[data-exercise-media-stack]");
+      return stack?.offsetHeight ?? 0;
+    };
+
+    const applyLayout = () => {
       const width = body.clientWidth;
-      const spacerHeight = getContentScrollSpacerPx(width);
+      const measuredStack = measureMediaStackHeight();
+      const spacerHeight =
+        measuredStack > 0 ? measuredStack : getContentScrollSpacerPx(width);
       const spacerPx = `${spacerHeight}px`;
       body.style.setProperty("--content-scroll-spacer", spacerPx);
       scroller.style.setProperty("--content-scroll-spacer", spacerPx);
@@ -89,6 +97,9 @@ export function useExercisePageLayout(
         "--timer-to-hero-gap",
         `${TIMER_TO_HERO_GAP_PX}px`,
       );
+    };
+
+    const resetScroll = () => {
       scroller.scrollTop = 0;
       applyScrollEffects();
     };
@@ -101,19 +112,24 @@ export function useExercisePageLayout(
       });
     };
 
-    apply();
+    applyLayout();
+    resetScroll();
     const observer = new ResizeObserver(() => {
-      apply();
+      applyLayout();
       applyScrollEffects();
     });
     observer.observe(body);
     observer.observe(scroller);
-    window.addEventListener("resize", apply);
+    const mediaStack = body.querySelector<HTMLElement>(
+      "[data-exercise-media-stack]",
+    );
+    if (mediaStack) observer.observe(mediaStack);
+    window.addEventListener("resize", applyLayout);
     scroller.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
       observer.disconnect();
-      window.removeEventListener("resize", apply);
+      window.removeEventListener("resize", applyLayout);
       scroller.removeEventListener("scroll", onScroll);
       if (scrollRaf) cancelAnimationFrame(scrollRaf);
       const sheet = getSheet();
@@ -124,5 +140,5 @@ export function useExercisePageLayout(
       scroller.style.removeProperty("--content-scroll-spacer");
       body.style.removeProperty("--hero-dim-progress");
     };
-  }, [bodyRef, contentScrollRef, contentSheetRef, resetKey]);
+  }, [bodyRef, contentScrollRef, contentSheetRef, scrollResetKey]);
 }

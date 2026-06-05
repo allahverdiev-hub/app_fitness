@@ -105,7 +105,8 @@
   --thumb-set-pending: #48484a;
   --hero-media-aspect-ratio: 4 / 3;
   --hero-top-offset: 60px;
-  --hero-bottom-gap: 60px;
+  --hero-bottom-gap: 40px;
+  --timer-to-hero-gap: 40px;
   --content-scroll-spacer: 100%;
   --content-sheet-overlap: 0px;
   --sheet-top-radius: 28px;
@@ -146,9 +147,8 @@
   );
   --workout-actions-island-gap: var(--floating-island-gap);
   /* Низ панели действий: над таб-баром + зазор между островками */
-  --workout-actions-bottom: calc(
-    var(--tab-nav-island-clearance) + var(--workout-actions-island-gap)
-  );
+  /* Таб-бар в потоке layout (не поверх контента) — зазор только от низа main */
+  --workout-actions-bottom: var(--floating-island-inset-bottom);
   --workout-list-bottom-inset: calc(
     var(--workout-actions-bottom) + var(--workout-actions-island-height)
   );
