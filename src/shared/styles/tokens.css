@@ -146,9 +146,8 @@
     var(--action-control-height) + 2 * var(--floating-island-padding)
   );
   --workout-actions-island-gap: var(--floating-island-gap);
-  /* Низ панели действий: над таб-баром + зазор между островками */
-  /* Таб-бар в потоке layout (не поверх контента) — зазор только от низа main */
-  --workout-actions-bottom: var(--floating-island-inset-bottom);
+  /* Таб-бар в потоке layout; 6px между панелью действий и таб-баром */
+  --workout-actions-bottom: var(--floating-island-gap);
   --workout-list-bottom-inset: calc(
     var(--workout-actions-bottom) + var(--workout-actions-island-height)
   );

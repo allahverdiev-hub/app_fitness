@@ -56,23 +56,19 @@
 .list {
   position: relative;
   z-index: 0;
-  height: 100%;
   margin: 0;
   padding: var(--edge-pad, 88px) 0;
   list-style: none;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior-y: contain;
-  touch-action: pan-y;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: grab;
 }
 
-.list::-webkit-scrollbar {
-  display: none;
+.list:active {
+  cursor: grabbing;
 }
 
 .item {
@@ -81,8 +77,6 @@
   width: 100%;
   height: 44px;
   flex-shrink: 0;
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
   font-size: var(--wheel-item-font-size);
   font-weight: 500;
   line-height: 1;
