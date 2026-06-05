@@ -11,6 +11,7 @@
 }
 
 .islandShell {
+  composes: frostedPlate from "@/shared/styles/frostedPlateSurfaces.module.css";
   position: relative;
   width: 100%;
   pointer-events: auto;
@@ -58,7 +59,7 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
-  min-height: var(--tab-nav-island-height);
+  min-height: var(--tab-nav-item-height);
   padding: 2px 6px;
   border: none;
   background: transparent;

@@ -27,6 +27,8 @@ export type WorkoutSessionExerciseDef = {
   completed: boolean;
   status?: ExerciseItem["status"];
   description?: ExerciseDescription;
+  /** Название до замены — для подписи в листинге */
+  replacedFromTitle?: string;
 };
 
 /** Единый порядок и содержание: листинг тренировки ↔ карусель на странице упражнения */
@@ -175,6 +177,7 @@ export function toListExerciseItem(
     thumbnailSrc: def.thumbnailSrc,
     imageAlt: def.imageAlt,
     completed: def.completed,
+    replacedFromTitle: def.replacedFromTitle,
   };
 }
 

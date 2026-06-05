@@ -24,6 +24,8 @@
   padding: 0;
   margin: 0;
   background: rgba(0, 0, 0, 0.52);
+  -webkit-backdrop-filter: blur(var(--sheet-popup-backdrop-blur));
+  backdrop-filter: blur(var(--sheet-popup-backdrop-blur));
   opacity: 0;
   cursor: pointer;
   transition: opacity var(--add-set-sheet-backdrop-duration)
@@ -47,7 +49,7 @@
   max-height: 78%;
   padding: var(--space-md) var(--page-gutter)
     calc(var(--space-lg) + var(--safe-bottom));
-  background: var(--color-surface);
+  background: var(--sheet-popup-bg);
   border-radius: var(--sheet-popup-top-radius) var(--sheet-popup-top-radius) 0 0;
   box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.45);
   transform: translate3d(0, 100%, 0);

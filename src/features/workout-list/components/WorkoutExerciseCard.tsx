@@ -1,5 +1,9 @@
 import { IconCheck, IconMore } from "@/shared/icons";
 import type { WorkoutListExerciseItem } from "@/features/workout-list/types/workoutOverview";
+import { WorkoutExerciseMuscleLabel } from "@/features/workout-list/components/WorkoutExerciseMuscleLabel";
+import { WorkoutExerciseReplacedLabel } from "@/features/workout-list/components/WorkoutExerciseReplacedLabel";
+import { WorkoutExerciseTitle } from "@/features/workout-list/components/WorkoutExerciseTitle";
+import { WorkoutExerciseVolumeLabel } from "@/features/workout-list/components/WorkoutExerciseVolumeLabel";
 import styles from "./WorkoutExerciseCard.module.css";
 
 type WorkoutExerciseCardProps = {
@@ -8,19 +12,14 @@ type WorkoutExerciseCardProps = {
   onMenu?: () => void;
 };
 
-function subtitleHasDigits(text: string): boolean {
-  return /\d/.test(text);
-}
-
 export function WorkoutExerciseCard({
   exercise,
   onPress,
   onMenu,
 }: WorkoutExerciseCardProps) {
-  const volumeSubtitle = subtitleHasDigits(exercise.subtitle);
-
   return (
-    <article
+    <div className={styles.item}>
+      <article
         className={
           exercise.completed
             ? `${styles.card} ${styles.cardCompleted}`
@@ -53,18 +52,18 @@ export function WorkoutExerciseCard({
             ) : null}
           </div>
           <div className={styles.body}>
-            <h2 className={styles.title}>{exercise.title}</h2>
-            <p
-              className={
-                volumeSubtitle
-                  ? `${styles.subtitle} ${styles.subtitleVolume}`
-                  : styles.subtitle
-              }
+            <WorkoutExerciseTitle
+              className={exercise.completed ? styles.titleCompleted : undefined}
             >
+              {exercise.title}
+            </WorkoutExerciseTitle>
+            <WorkoutExerciseVolumeLabel completed={exercise.completed}>
               {exercise.subtitle}
-            </p>
+            </WorkoutExerciseVolumeLabel>
             {exercise.muscleGroup ? (
-              <p className={styles.muscle}>{exercise.muscleGroup}</p>
+              <WorkoutExerciseMuscleLabel className={styles.muscleLabel}>
+                {exercise.muscleGroup}
+              </WorkoutExerciseMuscleLabel>
             ) : null}
           </div>
         </button>
@@ -79,6 +78,13 @@ export function WorkoutExerciseCard({
         >
           <IconMore size={20} />
         </button>
-    </article>
+      </article>
+      {exercise.replacedFromTitle ? (
+        <WorkoutExerciseReplacedLabel
+          previousTitle={exercise.replacedFromTitle}
+          completed={exercise.completed}
+        />
+      ) : null}
+    </div>
   );
 }

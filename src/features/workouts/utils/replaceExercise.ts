@@ -52,6 +52,7 @@ export function applyExerciseReplacement(
       ...def,
       ...patch,
       id: targetId,
+      replacedFromTitle: def.title,
       completed: def.completed,
       status: def.status,
       description,

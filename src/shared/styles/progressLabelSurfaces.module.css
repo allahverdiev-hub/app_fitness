@@ -1,0 +1,7 @@
+/* Подпись над сегментированным прогрессом («N из M») */
+.progressLabel {
+  font-size: var(--progress-label-size);
+  font-weight: var(--progress-label-weight);
+  line-height: var(--progress-label-line-height);
+  color: var(--progress-label-color);
+}

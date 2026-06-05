@@ -86,16 +86,13 @@ export function enrichProgramOverview(
   };
 }
 
-export function computeWeekWorkoutStats(
+export function computeProgramWorkoutStats(
   weeks: readonly EnrichedProgramWeek[],
-  weekNumber: number,
 ): WeekWorkoutStats {
   let completedWorkouts = 0;
   let totalWorkouts = 0;
 
   for (const week of weeks) {
-    if (week.weekNumber !== weekNumber) continue;
-
     for (const workout of week.workouts) {
       totalWorkouts += 1;
       if (workout.status === "completed") {
@@ -105,4 +102,9 @@ export function computeWeekWorkoutStats(
   }
 
   return { completedWorkouts, totalWorkouts };
+}
+
+/** Кольцо прогресса тренировки — всегда зелёное */
+export function getWorkoutProgressRingColor(): string {
+  return "var(--program-workout-progress-high)";
 }

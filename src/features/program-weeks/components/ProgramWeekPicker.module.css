@@ -3,66 +3,113 @@
 }
 
 .track {
+  composes: frostedPlate from "@/shared/styles/frostedPlateSurfaces.module.css";
+  --segment-width: calc(
+    (100% - 2 * var(--program-week-tab-track-padding)) / var(--tab-count, 4)
+  );
   position: relative;
   display: flex;
   align-items: stretch;
   width: 100%;
-  gap: 0;
-  padding: 4px;
-  border: 1px solid var(--tab-nav-border-color);
+  padding: var(--program-week-tab-track-padding);
+  border: 1px solid var(--program-week-tab-track-border-color);
   border-radius: var(--radius-pill);
-  background: transparent;
   box-sizing: border-box;
-  isolation: isolate;
+  overflow: hidden;
 }
 
 .indicator {
   position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 0;
+  top: var(--program-week-tab-track-padding);
+  bottom: var(--program-week-tab-track-padding);
+  left: calc(
+    var(--program-week-tab-track-padding) + var(--active-index, 0) *
+      var(--segment-width)
+  );
   z-index: 0;
+  width: var(--segment-width);
   border-radius: var(--radius-pill);
   background: var(--color-primary-btn-bg);
-  transform: translateX(0);
+  transform: scaleX(var(--program-week-tab-active-scale));
+  transform-origin: center;
   transition:
-    transform 0.28s cubic-bezier(0.33, 1, 0.68, 1),
-    width 0.28s cubic-bezier(0.33, 1, 0.68, 1);
+    left 0.32s cubic-bezier(0.33, 1, 0.68, 1),
+    transform 0.32s cubic-bezier(0.33, 1, 0.68, 1);
   pointer-events: none;
-  will-change: transform, width;
+  will-change: left, transform;
 }
 
 .item {
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 1 1 0;
   min-width: 0;
-  height: 36px;
-  padding: 0 10px;
+  height: var(--program-week-tab-active-height);
+  padding: 0 var(--program-week-tab-padding-x);
   border: none;
   border-radius: var(--radius-pill);
   background: transparent;
-  color: var(--color-text-secondary);
+  color: var(--program-week-tab-inactive-color);
   font-family: inherit;
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  line-height: 1.2;
-  white-space: nowrap;
+  font-size: var(--program-week-tab-inactive-font-size);
+  font-weight: var(--program-week-tab-inactive-font-weight);
+  line-height: var(--program-week-tab-inactive-line-height);
+  letter-spacing: var(--program-week-tab-inactive-letter-spacing);
+  text-transform: uppercase;
+  text-decoration: none;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition:
-    color 0.22s ease,
-    flex 0.28s cubic-bezier(0.33, 1, 0.68, 1),
-    padding 0.28s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: color 0.22s ease;
 }
 
 .itemActive {
-  flex: 0 0 auto;
-  padding: 0 16px;
-  color: var(--color-primary-btn-text);
-  font-weight: 600;
+  color: var(--program-week-tab-active-color);
+  font-size: var(--program-week-tab-active-font-size);
+  font-weight: var(--program-week-tab-active-font-weight);
+  line-height: var(--program-week-tab-active-line-height);
+  letter-spacing: var(--program-week-tab-active-letter-spacing);
+}
+
+.itemActive .label {
+  padding-inline-end: var(--program-week-tab-active-letter-spacing);
+}
+
+.labelWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.label {
+  white-space: nowrap;
+  /* Компенсация хвостового letter-spacing у uppercase */
+  padding-inline-end: var(--program-week-tab-inactive-letter-spacing);
+  transition: opacity 0.18s ease;
+}
+
+.labelHidden {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .item:active {
   opacity: 0.88;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicator {
+    transition: none;
+  }
+
+  .label {
+    transition: none;
+  }
 }

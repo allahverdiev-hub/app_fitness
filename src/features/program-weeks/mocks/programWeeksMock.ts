@@ -76,9 +76,12 @@ export const mockProgramOverview: ProgramOverview = {
   ],
 };
 
+/** Демо-сессия листинга: «Спина + плечи» (неделя 1, день 2) */
+export const defaultProgramWorkoutId = "w1-d2";
+
 export const mockProgramWeekPicker = [
-  { id: "picker-1", weekNumber: 1 },
-  { id: "picker-2", weekNumber: 2 },
-  { id: "picker-3", weekNumber: 3 },
-  { id: "picker-4", weekNumber: 4 },
+  { id: "picker-1", weekNumber: 1, anchorId: "week-1" },
+  { id: "picker-2", weekNumber: 2, anchorId: "week-2" },
+  { id: "picker-3", weekNumber: 3, anchorId: "week-3" },
+  { id: "picker-4", weekNumber: 4, anchorId: "week-4" },
 ] as const;

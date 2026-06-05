@@ -1,36 +1,24 @@
-import {
-  useCallback,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import type { CSSProperties, MouseEvent } from "react";
+import { useMemo } from "react";
 import styles from "./ProgramWeekPicker.module.css";
 
 export type ProgramWeekPickerOption = {
   id: string;
   weekNumber: number;
+  anchorId: string;
 };
 
 type ProgramWeekPickerProps = {
   options: readonly ProgramWeekPickerOption[];
   activeWeekNumber: number;
-  onChange?: (weekNumber: number) => void;
-};
-
-type IndicatorState = {
-  left: number;
-  width: number;
+  onAnchorNavigate?: (option: ProgramWeekPickerOption) => void;
 };
 
 export function ProgramWeekPicker({
   options,
   activeWeekNumber,
-  onChange,
+  onAnchorNavigate,
 }: ProgramWeekPickerProps) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-
   const activeIndex = useMemo(
     () =>
       Math.max(
@@ -40,77 +28,54 @@ export function ProgramWeekPicker({
     [options, activeWeekNumber],
   );
 
-  const activeId = options[activeIndex]?.id;
+  const trackStyle = {
+    "--tab-count": String(options.length),
+    "--active-index": String(activeIndex),
+  } as CSSProperties;
 
-  const [indicator, setIndicator] = useState<IndicatorState>({
-    left: 0,
-    width: 0,
-  });
-
-  const updateIndicator = useCallback(() => {
-    const track = trackRef.current;
-    const activeEl = activeId ? itemRefs.current[activeId] : null;
-    if (!track || !activeEl) return;
-
-    setIndicator({
-      left: activeEl.offsetLeft,
-      width: activeEl.offsetWidth,
-    });
-  }, [activeId]);
-
-  useLayoutEffect(() => {
-    updateIndicator();
-  }, [updateIndicator, activeWeekNumber, options]);
-
-  useLayoutEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const observer = new ResizeObserver(() => updateIndicator());
-    observer.observe(track);
-
-    for (const option of options) {
-      const el = itemRefs.current[option.id];
-      if (el) observer.observe(el);
-    }
-
-    return () => observer.disconnect();
-  }, [options, updateIndicator]);
+  const handleAnchorClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    option: ProgramWeekPickerOption,
+  ) => {
+    event.preventDefault();
+    onAnchorNavigate?.(option);
+  };
 
   return (
     <div className={styles.wrap}>
       <div
-        ref={trackRef}
         className={styles.track}
+        style={trackStyle}
         role="tablist"
         aria-label="Недели программы"
       >
-        <div
-          className={styles.indicator}
-          style={{
-            width: indicator.width,
-            transform: `translateX(${indicator.left}px)`,
-          }}
-          aria-hidden
-        />
+        <div className={styles.indicator} aria-hidden />
         {options.map((option) => {
           const isActive = option.weekNumber === activeWeekNumber;
 
           return (
-            <button
+            <a
               key={option.id}
-              ref={(element) => {
-                itemRefs.current[option.id] = element;
-              }}
-              type="button"
+              href={`#${option.anchorId}`}
               role="tab"
               aria-selected={isActive}
               aria-label={`Неделя ${option.weekNumber}`}
               className={`${styles.item} ${isActive ? styles.itemActive : ""}`}
-              onClick={() => onChange?.(option.weekNumber)}
+              onClick={(event) => handleAnchorClick(event, option)}
             >
-              {isActive ? `Неделя ${option.weekNumber}` : option.weekNumber}
-            </button>
+              <span className={styles.labelWrap} aria-hidden>
+                <span
+                  className={`${styles.label} ${styles.labelShort} ${isActive ? styles.labelHidden : ""}`}
+                >
+                  {option.weekNumber}
+                </span>
+                <span
+                  className={`${styles.label} ${styles.labelLong} ${isActive ? "" : styles.labelHidden}`}
+                >
+                  Неделя {option.weekNumber}
+                </span>
+              </span>
+            </a>
           );
         })}
       </div>

@@ -15,6 +15,7 @@ type ProgressOverviewProps = {
   variant?: SegmentedProgressVariant;
   spacing?: ProgressOverviewSpacing;
   className?: string;
+  labelClassName?: string;
   ariaLabel?: string;
 };
 
@@ -26,6 +27,7 @@ export function ProgressOverview({
   variant = "default",
   spacing = "none",
   className = "",
+  labelClassName = "",
   ariaLabel,
 }: ProgressOverviewProps) {
   if (total <= 0) return null;
@@ -41,7 +43,7 @@ export function ProgressOverview({
     <div
       className={`${styles.block} ${spacingClass} ${className}`.trim()}
     >
-      <p className={styles.label}>
+      <p className={`${styles.label} ${labelClassName}`.trim()}>
         {prefix ? <span className={styles.labelMuted}>{prefix}</span> : null}
         <span>
           {completed} из {total}

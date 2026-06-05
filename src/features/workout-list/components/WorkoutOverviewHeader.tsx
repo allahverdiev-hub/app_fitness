@@ -13,19 +13,14 @@ export function WorkoutOverviewHeader({ overview }: WorkoutOverviewHeaderProps) 
 
   return (
     <div className={styles.block}>
-      <p className={styles.meta}>
-        <span>{overview.intensityLabel}</span>
-        <span className={styles.metaDot} aria-hidden>
-          •
-        </span>
-        <span>{overview.durationLabel}</span>
-      </p>
       <PageTitle>{overview.title}</PageTitle>
       <p className={styles.hint}>{overview.hint}</p>
       <ProgressOverview
         completed={done}
         total={total}
+        variant="program"
         spacing="section"
+        labelClassName={styles.progressLabel}
         ariaLabel={`Выполнено упражнений: ${done} из ${total}`}
       />
     </div>

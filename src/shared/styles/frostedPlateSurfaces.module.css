@@ -1,0 +1,6 @@
+/* Полупрозрачная плашка с размытием фона (табы, таб-бар) */
+.frostedPlate {
+  background: var(--frosted-plate-bg);
+  -webkit-backdrop-filter: blur(var(--frosted-plate-blur));
+  backdrop-filter: blur(var(--frosted-plate-blur));
+}

@@ -1,20 +1,25 @@
 import { useState } from "react";
 import { MobileFrame } from "@/shell/MobileFrame/MobileFrame";
 import { BottomTabNav, type AppTabId } from "@/shell/BottomTabNav";
-import { TabPlaceholder } from "@/shell/TabPlaceholder/TabPlaceholder";
+import { CatalogFlow } from "@/features/catalog/CatalogFlow";
+import { ProfileFlow } from "@/features/profile/ProfileFlow";
+import { WorkoutsFlow } from "@/features/workouts/WorkoutsFlow";
 import {
-  WorkoutsFlow,
-  type WorkoutsScreen,
-} from "@/features/workouts/WorkoutsFlow";
+  bumpTabPopSignal,
+  INITIAL_TAB_POP_SIGNALS,
+  type TabPopSignals,
+} from "./tabNavigation";
 import styles from "./App.module.css";
 
 export function App() {
   const [activeTab, setActiveTab] = useState<AppTabId>("workouts");
-  const [workoutsScreen, setWorkoutsScreen] =
-    useState<WorkoutsScreen>("program");
+  const [tabPopSignals, setTabPopSignals] = useState<TabPopSignals>(
+    INITIAL_TAB_POP_SIGNALS,
+  );
 
-  const showBottomTabNav =
-    activeTab !== "workouts" || workoutsScreen !== "exercise";
+  const handleTabReselect = (tab: AppTabId) => {
+    setTabPopSignals((signals) => bumpTabPopSignal(signals, tab));
+  };
 
   return (
     <MobileFrame>
@@ -23,15 +28,27 @@ export function App() {
           {activeTab === "workouts" ? (
             <WorkoutsFlow
               key="workouts-flow"
-              onScreenChange={setWorkoutsScreen}
+              popSignal={tabPopSignals.workouts}
             />
           ) : null}
-          {activeTab === "catalog" && <TabPlaceholder title="Справочник" />}
-          {activeTab === "profile" && <TabPlaceholder title="Профиль" />}
+          {activeTab === "catalog" ? (
+            <CatalogFlow
+              key="catalog-flow"
+              popSignal={tabPopSignals.catalog}
+            />
+          ) : null}
+          {activeTab === "profile" ? (
+            <ProfileFlow
+              key="profile-flow"
+              popSignal={tabPopSignals.profile}
+            />
+          ) : null}
         </main>
-        {showBottomTabNav ? (
-          <BottomTabNav active={activeTab} onChange={setActiveTab} />
-        ) : null}
+        <BottomTabNav
+          active={activeTab}
+          onChange={setActiveTab}
+          onReselect={handleTabReselect}
+        />
       </div>
     </MobileFrame>
   );

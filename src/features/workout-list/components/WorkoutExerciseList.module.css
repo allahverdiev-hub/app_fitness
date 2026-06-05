@@ -35,12 +35,10 @@
 .sectionTitle {
   margin: 0;
   padding: 0 2px;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--color-text-tertiary);
+  font-size: var(--workout-section-title-size);
+  font-weight: var(--workout-section-title-weight);
+  line-height: var(--workout-section-title-line-height);
+  color: var(--workout-section-title-color);
 }
 
 .sectionList {

@@ -8,6 +8,7 @@ export type WorkoutListExerciseItem = {
   thumbnailSrc: string;
   imageAlt: string;
   completed: boolean;
+  replacedFromTitle?: string;
 };
 
 export type WorkoutOverview = {

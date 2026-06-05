@@ -1,9 +1,6 @@
 import { IconCheck } from "@/shared/icons";
-import { getProgressRingColor } from "@/features/program-weeks/utils/difficulty";
-import type {
-  ProgramDifficulty,
-  WorkoutSessionStatus,
-} from "@/features/program-weeks/types/programWeeks";
+import { getWorkoutProgressRingColor } from "@/features/program-weeks/utils/workoutProgress";
+import type { WorkoutSessionStatus } from "@/features/program-weeks/types/programWeeks";
 import styles from "./WorkoutProgressIndicator.module.css";
 
 const SIZE = 56;
@@ -14,13 +11,11 @@ const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 type WorkoutProgressIndicatorProps = {
   status: WorkoutSessionStatus;
   progressPercent?: number;
-  difficulty: ProgramDifficulty;
 };
 
 export function WorkoutProgressIndicator({
   status,
   progressPercent = 0,
-  difficulty,
 }: WorkoutProgressIndicatorProps) {
   if (status === "completed") {
     return (
@@ -33,9 +28,7 @@ export function WorkoutProgressIndicator({
   const clamped = Math.max(0, Math.min(100, progressPercent));
   const dashOffset = CIRCUMFERENCE * (1 - clamped / 100);
   const ringColor =
-    status === "not_started"
-      ? "transparent"
-      : getProgressRingColor(difficulty, clamped);
+    status === "in_progress" ? getWorkoutProgressRingColor() : "transparent";
 
   return (
     <span className={styles.ringWrap} aria-hidden>

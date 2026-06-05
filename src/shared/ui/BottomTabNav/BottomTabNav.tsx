@@ -13,6 +13,8 @@ export type BottomTabNavProps<T extends string> = {
   items: readonly BottomTabNavItem<T>[];
   active: T;
   onChange: (tab: T) => void;
+  /** Повторный тап по уже активной вкладке */
+  onReselect?: (tab: T) => void;
   ariaLabel?: string;
 };
 
@@ -20,11 +22,12 @@ export function BottomTabNav<T extends string>({
   items,
   active,
   onChange,
+  onReselect,
   ariaLabel = "Основная навигация",
 }: BottomTabNavProps<T>) {
   return (
     <nav className={styles.nav} aria-label={ariaLabel}>
-      <FloatingIsland className={styles.islandShell}>
+      <FloatingIsland transparent className={styles.islandShell}>
         <ul className={styles.list}>
           {items.map((tab) => {
             const isActive = tab.id === active;
@@ -36,7 +39,13 @@ export function BottomTabNav<T extends string>({
                   type="button"
                   className={`${styles.tab} ${isActive ? styles.tabActive : ""}`}
                   aria-current={isActive ? "page" : undefined}
-                  onClick={() => onChange(tab.id)}
+                  onClick={() => {
+                    if (isActive) {
+                      onReselect?.(tab.id);
+                      return;
+                    }
+                    onChange(tab.id);
+                  }}
                 >
                   <Icon size={22} className={styles.tabIcon} />
                   <span className={styles.label}>{tab.label}</span>

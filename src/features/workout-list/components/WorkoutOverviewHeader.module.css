@@ -6,23 +6,14 @@
   padding: 0 var(--page-gutter);
 }
 
-.meta {
-  margin: 0 0 var(--space-sm);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  line-height: 1.25;
-  color: var(--color-text-secondary);
-}
-
-.metaDot {
-  opacity: 0.85;
-}
-
 .hint {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.35;
-  color: var(--color-text-secondary);
+  font-size: var(--description-m-size);
+  font-weight: var(--description-m-weight);
+  line-height: var(--description-m-line-height);
+  color: var(--description-m-color);
+}
+
+.progressLabel {
+  composes: progressLabel from "@/shared/styles/progressLabelSurfaces.module.css";
 }

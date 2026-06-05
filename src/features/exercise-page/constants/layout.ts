@@ -4,7 +4,7 @@
  * 2. Контентная панель при скролле поднимается поверх
  */
 
-export const HERO_TOP_OFFSET_PX = 60;
+export const HERO_TOP_OFFSET_PX = 16;
 
 /** Вертикальные зазоры: таймер ↔ видео и видео ↔ контентная панель */
 export const HERO_MEDIA_GAP_PX = 40;

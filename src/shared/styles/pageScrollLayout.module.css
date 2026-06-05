@@ -1,0 +1,3 @@
+.scrollInset {
+  padding-top: var(--scroll-top-clearance);
+}

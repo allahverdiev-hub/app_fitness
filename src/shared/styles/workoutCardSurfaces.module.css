@@ -1,0 +1,8 @@
+/* Фон карточек листинга упражнений (pending / completed) */
+.pending {
+  background: var(--color-workout-card);
+}
+
+.completed {
+  background: var(--color-workout-card-done);
+}

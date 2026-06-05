@@ -26,7 +26,7 @@
   top: 0;
   background: linear-gradient(
     180deg,
-    var(--wheel-fade-bg, var(--color-surface)) 0%,
+    var(--wheel-fade-bg, var(--sheet-popup-bg)) 0%,
     transparent 100%
   );
 }
@@ -35,7 +35,7 @@
   bottom: 0;
   background: linear-gradient(
     0deg,
-    var(--wheel-fade-bg, var(--color-surface)) 0%,
+    var(--wheel-fade-bg, var(--sheet-popup-bg)) 0%,
     transparent 100%
   );
 }

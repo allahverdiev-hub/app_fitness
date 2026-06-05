@@ -1,3 +1,10 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
 .card {
   display: flex;
   align-items: stretch;
@@ -7,18 +14,15 @@
 }
 
 .cardPending {
-  background: #242424;
+  composes: pending from "@/shared/styles/workoutCardSurfaces.module.css";
 }
 
 .cardCompleted {
-  background: #1d1d1d;
+  composes: completed from "@/shared/styles/workoutCardSurfaces.module.css";
   color: #868686;
 }
 
-.cardCompleted .title,
-.cardCompleted .subtitle,
-.cardCompleted .subtitleVolume,
-.cardCompleted .muscle {
+.cardCompleted .muscleLabel {
   color: #868686;
 }
 
@@ -95,35 +99,8 @@
   padding: 2px 0;
 }
 
-.title {
-  margin: 0;
-  font-size: var(--text-exercise-list-title-size);
-  font-weight: var(--text-exercise-list-title-weight);
-  line-height: var(--text-exercise-list-title-line-height);
-  letter-spacing: var(--text-exercise-list-title-letter-spacing);
-  text-transform: uppercase;
-  color: var(--color-text-primary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.subtitle {
-  margin: 0;
-  font-size: 12px;
-  line-height: 1.25;
-  color: var(--color-text-secondary);
-}
-
-.subtitleVolume {
-  color: var(--color-text-primary);
-}
-
-.muscle {
-  margin: 2px 0 0;
-  font-size: 12px;
-  line-height: 1.2;
-  color: var(--color-text-tertiary);
+.titleCompleted {
+  color: #868686;
 }
 
 .menuBtn {

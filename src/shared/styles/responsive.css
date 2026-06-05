@@ -12,7 +12,8 @@
   --bottom-bar-height: 128px;
   --scroll-extra-bottom: 48px;
   --scroll-bottom-padding: calc(
-    var(--bottom-bar-height) + var(--scroll-extra-bottom) + var(--safe-bottom)
+    var(--exercise-page-footer-bottom) + var(--bottom-bar-height) +
+      var(--scroll-extra-bottom)
   );
   --stop-btn-size: 44px;
   --btn-icon-size: 18px;

@@ -3,6 +3,8 @@ import { ActionPopup } from "@/shared/ui/ActionPopup";
 import { Level2ActionButton } from "@/shared/ui/ActionButton";
 import actionStyles from "@/shared/ui/ActionButton/ActionButton.module.css";
 import { getReplaceSuggestions } from "@/features/exercise-page/mocks/replaceSuggestions";
+import { WorkoutExerciseMuscleLabel } from "@/features/workout-list/components/WorkoutExerciseMuscleLabel";
+import { WorkoutExerciseTitle } from "@/features/workout-list/components/WorkoutExerciseTitle";
 import styles from "./ReplaceExerciseSheet.module.css";
 
 type ReplaceExerciseSheetProps = {
@@ -62,21 +64,27 @@ export function ReplaceExerciseSheet({
           {suggestions.map((item) => (
             <li key={item.id}>
               <label className={styles.card}>
-                <div className={styles.thumbWrap}>
-                  <img
-                    className={styles.thumb}
-                    src={item.thumbnailSrc}
-                    alt=""
-                    width={72}
-                    height={72}
-                    draggable={false}
-                  />
-                </div>
-                <div className={styles.body}>
-                  <span className={styles.title}>{item.title}</span>
-                  {item.muscleGroup ? (
-                    <span className={styles.muscle}>{item.muscleGroup}</span>
-                  ) : null}
+                <div className={styles.cardMain}>
+                  <div className={styles.thumbWrap}>
+                    <img
+                      className={styles.thumb}
+                      src={item.thumbnailSrc}
+                      alt=""
+                      width={72}
+                      height={72}
+                      draggable={false}
+                    />
+                  </div>
+                  <div className={styles.body}>
+                    <WorkoutExerciseTitle as="span">
+                      {item.title}
+                    </WorkoutExerciseTitle>
+                    {item.muscleGroup ? (
+                      <WorkoutExerciseMuscleLabel>
+                        {item.muscleGroup}
+                      </WorkoutExerciseMuscleLabel>
+                    ) : null}
+                  </div>
                 </div>
                 <input
                   type="radio"

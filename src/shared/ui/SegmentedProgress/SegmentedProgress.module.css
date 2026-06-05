@@ -24,24 +24,12 @@
   height: var(--segmented-progress-height-sm, 4px);
 }
 
-.variantDefault .segment {
-  background: var(--segmented-progress-pending, var(--color-surface-elevated));
-}
-
-.variantDefault .segmentDone {
-  background: var(--segmented-progress-done, var(--color-accent));
-}
-
+.variantDefault .segment,
 .variantProgram .segment {
-  background: var(
-    --segmented-progress-pending-program,
-    var(--program-segment-pending, var(--color-workout-card))
-  );
+  background: var(--segmented-progress-segment-pending);
 }
 
+.variantDefault .segmentDone,
 .variantProgram .segmentDone {
-  background: var(
-    --segmented-progress-done-program,
-    var(--program-accent, var(--color-accent))
-  );
+  background: var(--segmented-progress-segment-done);
 }

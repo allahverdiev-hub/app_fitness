@@ -18,11 +18,11 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 6px 10px 6px 6px;
+  gap: var(--space-xl);
+  padding: 6px 16px 6px 6px;
   border: none;
   border-radius: 16px;
-  background: #242424;
+  composes: pending from "@/shared/styles/workoutCardSurfaces.module.css";
   color: inherit;
   text-align: left;
   cursor: pointer;
@@ -31,6 +31,14 @@
 
 .card:active {
   opacity: 0.88;
+}
+
+.cardMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .thumbWrap {
@@ -58,24 +66,6 @@
   padding: 2px 0;
 }
 
-.title {
-  font-size: var(--text-exercise-list-title-size);
-  font-weight: var(--text-exercise-list-title-weight);
-  line-height: var(--text-exercise-list-title-line-height);
-  letter-spacing: var(--text-exercise-list-title-letter-spacing);
-  text-transform: uppercase;
-  color: var(--color-text-primary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.muscle {
-  font-size: 12px;
-  line-height: 1.2;
-  color: var(--color-text-tertiary);
-}
-
 .radio {
   flex-shrink: 0;
   align-self: center;
@@ -96,7 +86,7 @@
 .radio:checked {
   border-color: var(--color-accent);
   background-color: var(--color-accent);
-  box-shadow: inset 0 0 0 4px #242424;
+  box-shadow: inset 0 0 0 4px var(--sheet-popup-bg);
 }
 
 .actions {

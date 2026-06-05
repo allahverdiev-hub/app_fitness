@@ -20,7 +20,6 @@ import { getAddSetDefaults } from "@/features/exercise-page/utils/getAddSetDefau
 import { parseRestDuration } from "@/shared/lib/parseRestDuration";
 import type { DiaryLoad } from "@/features/exercise-page/mocks/diary";
 import type { AddSetFormValues, LoggedSet } from "@/features/exercise-page/types/set";
-import { HeaderNav } from "@/features/exercise-page/components/chrome/HeaderNav";
 import { TimerBar } from "@/features/exercise-page/components/chrome/TimerBar";
 import { ExerciseCarousel } from "@/features/exercise-page/components/carousel/ExerciseCarousel";
 import { ExerciseHeroStage } from "@/features/exercise-page/components/hero/ExerciseHeroStage";
@@ -54,7 +53,6 @@ type ExercisePageProps = {
   completedSetsById: Record<string, number>;
   onCompletedSetsChange: Dispatch<SetStateAction<Record<string, number>>>;
   onReplaceExercise: (targetId: string, suggestionId: string) => void;
-  onBack?: () => void;
 };
 
 export function ExercisePage({
@@ -64,7 +62,6 @@ export function ExercisePage({
   completedSetsById,
   onCompletedSetsChange,
   onReplaceExercise,
-  onBack,
 }: ExercisePageProps) {
   const bodyRef = useRef<HTMLDivElement>(null);
   const contentScrollRef = useRef<HTMLDivElement>(null);
@@ -316,7 +313,6 @@ export function ExercisePage({
           </section>
         </div>
 
-        <HeaderNav onBack={onBack} />
       </div>
       <BottomBar
         completedSets={completedSets}

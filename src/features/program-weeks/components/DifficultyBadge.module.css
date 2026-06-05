@@ -1,64 +1,17 @@
 .badge {
+  --program-week-difficulty-tone: var(--program-week-difficulty-color-medium);
 
-  display: inline-flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  padding: 4px 10px;
-
-  border: 1px solid var(--difficulty-color);
-
-  border-radius: var(--radius-pill);
-
-  background: rgba(0, 0, 0, 0.12);
-
-  backdrop-filter: blur(10px);
-
-  -webkit-backdrop-filter: blur(10px);
-
-  flex-shrink: 0;
-
+  composes: difficultyBadge from "@/shared/styles/programWeekDifficultyBadgeSurfaces.module.css";
 }
-
-
-
-.content {
-
-  display: inline-flex;
-
-  align-items: flex-end;
-
-  gap: var(--space-sm);
-
-}
-
-
 
 .label {
-
-  font-size: 10px;
-
-  font-weight: 500;
-
-  line-height: 1;
-
-  letter-spacing: 0.02em;
-
-  color: var(--difficulty-color);
-
-  text-transform: uppercase;
-
+  composes: difficultyBadgeLabel from "@/shared/styles/programWeekDifficultyBadgeSurfaces.module.css";
 }
 
-
+.iconWrap {
+  composes: difficultyBadgeIconWrap from "@/shared/styles/programWeekDifficultyBadgeSurfaces.module.css";
+}
 
 .icon {
-
-  flex-shrink: 0;
-
-  display: block;
-
+  composes: difficultyBadgeIcon from "@/shared/styles/programWeekDifficultyBadgeSurfaces.module.css";
 }
-

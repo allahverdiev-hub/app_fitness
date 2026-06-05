@@ -6,7 +6,7 @@ import {
   isExerciseFullyComplete,
 } from "@/features/exercise-page/utils/exerciseStatus";
 
-import { WorkoutListTopBar } from "@/features/workout-list/components/WorkoutListTopBar";
+import pageScrollLayoutStyles from "@/shared/styles/pageScrollLayout.module.css";
 import { WorkoutOverviewHeader } from "@/features/workout-list/components/WorkoutOverviewHeader";
 import { WorkoutExerciseList } from "@/features/workout-list/components/WorkoutExerciseList";
 import { WorkoutListActions } from "@/features/workout-list/components/WorkoutListActions";
@@ -22,7 +22,7 @@ import type { WorkoutListExerciseItem } from "@/features/workout-list/types/work
 import styles from "./WorkoutListPage.module.css";
 
 type WorkoutListPageProps = {
-  onBack?: () => void;
+  workoutTitle: string;
   workoutActive?: boolean;
   workoutElapsed?: string;
   workoutPaused?: boolean;
@@ -39,7 +39,7 @@ type WorkoutListPageProps = {
 };
 
 export function WorkoutListPage({
-  onBack,
+  workoutTitle,
   workoutActive = false,
   workoutElapsed = "0:00",
   workoutPaused = false,
@@ -54,7 +54,10 @@ export function WorkoutListPage({
   onReplaceExercise,
   onDeleteExercise,
 }: WorkoutListPageProps) {
-  const overview = mockWorkoutOverview;
+  const overview = useMemo(
+    () => ({ ...mockWorkoutOverview, title: workoutTitle }),
+    [workoutTitle],
+  );
   const baselineExercisesRef = useRef(exercisesFromParent);
 
   const [editing, setEditing] = useState(false);
@@ -177,24 +180,25 @@ export function WorkoutListPage({
 
   return (
     <div className={styles.page}>
-      <WorkoutListTopBar onBack={onBack} />
       <div className={styles.scroll}>
-        <WorkoutOverviewHeader overview={overviewWithProgress} />
-        <WorkoutExerciseList
-          exercises={exercisesWithProgress}
-          editing={editing}
-          dissolvingId={dissolvingId}
-          collapsingId={collapsingId}
-          onDissolveComplete={handleDissolveComplete}
-          onCollapseComplete={handleCollapseComplete}
-          onReorder={(next) => {
-            setExercises(next);
-            if (!editing) onExercisesChange?.(next);
-          }}
-          onOpenExercise={openExercise}
-          onMenu={setMenuExercise}
-          onAddExercise={handleAddExercise}
-        />
+        <div className={pageScrollLayoutStyles.scrollInset}>
+          <WorkoutOverviewHeader overview={overviewWithProgress} />
+          <WorkoutExerciseList
+            exercises={exercisesWithProgress}
+            editing={editing}
+            dissolvingId={dissolvingId}
+            collapsingId={collapsingId}
+            onDissolveComplete={handleDissolveComplete}
+            onCollapseComplete={handleCollapseComplete}
+            onReorder={(next) => {
+              setExercises(next);
+              if (!editing) onExercisesChange?.(next);
+            }}
+            onOpenExercise={openExercise}
+            onMenu={setMenuExercise}
+            onAddExercise={handleAddExercise}
+          />
+        </div>
       </div>
       <div className={styles.actions}>
         <WorkoutListActions

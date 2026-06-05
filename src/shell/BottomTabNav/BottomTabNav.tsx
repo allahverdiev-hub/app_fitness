@@ -19,10 +19,16 @@ const APP_TABS: readonly BottomTabNavItem<AppTabId>[] = [
 type AppBottomTabNavProps = {
   active: AppTabId;
   onChange: (tab: AppTabId) => void;
+  onReselect?: (tab: AppTabId) => void;
 };
 
-export function BottomTabNav({ active, onChange }: AppBottomTabNavProps) {
+export function BottomTabNav({ active, onChange, onReselect }: AppBottomTabNavProps) {
   return (
-    <BottomTabNavBase items={APP_TABS} active={active} onChange={onChange} />
+    <BottomTabNavBase
+      items={APP_TABS}
+      active={active}
+      onChange={onChange}
+      onReselect={onReselect}
+    />
   );
 }

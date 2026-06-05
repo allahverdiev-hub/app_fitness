@@ -1,0 +1,34 @@
+.plate {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 0;
+  min-width: 0;
+  padding: 6px;
+  border-radius: 16px;
+  box-sizing: border-box;
+  font-size: var(--workout-exercise-replaced-label-size);
+  font-weight: var(--workout-exercise-replaced-label-weight);
+  line-height: var(--workout-exercise-replaced-label-line-height);
+  color: var(--workout-exercise-replaced-label-color);
+}
+
+.platePending {
+  composes: pending from "@/shared/styles/workoutCardSurfaces.module.css";
+}
+
+.plateCompleted {
+  composes: completed from "@/shared/styles/workoutCardSurfaces.module.css";
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  color: inherit;
+}
+
+.text {
+  min-width: 0;
+  flex: 1;
+}

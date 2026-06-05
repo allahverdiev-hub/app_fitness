@@ -275,13 +275,17 @@ export function IconSignalBars({
   className,
   activeCount = 3,
   activeColor = "currentColor",
-}: IconProps & { activeCount?: 1 | 2 | 3; activeColor?: string }) {
+  inactiveColor = "rgba(255, 255, 255, 0.22)",
+}: IconProps & {
+  activeCount?: 1 | 2 | 3;
+  activeColor?: string;
+  inactiveColor?: string;
+}) {
   const bars = [
     { x: 1, h: 5 },
     { x: 6, h: 8 },
     { x: 11, h: 11 },
   ];
-  const inactive = "rgba(255, 255, 255, 0.22)";
 
   return (
     <svg
@@ -301,7 +305,7 @@ export function IconSignalBars({
           width={3.5}
           height={bar.h}
           rx={1}
-          fill={index < activeCount ? activeColor : inactive}
+          fill={index < activeCount ? activeColor : inactiveColor}
         />
       ))}
     </svg>

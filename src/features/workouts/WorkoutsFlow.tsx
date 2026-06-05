@@ -5,6 +5,7 @@ import { useWorkoutTimer } from "@/features/workouts/hooks/useWorkoutTimer";
 import {
   cloneWorkoutSessionExercises,
   mockWorkout,
+  mockWorkoutOverview,
   toExerciseItems,
   toListExerciseItems,
   buildWorkoutExerciseSetsById,
@@ -12,22 +13,40 @@ import {
 } from "@/features/workouts/mocks/workoutSession";
 import { applyExerciseDeletion } from "@/features/workouts/utils/deleteExercise";
 import { applyExerciseReplacement } from "@/features/workouts/utils/replaceExercise";
+import {
+  defaultProgramWorkoutId,
+  mockProgramOverview,
+} from "@/features/program-weeks/mocks/programWeeksMock";
 import { ProgramWeeksPage } from "@/features/program-weeks/ProgramWeeksPage";
+import { getProgramWorkoutTitleById } from "@/features/program-weeks/utils/programWorkoutLookup";
 import { WorkoutListPage } from "@/features/workout-list/WorkoutListPage";
 import type { WorkoutListExerciseItem } from "@/features/workout-list/types/workoutOverview";
 import {
   formatWorkoutElapsed,
   formatWorkoutElapsedCompact,
 } from "@/shared/lib/workoutElapsed";
+import { useTabPopSignal } from "@/shared/lib/tabStackNavigation";
 
 export type WorkoutsScreen = "program" | "list" | "exercise";
 
+export function popWorkoutsScreen(screen: WorkoutsScreen): WorkoutsScreen {
+  if (screen === "exercise") return "list";
+  if (screen === "list") return "program";
+  return screen;
+}
+
 type WorkoutsFlowProps = {
   onScreenChange?: (screen: WorkoutsScreen) => void;
+  /** Инкремент — сигнал «вернуться на уровень выше» (повторный тап по табу) */
+  popSignal?: number;
 };
 
-export function WorkoutsFlow({ onScreenChange }: WorkoutsFlowProps = {}) {
+export function WorkoutsFlow({
+  onScreenChange,
+  popSignal = 0,
+}: WorkoutsFlowProps = {}) {
   const [screen, setScreen] = useState<WorkoutsScreen>("program");
+  const [activeWorkoutId, setActiveWorkoutId] = useState(defaultProgramWorkoutId);
   const [exerciseId, setExerciseId] = useState(mockWorkout.activeExerciseId);
   const [workoutActive, setWorkoutActive] = useState(false);
   const [exerciseDefs, setExerciseDefs] = useState<WorkoutSessionExerciseDef[]>(
@@ -142,7 +161,17 @@ export function WorkoutsFlow({ onScreenChange }: WorkoutsFlowProps = {}) {
     onScreenChange?.(screen);
   }, [screen, onScreenChange]);
 
-  const openWorkoutList = useCallback(() => {
+  useTabPopSignal(popSignal, popWorkoutsScreen, setScreen);
+
+  const activeWorkoutTitle = useMemo(
+    () =>
+      getProgramWorkoutTitleById(mockProgramOverview, activeWorkoutId) ??
+      mockWorkoutOverview.title,
+    [activeWorkoutId],
+  );
+
+  const openWorkoutList = useCallback((workoutId: string) => {
+    setActiveWorkoutId(workoutId);
     setScreen("list");
   }, []);
 
@@ -155,7 +184,6 @@ export function WorkoutsFlow({ onScreenChange }: WorkoutsFlowProps = {}) {
         completedSetsById={completedSetsById}
         onCompletedSetsChange={setCompletedSetsById}
         onReplaceExercise={handleReplaceExercise}
-        onBack={() => setScreen("list")}
       />
     );
   }
@@ -173,7 +201,7 @@ export function WorkoutsFlow({ onScreenChange }: WorkoutsFlowProps = {}) {
 
   return (
     <WorkoutListPage
-      onBack={() => setScreen("program")}
+      workoutTitle={activeWorkoutTitle}
       workoutActive={workoutActive}
       workoutElapsed={workoutElapsed}
       workoutPaused={!isRunning}

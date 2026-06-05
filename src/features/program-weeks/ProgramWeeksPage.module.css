@@ -1,8 +1,7 @@
 .page {
-  --program-accent: #c4ff62;
-  --program-picker-bg: #1c1c1e;
-  --program-segment-pending: #242424;
+  --program-workout-progress-high: var(--program-accent);
   --program-ring-track: #2a2a2a;
+  --program-page-header-height: 108px;
 
   position: relative;
   display: flex;
@@ -12,6 +11,19 @@
   height: 100%;
   background: var(--color-bg);
   overflow: hidden;
+}
+
+.pickerSticky {
+  position: sticky;
+  top: var(--safe-top);
+  z-index: 44;
+  margin: 0 calc(-1 * var(--page-gutter)) var(--space-sm);
+  padding: 0 var(--page-gutter);
+  pointer-events: none;
+}
+
+.pickerSticky > * {
+  pointer-events: auto;
 }
 
 .scroll {
@@ -35,18 +47,8 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  padding: var(--space-md) var(--page-gutter)
+  padding: var(--page-top-inset) var(--page-gutter)
     calc(var(--program-weeks-bottom-inset) + var(--space-lg));
-}
-
-.intro {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.weekProgress {
-  margin-bottom: var(--workout-progress-gap);
 }
 
 .weeks {

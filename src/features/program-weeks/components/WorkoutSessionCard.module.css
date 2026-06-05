@@ -6,7 +6,7 @@
   padding: var(--space-lg);
   border: none;
   border-radius: 16px;
-  background: var(--color-workout-card);
+  composes: pending from "@/shared/styles/workoutCardSurfaces.module.css";
   color: var(--color-text-primary);
   text-align: left;
   cursor: pointer;
@@ -15,7 +15,7 @@
 }
 
 .cardDone {
-  background: var(--color-workout-card-done);
+  composes: completed from "@/shared/styles/workoutCardSurfaces.module.css";
 }
 
 .card:active {
@@ -49,19 +49,19 @@
 }
 
 .dayLabel {
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  line-height: 1;
-  color: var(--color-text-secondary);
+  font-size: var(--program-workout-day-label-size);
+  font-weight: var(--program-workout-day-label-weight);
+  line-height: var(--program-workout-day-label-line-height);
+  color: var(--program-workout-day-label-color);
 }
 
 .dayLabelPrimary {
-  font-size: var(--text-exercise-list-title-size);
-  font-weight: var(--text-exercise-list-title-weight);
-  line-height: var(--text-exercise-list-title-line-height);
-  letter-spacing: var(--text-exercise-list-title-letter-spacing);
+  font-size: var(--program-workout-day-label-primary-size);
+  font-weight: var(--program-workout-day-label-primary-weight);
+  line-height: var(--program-workout-day-label-primary-line-height);
+  letter-spacing: var(--program-workout-day-label-primary-letter-spacing);
   text-transform: uppercase;
-  color: var(--color-text-primary);
+  color: var(--program-workout-day-label-primary-color);
 }
 
 .bodyDone .title,

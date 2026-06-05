@@ -13,7 +13,11 @@ export function ProgramWeekSection({
   onOpenWorkout,
 }: ProgramWeekSectionProps) {
   return (
-    <section className={styles.section} aria-labelledby={`week-${week.id}`}>
+    <section
+      id={week.id}
+      className={styles.section}
+      aria-labelledby={`week-${week.id}`}
+    >
       <div className={styles.intro}>
         <div className={styles.header}>
           <h2 className={styles.title} id={`week-${week.id}`}>
@@ -28,7 +32,6 @@ export function ProgramWeekSection({
           <li key={workout.id}>
             <WorkoutSessionCard
               workout={workout}
-              difficulty={week.difficulty}
               onOpen={onOpenWorkout}
             />
           </li>

@@ -3,25 +3,23 @@
 ```
 src/
 ├── main.tsx
-├── app/                         # App, табы, WorkoutsFlow
-├── shell/                       # MobileFrame, StatusBar, BottomTabNav
+├── app/                         # App, табы, tabNavigation
+├── shell/                       # MobileFrame, BottomTabNav (обёртка), PlaceholderTabFlow
 ├── shared/
-│   ├── ui/                      # FloatingIsland, ActionPopup, bottom-sheet, …
+│   ├── ui/                      # ActionButton, BottomTabNav (базовый), ProgressOverview, …
 │   ├── icons/
-│   ├── styles/                  # global, tokens, responsive
-│   └── lib/                     # formatDuration, workoutElapsed, kinescope
+│   ├── styles/                  # global, tokens, frostedPlate, pageScrollLayout, …
+│   └── lib/                     # formatDuration, workoutElapsed, tabStackNavigation, …
 └── features/
-    ├── workouts/                # Навигация list ↔ exercise, таймер сессии
-    │   ├── WorkoutsFlow.tsx
-    │   ├── hooks/useWorkoutTimer.ts
-    │   └── mocks/workoutSession.ts   # Единый источник моков (листинг + карусель)
-    ├── workout-list/            # Листинг тренировки, drag-reorder, нижняя панель
-    └── exercise-page/           # Страница упражнения (карусель, подходы, sheet’ы)
-        ├── ExercisePage.tsx
-        ├── config/              # media, techniqueVideo
-        ├── mocks/               # descriptions, diary (данные сессии — в workouts/)
-        ├── types/, utils/, hooks/
-        └── components/          # bottom-bar, carousel, chart, add-set-sheet, …
+    ├── catalog/                 # Заглушка таба «Справочник»
+    ├── profile/                 # Заглушка таба «Профиль»
+    ├── workouts/                # Оркестратор таба «Тренировки»
+    │   ├── WorkoutsFlow.tsx     # Стек: program → list → exercise
+    │   ├── hooks/, mocks/, utils/
+    ├── program-weeks/           # Экран программы (недели, карточки)
+    ├── workout-list/            # Листинг упражнений
+    └── exercise-page/           # Страница упражнения
 ```
 
-Иконки и картинки: `public/icons/`, `public/media/`. Импорты: `@/` → `src/` (`vite.config.ts`).
+**Моки сессии:** `workouts/mocks/workoutSession.ts` — листинг и карусель.  
+**Импорты:** `@/` → `src/` (`vite.config.ts`).

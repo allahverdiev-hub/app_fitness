@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { formatWorkoutElapsed } from "@/shared/lib/workoutElapsed";
 
 export function useWorkoutTimer(initialSeconds = 0) {
   const [elapsedSeconds, setElapsedSeconds] = useState(initialSeconds);
@@ -29,7 +28,6 @@ export function useWorkoutTimer(initialSeconds = 0) {
 
   return {
     elapsedSeconds,
-    elapsed: formatWorkoutElapsed(elapsedSeconds),
     isRunning,
     toggleRunning,
     reset,
