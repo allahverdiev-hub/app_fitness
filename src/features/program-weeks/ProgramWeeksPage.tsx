@@ -10,6 +10,7 @@ import { ProgramWeekSection } from "@/features/program-weeks/components/ProgramW
 import {
   computeWeekWorkoutStats,
   enrichProgramOverview,
+  type EnrichedProgramWeek,
 } from "@/features/program-weeks/utils/workoutProgress";
 import { ProgressOverview } from "@/shared/ui/ProgressOverview";
 import styles from "./ProgramWeeksPage.module.css";
@@ -45,11 +46,11 @@ export function ProgramWeeksPage({
     [overview.weeks, activeWeekNumber],
   );
 
-  const visibleWeeks = useMemo(
-    () =>
-      overview.weeks.filter((week) => week.weekNumber === activeWeekNumber),
-    [overview.weeks, activeWeekNumber],
-  );
+  const visibleWeeks = useMemo((): EnrichedProgramWeek[] => {
+    return overview.weeks.filter(
+      (week) => week.weekNumber === activeWeekNumber,
+    );
+  }, [overview.weeks, activeWeekNumber]);
 
   return (
     <div className={styles.page}>

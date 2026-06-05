@@ -121,16 +121,18 @@ export function WorkoutsFlow({ onScreenChange }: WorkoutsFlowProps = {}) {
     (items: WorkoutListExerciseItem[]) => {
       setExerciseDefs((prev) => {
         const byId = Object.fromEntries(prev.map((def) => [def.id, def]));
-        return items
-          .map((item) => {
-            const def = byId[item.id];
-            if (!def) return null;
-            return {
-              ...def,
-              listSection: item.section,
-            };
-          })
-          .filter((def): def is WorkoutSessionExerciseDef => def != null);
+        return items.flatMap((item) => {
+          const def = byId[item.id];
+          if (!def) return [];
+
+          const next: WorkoutSessionExerciseDef = { ...def };
+          if (item.section !== undefined) {
+            next.listSection = item.section;
+          } else {
+            delete next.listSection;
+          }
+          return [next];
+        });
       });
     },
     [],

@@ -18,7 +18,7 @@ export type EnrichedProgramWeek = Omit<ProgramWeek, "workouts"> & {
   workouts: EnrichedProgramWorkoutSession[];
 };
 
-export type EnrichedProgramOverview = ProgramOverview & {
+export type EnrichedProgramOverview = Omit<ProgramOverview, "weeks"> & {
   weeks: EnrichedProgramWeek[];
 };
 
@@ -66,16 +66,18 @@ export function enrichProgramOverview(
   completedSetsById: Record<string, number>,
   setsByExerciseId: Record<string, number>,
 ): EnrichedProgramOverview {
-  const weeks = overview.weeks.map((week) => ({
+  const weeks: EnrichedProgramWeek[] = overview.weeks.map((week) => ({
     ...week,
-    workouts: week.workouts.map((workout) => ({
-      ...workout,
-      ...computeWorkoutSessionProgress(
-        sessionExerciseIds,
-        completedSetsById,
-        setsByExerciseId,
-      ),
-    })),
+    workouts: week.workouts.map(
+      (workout): EnrichedProgramWorkoutSession => ({
+        ...workout,
+        ...computeWorkoutSessionProgress(
+          sessionExerciseIds,
+          completedSetsById,
+          setsByExerciseId,
+        ),
+      }),
+    ),
   }));
 
   return {

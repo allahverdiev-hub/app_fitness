@@ -226,7 +226,9 @@ export function ExercisePage({
   }, [activeExerciseIndex, exercises, hasNextExercise, skipRest]);
 
   useEffect(() => {
-    setActiveId(initialExerciseId);
+    if (initialExerciseId !== undefined) {
+      setActiveId(initialExerciseId);
+    }
   }, [initialExerciseId]);
 
   useExercisePageLayout(

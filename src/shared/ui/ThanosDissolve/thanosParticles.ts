@@ -75,8 +75,8 @@ function sampleThumbParticles(
   container: HTMLElement,
   bleedX: number,
   bleedY: number,
-  width: number,
-  height: number,
+  _width: number,
+  _height: number,
   centerX: number,
   centerY: number,
 ): Particle[] {
@@ -142,7 +142,6 @@ function sampleBodyParticles(
 ): Particle[] {
   const particles: Particle[] = [];
   const canvasWidth = width + bleedX * 2;
-  const canvasHeight = height + bleedY * 2;
 
   for (let y = bleedY; y < bleedY + height; y += BODY_GRID_STEP) {
     for (let x = bleedX; x < bleedX + width; x += BODY_GRID_STEP) {
