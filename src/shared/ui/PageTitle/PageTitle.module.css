@@ -1,0 +1,9 @@
+.title {
+  margin: 0 0 var(--page-title-gap-below);
+  font-size: var(--page-title-size);
+  font-weight: var(--page-title-weight);
+  line-height: var(--page-title-line-height);
+  letter-spacing: var(--page-title-letter-spacing);
+  color: var(--color-text-primary);
+  word-wrap: break-word;
+}

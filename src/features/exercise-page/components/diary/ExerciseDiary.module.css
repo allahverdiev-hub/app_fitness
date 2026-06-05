@@ -1,0 +1,104 @@
+.section {
+  padding: 0 var(--page-gutter);
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.sessions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.sessionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.sessionDate {
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.intensity {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.intensityLabel {
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.setList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.setCard {
+  padding: 14px var(--space-lg);
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+}
+
+.setRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-height: 22px;
+}
+
+.setNumber {
+  flex-shrink: 0;
+  width: 14px;
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  text-align: center;
+}
+
+.setLine {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.menuBtn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin: -4px -6px -4px 0;
+  color: var(--color-text-secondary);
+}
+
+.menuBtn:active {
+  opacity: 0.75;
+}
+
+.setNote {
+  margin: var(--space-md) 0 0;
+  padding-left: calc(14px + var(--space-md));
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--color-text-secondary);
+}

@@ -1,0 +1,18 @@
+.block {
+  padding: 0 var(--page-gutter);
+  margin-bottom: var(--space-2xl);
+}
+
+.volume {
+  margin: 0 0 4px;
+  font-size: 15px;
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.muscles {
+  margin: 0;
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}

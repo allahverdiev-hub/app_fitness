@@ -1,0 +1,14 @@
+.island {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: var(--radius-pill);
+  background: var(--floating-island-bg);
+  box-shadow: var(--floating-island-shadow);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--bottom-bar-gap);
+  padding: var(--floating-island-padding);
+}

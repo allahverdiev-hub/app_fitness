@@ -1,0 +1,47 @@
+.block {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0 var(--page-gutter) 20px;
+}
+
+.meta {
+  margin: 0 0 var(--space-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--color-text-secondary);
+}
+
+.metaDot {
+  opacity: 0.85;
+}
+
+.hint {
+  margin: 0 0 34px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--color-text-secondary);
+}
+
+.progressBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.progressLabel {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--color-text-primary);
+}

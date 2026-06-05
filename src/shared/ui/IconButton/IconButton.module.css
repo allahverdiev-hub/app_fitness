@@ -1,0 +1,39 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+  transition: opacity 0.15s ease;
+}
+
+.btn svg {
+  width: var(--btn-icon-size);
+  height: var(--btn-icon-size);
+  flex-shrink: 0;
+}
+
+.btn:active {
+  opacity: 0.7;
+}
+
+.ghost {
+  width: 36px;
+  height: 36px;
+}
+
+.capsule {
+  height: 36px;
+  padding: 0 12px;
+  gap: 6px;
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.circle {
+  width: 32px;
+  height: 32px;
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-pill);
+}

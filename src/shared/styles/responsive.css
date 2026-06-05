@@ -1,0 +1,85 @@
+/* Базовые layout-переменные (мобильный first) */
+:root {
+  --page-gutter: 16px;
+  --viewport-pad-x: 0px;
+  --viewport-pad-y: 0px;
+  --app-max-width: 100%;
+  --app-radius: 0;
+  --app-shadow: none;
+  --thumb-size: 76px;
+  --hero-max-height: min(32dvh, 260px);
+  --page-title-size: 18px;
+  --bottom-bar-height: 128px;
+  --scroll-extra-bottom: 48px;
+  --scroll-bottom-padding: calc(
+    var(--bottom-bar-height) + var(--scroll-extra-bottom) + var(--safe-bottom)
+  );
+  --stop-btn-size: 44px;
+  --btn-icon-size: 18px;
+  --stop-icon-size: 18px;
+}
+
+/* Узкие телефоны */
+@media (max-width: 379px) {
+  :root {
+    --page-gutter: 12px;
+    --thumb-size: 68px;
+    --hero-max-height: min(17dvh, 120px);
+    --page-title-size: 18px;
+    --bottom-bar-height: 118px;
+    --scroll-extra-bottom: 40px;
+    --font-size-md: 14px;
+    --font-size-lg: 16px;
+  }
+}
+
+/* Крупные телефоны */
+@media (min-width: 430px) and (max-width: 767px) {
+  :root {
+    --page-gutter: 20px;
+    --thumb-size: 80px;
+    --hero-max-height: min(20dvh, 150px);
+  }
+}
+
+/* Планшет и десктоп — «рамка телефона» по центру */
+@media (min-width: 768px) {
+  :root {
+    --viewport-pad-x: 24px;
+    --viewport-pad-y: 24px;
+    --app-max-width: 390px;
+    --app-radius: 40px;
+    --app-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+    --hero-max-height: 300px;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --viewport-pad-x: 32px;
+    --viewport-pad-y: 32px;
+  }
+}
+
+/* Альбомная ориентация — компактнее по вертикали */
+@media (max-height: 520px) and (orientation: landscape) {
+  :root {
+    --hero-max-height: min(16dvh, 100px);
+    --bottom-bar-height: 108px;
+    --scroll-extra-bottom: 32px;
+    --page-title-size: 18px;
+    --thumb-size: 64px;
+    --stop-btn-size: 40px;
+    --stop-icon-size: 18px;
+    --page-gutter: 14px;
+  }
+}
+
+/* Низкие экраны в портрете */
+@media (max-height: 700px) and (orientation: portrait) {
+  :root {
+    --hero-max-height: min(18dvh, 130px);
+    --bottom-bar-height: 120px;
+    --scroll-extra-bottom: 40px;
+  }
+}

@@ -1,0 +1,150 @@
+.page {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  overflow: hidden;
+}
+.body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  isolation: isolate;
+  --hero-dim-progress: 0;
+  background: color-mix(
+    in srgb,
+    var(--color-bg) calc(var(--hero-dim-progress) * 100%),
+    var(--hero-stage-bg)
+  );
+}
+
+/* Зона 1: белый фон на всю высоту страницы (под контентом) */
+.mediaZone {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--hero-stage-bg);
+  pointer-events: none;
+}
+
+.mediaZone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: var(--color-bg);
+  opacity: var(--hero-dim-progress, 0);
+  pointer-events: none;
+}
+
+/* Контейнер миниатюр + hero — только верхняя часть зоны 1 */
+.mediaContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: var(--hero-top-offset, 60px);
+  pointer-events: none;
+}
+
+.mediaContent > * {
+  pointer-events: auto;
+}
+
+.timerInMedia {
+  flex-shrink: 0;
+  z-index: 1;
+  margin-bottom: var(--timer-to-hero-gap, 60px);
+  --timer-hero-label-color: color-mix(
+    in srgb,
+    var(--color-text-secondary) calc(var(--hero-dim-progress, 0) * 100%),
+    #636366
+  );
+  --timer-hero-time-color: color-mix(
+    in srgb,
+    var(--color-text-primary) calc(var(--hero-dim-progress, 0) * 100%),
+    #1c1c1e
+  );
+  --timer-hero-divider: color-mix(
+    in srgb,
+    var(--color-divider) calc(var(--hero-dim-progress, 0) * 100%),
+    #c7c7cc
+  );
+}
+
+.mediaHero {
+  flex-shrink: 0;
+  margin-bottom: var(--hero-bottom-gap, 60px);
+}
+
+/* Зона 2: контент поверх media при скролле, без боковых отступов */
+.contentScroll {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  scroll-padding-bottom: var(--scroll-bottom-padding);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  transform: translateZ(0);
+}
+
+.contentScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.contentScrollSpacer {
+  height: var(--content-scroll-spacer, 0px);
+  min-height: 0;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.contentSheet {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100% + var(--content-sheet-overlap, 0px));
+  padding-bottom: var(--scroll-bottom-padding);
+  background: var(--color-bg);
+  border-radius: var(--content-sheet-radius, var(--sheet-top-radius))
+    var(--content-sheet-radius, var(--sheet-top-radius)) 0 0;
+  overflow: hidden;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.35);
+  isolation: isolate;
+}
+
+.contentSheetHandle {
+  width: 40px;
+  height: 4px;
+  margin: 10px auto 4px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  flex-shrink: 0;
+}
+
+.contentSheetBody {
+  padding-top: var(--space-xs);
+}
+
+.thumbsAboveTitle {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: var(--space-lg);
+}
+
+.thumbsAboveTitle > div {
+  margin-bottom: 0;
+  width: 100%;
+}

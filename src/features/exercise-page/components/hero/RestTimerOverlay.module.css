@@ -1,0 +1,169 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.phaseExit {
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+}
+
+.glow {
+  position: absolute;
+  width: clamp(200px, 52vw, 320px);
+  height: clamp(200px, 52vw, 320px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(255, 255, 255, 0.65) 28%,
+    rgba(255, 255, 255, 0.22) 52%,
+    rgba(255, 255, 255, 0) 72%
+  );
+  filter: blur(28px);
+  transform: scale(1.15);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+}
+
+.time {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(56px, 20vw, 120px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: #000000;
+  font-family: inherit;
+  opacity: 0;
+}
+
+.phaseShown .glow,
+.phaseShown .time {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.phaseShown .glow {
+  transform: scale(1.15);
+}
+
+.phaseEnter .glow {
+  animation: restGlowIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.phaseEnter .time {
+  animation: restTimeIn 0.42s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+
+.phaseExit .glow {
+  animation: restGlowOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.phaseExit .time {
+  animation: restTimeOut 0.36s cubic-bezier(0.4, 0, 0.2, 1) 0.04s forwards;
+}
+
+.overlay:active .time {
+  opacity: 0.75;
+}
+
+.phaseExit:active .time {
+  opacity: inherit;
+}
+
+@keyframes restGlowIn {
+  from {
+    opacity: 0;
+    transform: scale(0.78);
+    filter: blur(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.15);
+    filter: blur(28px);
+  }
+}
+
+@keyframes restTimeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes restGlowOut {
+  from {
+    opacity: 1;
+    transform: scale(1.15);
+    filter: blur(28px);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.88);
+    filter: blur(40px);
+  }
+}
+
+@keyframes restTimeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phaseEnter .glow,
+  .phaseEnter .time,
+  .phaseExit .glow,
+  .phaseExit .time {
+    animation: none;
+  }
+
+  .phaseEnter .glow,
+  .phaseEnter .time,
+  .phaseShown .glow,
+  .phaseShown .time {
+    opacity: 1;
+  }
+
+  .phaseExit .glow,
+  .phaseExit .time {
+    opacity: 0;
+  }
+
+  .phaseShown .glow {
+    transform: scale(1.15);
+  }
+}

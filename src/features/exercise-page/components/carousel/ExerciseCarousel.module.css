@@ -1,0 +1,33 @@
+.wrap {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--page-gutter);
+  margin-bottom: var(--space-lg);
+}
+
+.wrap::-webkit-scrollbar {
+  display: none;
+}
+
+.track {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: var(--space-xs) var(--page-gutter);
+  min-width: min-content;
+}
+
+.track > * {
+  scroll-snap-align: center;
+  flex-shrink: 0;
+}

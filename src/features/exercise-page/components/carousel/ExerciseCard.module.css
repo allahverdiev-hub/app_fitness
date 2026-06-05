@@ -1,0 +1,150 @@
+.card {
+  flex: 0 0 var(--thumb-shell-size);
+  width: var(--thumb-shell-size);
+  height: var(--thumb-shell-size);
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid transparent;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0;
+  cursor: pointer;
+}
+
+.cardNoRing {
+  flex-basis: var(--thumb-size);
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+}
+
+.thumbShell {
+  position: relative;
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.setRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--thumb-size) + var(--thumb-set-ring-offset));
+  height: calc(var(--thumb-size) + var(--thumb-set-ring-offset));
+  overflow: visible;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.segmentDone,
+.segmentPending {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.segmentDone {
+  stroke: var(--thumb-set-done);
+}
+
+.segmentPending {
+  stroke: var(--thumb-set-pending);
+}
+
+.thumbInner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+}
+
+.thumbImg,
+.thumbImgDone {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.thumbImg {
+  opacity: 0.55;
+}
+
+.card.active .thumbImg {
+  opacity: 1;
+}
+
+.thumbImgDone {
+  opacity: 0.2;
+  filter: grayscale(1);
+}
+
+.card.active .thumbImgDone {
+  opacity: 1;
+  filter: none;
+}
+
+/* Галочка → расширение зелёной подложки → бордер как у сегментов подходов */
+.doneBadge {
+  --done-morph-duration: 520ms;
+  --done-morph-ease: cubic-bezier(0.33, 1, 0.45, 1);
+  --done-badge-inset: 28%;
+
+  position: absolute;
+  z-index: 2;
+  inset: var(--done-badge-inset);
+  border-radius: 50%;
+  box-sizing: border-box;
+  background: var(--color-accent);
+  border: 0 solid var(--thumb-set-done);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    inset var(--done-morph-duration) var(--done-morph-ease),
+    background-color calc(var(--done-morph-duration) * 0.55)
+      calc(var(--done-morph-duration) * 0.38) var(--done-morph-ease),
+    border-width calc(var(--done-morph-duration) * 0.45)
+      calc(var(--done-morph-duration) * 0.44) ease;
+}
+
+.doneIcon {
+  color: var(--color-accent-on);
+  flex-shrink: 0;
+  transition:
+    opacity calc(var(--done-morph-duration) * 0.35) ease,
+    transform calc(var(--done-morph-duration) * 0.4) var(--done-morph-ease);
+}
+
+.card.active .doneBadge {
+  inset: calc(-1 * (var(--thumb-set-gap) + var(--thumb-set-segment-width)));
+  background: transparent;
+  border-width: var(--thumb-set-segment-width);
+}
+
+.card.active .doneIcon {
+  opacity: 0;
+  transform: scale(0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doneBadge,
+  .doneIcon {
+    transition: none;
+  }
+
+  .card.active .doneIcon {
+    opacity: 0;
+    transform: none;
+  }
+}

@@ -1,0 +1,14 @@
+.stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: transparent;
+  pointer-events: none;
+}
+
+.hero {
+  flex-shrink: 0;
+  width: 100%;
+  pointer-events: auto;
+}

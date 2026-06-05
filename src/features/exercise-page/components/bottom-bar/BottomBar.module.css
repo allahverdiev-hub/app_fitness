@@ -1,0 +1,239 @@
+.footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--exercise-page-footer-bottom);
+  z-index: 20;
+  padding: 0 var(--page-gutter);
+  background: none;
+  box-shadow: none;
+  pointer-events: none;
+  isolation: isolate;
+}
+
+.footer > * {
+  pointer-events: auto;
+  width: 100%;
+}
+
+.island {
+  flex-shrink: 0;
+}
+
+.islandStack {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--bottom-bar-gap);
+}
+
+.finishWorkout {
+  animation: finishWorkoutIn 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes finishWorkoutIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.timerBtn {
+  position: relative;
+  z-index: 1;
+  width: var(--bottom-bar-control-height);
+  height: var(--bottom-bar-control-height);
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+}
+
+.timerIcon {
+  width: var(--btn-icon-size);
+  height: var(--btn-icon-size);
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.timerBtnActive {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-primary);
+}
+
+.restCountdown {
+  font-size: clamp(11px, 2.8vw, 13px);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.addSetRow {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
+}
+
+.addSetCluster {
+  --next-drop-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --next-drop-duration: 0.72s;
+  --next-travel: calc(
+    var(--bottom-bar-control-height) + var(--bottom-bar-gap)
+  );
+
+  position: relative;
+  width: 100%;
+  min-height: var(--bottom-bar-control-height);
+}
+
+.addSet {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-width: 0;
+  transition: width var(--next-drop-duration) var(--next-drop-ease);
+}
+
+.addSetClusterSplit .addSet {
+  width: calc(100% - var(--bottom-bar-control-height) - var(--bottom-bar-gap));
+  transition-timing-function: var(--next-drop-ease);
+  transition-duration: var(--next-drop-duration);
+}
+
+.nextExercise {
+  position: absolute;
+  top: 0;
+  left: calc(100% - var(--action-control-height));
+  opacity: 0;
+  transform: translateX(calc(-0.92 * var(--next-travel))) scale(0);
+  transform-origin: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+  will-change: transform, opacity;
+}
+
+.nextExerciseIcon {
+  flex-shrink: 0;
+}
+
+.addSetClusterSplit .nextExercise {
+  animation: nextDropDetach var(--next-drop-duration) var(--next-drop-ease) forwards;
+  pointer-events: auto;
+}
+
+.addSetClusterSplit .nextExerciseIcon {
+  animation: nextDropIcon var(--next-drop-duration) var(--next-drop-ease) forwards;
+}
+
+@keyframes nextDropDetach {
+  0% {
+    transform: translateX(calc(-0.92 * var(--next-travel))) scale(0);
+    opacity: 0;
+  }
+
+  40% {
+    transform: translateX(calc(-0.9 * var(--bottom-bar-control-height))) scale(0.82);
+    opacity: 1;
+  }
+
+  62% {
+    transform: translateX(calc(-0.88 * var(--bottom-bar-control-height))) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes nextDropIcon {
+  0%,
+  52% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.nextExercise:active {
+  opacity: 0.88;
+}
+
+.addSetClusterSplit .nextExercise:active {
+  transform: translateX(0) scale(0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .addSet {
+    transition: none;
+  }
+
+  .addSetClusterSplit .addSet {
+    width: calc(100% - var(--bottom-bar-control-height) - var(--bottom-bar-gap));
+  }
+
+  .addSetClusterSplit .nextExercise {
+    animation: none;
+    transform: translateX(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .addSetClusterSplit .nextExerciseIcon {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.addSetLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.addSetBusy {
+  cursor: wait;
+}
+
+.addSetBusy:disabled {
+  opacity: 1;
+}
+
+.addSetSpinner {
+  width: 22px;
+  height: 22px;
+  border: 2.5px solid rgba(0, 0, 0, 0.12);
+  border-top-color: #000000;
+  border-radius: 50%;
+  animation: addSetSpin 0.65s linear infinite;
+}
+
+@keyframes addSetSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .finishWorkout {
+    animation: none;
+  }
+}

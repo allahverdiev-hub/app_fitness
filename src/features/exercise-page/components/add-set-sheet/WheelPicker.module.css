@@ -1,0 +1,95 @@
+.wheel {
+  --wheel-item-font-size: 22px;
+  --wheel-digit-count: 3;
+  --wheel-highlight-width: calc(var(--wheel-digit-count) * 1ch + 24px);
+
+  position: relative;
+  width: 100%;
+  min-width: var(--wheel-highlight-width);
+  height: var(--wheel-height, 220px);
+  overflow: hidden;
+  isolation: isolate;
+  font-size: var(--wheel-item-font-size);
+}
+
+.fadeTop,
+.fadeBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: var(--edge-pad, 88px);
+  pointer-events: none;
+}
+
+.fadeTop {
+  top: 0;
+  background: linear-gradient(
+    180deg,
+    var(--wheel-fade-bg, var(--color-surface)) 0%,
+    transparent 100%
+  );
+}
+
+.fadeBottom {
+  bottom: 0;
+  background: linear-gradient(
+    0deg,
+    var(--wheel-fade-bg, var(--color-surface)) 0%,
+    transparent 100%
+  );
+}
+
+.highlight {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: var(--wheel-highlight-width);
+  height: 44px;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--wheel-highlight-border, var(--color-divider));
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.list {
+  position: relative;
+  z-index: 0;
+  height: 100%;
+  margin: 0;
+  padding: var(--edge-pad, 88px) 0;
+  list-style: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 44px;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  font-size: var(--wheel-item-font-size);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  opacity: 0.38;
+  transition: opacity 0.12s ease, color 0.12s ease;
+}
+
+.itemActive {
+  color: var(--color-text-primary);
+  font-weight: 600;
+  opacity: 1;
+}

@@ -1,0 +1,181 @@
+/* Кнопки 2-го уровня (Техника, Заменить) + нижние действия (primary / muted / bar-secondary) */
+
+.level2 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--action-level2-gap);
+  min-width: 0;
+  height: var(--action-level2-height);
+  padding: 0 var(--action-level2-padding-x);
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-elevated);
+  color: var(--color-text-primary);
+  font-size: var(--action-level2-font-size);
+  font-weight: var(--action-level2-font-weight);
+  line-height: var(--action-level2-line-height);
+  letter-spacing: var(--action-level2-letter-spacing);
+  text-transform: uppercase;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.level2Grow {
+  flex: 1;
+}
+
+.level2Block {
+  width: 100%;
+}
+
+.level2Label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.level2 svg {
+  width: var(--btn-icon-size);
+  height: var(--btn-icon-size);
+  flex-shrink: 0;
+}
+
+.level2:active {
+  opacity: 0.75;
+}
+
+.level2Danger {
+  color: #ff453a;
+}
+
+.level2Danger svg {
+  color: #ff453a;
+}
+
+/* Нижние действия: серая иконка (muted) + белая капсула (primary) + серая капсула (bar-secondary) */
+
+.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: var(--action-control-height);
+  padding: 0 14px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-btn-bg);
+  color: var(--color-primary-btn-text);
+  font-size: var(--action-label-size);
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.primary:active:not(:disabled) {
+  opacity: 0.85;
+  transform: scale(0.98);
+}
+
+.primary:disabled {
+  cursor: wait;
+}
+
+.mutedIcon {
+  flex-shrink: 0;
+  width: var(--action-control-height);
+  height: var(--action-control-height);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.mutedIcon:active {
+  opacity: 0.85;
+}
+
+.mutedIcon svg {
+  width: var(--btn-icon-size);
+  height: var(--btn-icon-size);
+  flex-shrink: 0;
+}
+
+.secondary {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--action-control-height);
+  padding: 0 14px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-elevated);
+  color: var(--color-text-primary);
+  font-size: var(--action-label-size);
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.secondary:active {
+  opacity: 0.88;
+  transform: scale(0.98);
+}
+
+.primaryCircle {
+  flex-shrink: 0;
+  width: var(--action-control-height);
+  height: var(--action-control-height);
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-primary-btn-bg);
+  color: var(--color-primary-btn-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.primaryCircle:active {
+  opacity: 0.88;
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .primary,
+  .mutedIcon,
+  .secondary,
+  .primaryCircle {
+    height: 48px;
+  }
+
+  .mutedIcon,
+  .primaryCircle {
+    width: 48px;
+  }
+}
+
+@media (max-width: 379px) {
+  .primary,
+  .mutedIcon,
+  .secondary,
+  .primaryCircle {
+    height: 52px;
+  }
+
+  .mutedIcon,
+  .primaryCircle {
+    width: 52px;
+  }
+}

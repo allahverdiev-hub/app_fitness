@@ -1,0 +1,76 @@
+.root {
+  --action-popup-duration: 420ms;
+  --action-popup-backdrop-duration: 370ms;
+  --action-popup-ease-open: cubic-bezier(0.22, 1, 0.36, 1);
+  --action-popup-ease-close: cubic-bezier(0.4, 0, 0.2, 1);
+
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.rootShown {
+  pointer-events: auto;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.52);
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity var(--action-popup-backdrop-duration)
+    var(--action-popup-ease-close);
+}
+
+.rootShown .backdrop {
+  opacity: 1;
+  transition: opacity var(--action-popup-backdrop-duration)
+    var(--action-popup-ease-open);
+}
+
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: var(--space-md) var(--page-gutter)
+    calc(var(--space-lg) + var(--safe-bottom));
+  background: var(--color-surface);
+  border-radius: var(--sheet-popup-top-radius) var(--sheet-popup-top-radius) 0 0;
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.45);
+  transform: translate3d(0, 100%, 0);
+  transition: transform var(--action-popup-duration) var(--action-popup-ease-close);
+  backface-visibility: hidden;
+}
+
+.rootShown .sheet {
+  transform: translate3d(0, 0, 0);
+  transition: transform var(--action-popup-duration) var(--action-popup-ease-open);
+}
+
+.body {
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .sheet {
+    transition: none;
+  }
+
+  .backdrop {
+    opacity: 1;
+  }
+
+  .rootShown .sheet,
+  .sheet {
+    transform: translate3d(0, 0, 0);
+  }
+}

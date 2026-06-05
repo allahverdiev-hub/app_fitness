@@ -1,0 +1,155 @@
+:root {
+  --color-bg: #000000;
+  --color-surface: #1c1c1e;
+  --color-surface-elevated: #252527;
+  --color-surface-muted: #323234;
+  --color-accent: #d4ff00;
+  --color-accent-on: #000000;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #8e8e93;
+  --color-text-tertiary: #636366;
+  --color-divider: #38383a;
+  --color-primary-btn-bg: #ffffff;
+  --color-primary-btn-text: #000000;
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --radius-card: 14px;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-2xl: 24px;
+
+  --font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-md: 15px;
+  --font-size-lg: 17px;
+  --font-size-xl: 22px;
+  --font-size-2xl: 26px;
+
+  --page-title-size: 18px;
+  --page-title-weight: 600;
+  --page-title-line-height: 1.12;
+  --page-title-letter-spacing: -0.03em;
+  --page-title-gap-below: 6px;
+
+  --phone-width: 390px;
+  --phone-height: 844px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  --bottom-bar-height: 128px;
+  /* Figma: подложка таймер + «добавить подход» */
+  --bottom-bar-max-width: 355px;
+  --bottom-bar-min-height: 72px;
+  --bottom-bar-padding: 8px;
+  --bottom-bar-gap: 8px;
+  --bottom-bar-radius: 999px;
+  --bottom-bar-fill: rgba(44, 44, 46, 0.28);
+  --bottom-bar-blur: 56px;
+  --bottom-bar-scrim-top: rgba(0, 0, 0, 0);
+  --bottom-bar-scrim-mid: rgba(8, 8, 10, 0.82);
+  --bottom-bar-scrim-bottom: rgba(0, 0, 0, 0.97);
+  --bottom-bar-footer-blur: 24px;
+  --bottom-bar-border-from: #3a3a3c;
+  --bottom-bar-control-height: 56px;
+
+  /* Названия упражнений в листинге; тот же стиль — кнопки 2-го уровня */
+  --text-exercise-list-title-size: 13px;
+  --text-exercise-list-title-weight: 600;
+  --text-exercise-list-title-line-height: 1.2;
+  --text-exercise-list-title-letter-spacing: 0.02em;
+
+  /* Кнопки 2-го уровня: Техника, Заменить, пункты action-popup */
+  --action-level2-height: 46px;
+  --action-level2-font-size: var(--text-exercise-list-title-size);
+  --action-level2-font-weight: var(--text-exercise-list-title-weight);
+  --action-level2-line-height: var(--text-exercise-list-title-line-height);
+  --action-level2-letter-spacing: var(--text-exercise-list-title-letter-spacing);
+  --action-level2-gap: 6px;
+  --action-level2-padding-x: 12px;
+
+  /* Нижние действия (дизайн-система ActionButton) */
+  --action-control-height: var(--bottom-bar-control-height);
+  --action-label-size: clamp(12px, 3.2vw, 14px);
+
+  /* Высота шапки с кнопкой «Назад» (для отступа скролла) */
+  --header-nav-height: 52px;
+  /* Зазор под шапкой, чтобы была видна плашка таймера */
+  --scroll-top-gap: 12px;
+  --scroll-top-clearance: calc(var(--header-nav-height) + var(--scroll-top-gap));
+
+  /* Hero + выезжающая панель (паттерн как в Самокате) */
+  --hero-stage-bg: #ffffff;
+  --timer-hero-label-color: #636366;
+  --timer-hero-time-color: #1c1c1e;
+  --timer-hero-divider: #c7c7cc;
+  --chrome-nav-fill-hero: #f0f0f3;
+  --chrome-nav-content-hero: #48484a;
+  --chrome-nav-divider-hero: #c7c7cc;
+  --thumb-border: #d1d1d6;
+  --thumb-set-gap: 4px;
+  --thumb-set-segment-width: 3px;
+  --thumb-set-ring-offset: calc(
+    2 * (var(--thumb-set-gap) + var(--thumb-set-segment-width))
+  );
+  --thumb-shell-size: calc(var(--thumb-size) + var(--thumb-set-ring-offset));
+  --thumb-set-done: var(--color-accent);
+  --thumb-set-pending: #48484a;
+  --hero-media-aspect-ratio: 4 / 3;
+  --hero-top-offset: 60px;
+  --hero-bottom-gap: 60px;
+  --content-scroll-spacer: 100%;
+  --content-sheet-overlap: 0px;
+  --sheet-top-radius: 28px;
+  --content-sheet-radius: 28px;
+  --sheet-popup-top-radius: 22px;
+  --sheet-popup-top-gap: 8px;
+
+  --btn-icon-size: 18px;
+
+  /* Шапка поп-ап / bottom sheet (SheetPopupHeader) */
+  --action-popup-title-size: 15px;
+  --action-popup-title-weight: 600;
+  --action-popup-close-size: 32px;
+  --sheet-popup-header-gap-below: var(--space-md);
+
+  /* Плавающие островки (таб-бар, панели действий) */
+  --floating-island-bg: #1c1c1e;
+  --floating-island-shadow: 0 8px 28px rgba(0, 0, 0, 0.42);
+  --floating-island-padding: 8px;
+  --floating-island-inset-bottom: 12px;
+  --floating-island-gap: 6px;
+
+  --tab-nav-inactive: #868686;
+  --tab-nav-island-height: 52px;
+  /* Внешняя высота капсулы таб-бара (контент + вертикальный padding островка) */
+  --tab-nav-island-outer-height: calc(
+    var(--tab-nav-island-height) + 2 * var(--floating-island-padding)
+  );
+  /* От низа экрана до верхнего края таб-островка */
+  --tab-nav-island-clearance: calc(
+    var(--floating-island-inset-bottom) + var(--tab-nav-island-outer-height)
+  );
+  /* Страница упражнения: без таб-бара, нижняя панель у края экрана */
+  --exercise-page-footer-bottom: var(--floating-island-inset-bottom);
+
+  --workout-actions-island-height: calc(
+    var(--action-control-height) + 2 * var(--floating-island-padding)
+  );
+  --workout-actions-island-gap: var(--floating-island-gap);
+  /* Низ панели действий: над таб-баром + зазор между островками */
+  --workout-actions-bottom: calc(
+    var(--tab-nav-island-clearance) + var(--workout-actions-island-gap)
+  );
+  --workout-list-bottom-inset: calc(
+    var(--workout-actions-bottom) + var(--workout-actions-island-height)
+  );
+}

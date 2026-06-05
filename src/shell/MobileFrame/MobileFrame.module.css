@@ -1,0 +1,53 @@
+.viewport {
+  min-height: 100dvh;
+  min-height: 100svh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: var(--viewport-pad-y) var(--viewport-pad-x);
+  padding-top: max(var(--viewport-pad-y), var(--safe-top));
+  padding-bottom: max(var(--viewport-pad-y), var(--safe-bottom));
+  background: #0a0a0a;
+}
+
+.phone {
+  width: 100%;
+  max-width: var(--app-max-width);
+  height: 100%;
+  min-height: 0;
+  max-height: 100dvh;
+  max-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  border-radius: var(--app-radius);
+  overflow: hidden;
+  box-shadow: var(--app-shadow);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .viewport {
+    align-items: center;
+  }
+
+  .phone {
+    width: var(--phone-width);
+    height: min(100svh, var(--phone-height));
+    max-height: min(92svh, var(--phone-height));
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .viewport {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .phone {
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

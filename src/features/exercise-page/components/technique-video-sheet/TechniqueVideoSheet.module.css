@@ -1,0 +1,142 @@
+.root {
+  --technique-sheet-duration: 420ms;
+  --technique-sheet-backdrop-duration: 370ms;
+  --technique-sheet-ease-open: cubic-bezier(0.22, 1, 0.36, 1);
+  --technique-sheet-ease-close: cubic-bezier(0.4, 0, 0.2, 1);
+  --technique-sheet-body-in-delay: 100ms;
+
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.rootShown {
+  pointer-events: auto;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.62);
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity var(--technique-sheet-backdrop-duration)
+    var(--technique-sheet-ease-close);
+}
+
+.rootShown .backdrop {
+  opacity: 1;
+  transition: opacity var(--technique-sheet-backdrop-duration)
+    var(--technique-sheet-ease-open);
+}
+
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: var(--sheet-popup-top-gap);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  max-height: none;
+  padding: var(--space-md) var(--page-gutter)
+    calc(var(--space-md) + var(--safe-bottom));
+  background: var(--color-surface);
+  border-radius: var(--sheet-popup-top-radius) var(--sheet-popup-top-radius) 0 0;
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  transform: translate3d(0, 100%, 0);
+  transition: transform var(--technique-sheet-duration)
+    var(--technique-sheet-ease-close);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.rootShown .sheet {
+  transform: translate3d(0, 0, 0);
+  transition: transform var(--technique-sheet-duration)
+    var(--technique-sheet-ease-open);
+}
+
+.sheetBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition:
+    opacity 0.26s var(--technique-sheet-ease-close),
+    transform 0.28s var(--technique-sheet-ease-close);
+}
+
+.rootShown .sheetBody {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition:
+    opacity 0.34s var(--technique-sheet-ease-open) var(--technique-sheet-body-in-delay),
+    transform 0.38s var(--technique-sheet-ease-open) var(--technique-sheet-body-in-delay);
+}
+
+.playerWrap {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000000;
+}
+
+.player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.playerError {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: var(--space-lg);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .sheet,
+  .sheetBody {
+    transition: none;
+  }
+
+  .backdrop {
+    opacity: 1;
+  }
+
+  .rootShown .sheet,
+  .sheet {
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
+  }
+
+  .sheetBody,
+  .rootShown .sheetBody {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,147 @@
+.card {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 16px;
+}
+
+.cardPending {
+  background: #242424;
+}
+
+.cardCompleted {
+  background: #1d1d1d;
+  color: #868686;
+}
+
+.cardCompleted .title,
+.cardCompleted .subtitle,
+.cardCompleted .subtitleVolume,
+.cardCompleted .muscle {
+  color: #868686;
+}
+
+.cardCompleted .thumb {
+  opacity: 0.3;
+}
+
+.cardCompleted .menuBtn {
+  color: #868686;
+}
+
+.mainBtn {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mainBtn:active {
+  opacity: 0.88;
+}
+
+.thumbWrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-surface-elevated);
+}
+
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.doneBadge {
+  --done-badge-inset: 28%;
+
+  position: absolute;
+  z-index: 2;
+  inset: var(--done-badge-inset);
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 0 solid var(--thumb-set-done);
+  background: var(--color-accent);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doneIcon {
+  flex-shrink: 0;
+  color: var(--color-accent-on);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 2px 0;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-exercise-list-title-size);
+  font-weight: var(--text-exercise-list-title-weight);
+  line-height: var(--text-exercise-list-title-line-height);
+  letter-spacing: var(--text-exercise-list-title-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--color-text-secondary);
+}
+
+.subtitleVolume {
+  color: var(--color-text-primary);
+}
+
+.muscle {
+  margin: 2px 0 0;
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--color-text-tertiary);
+}
+
+.menuBtn {
+  flex-shrink: 0;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.menuBtn:active {
+  opacity: 0.7;
+}

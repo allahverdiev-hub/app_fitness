@@ -1,0 +1,180 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--page-gutter)
+    calc(var(--workout-list-bottom-inset) + var(--space-lg));
+}
+
+.listAnchor {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+}
+
+/* Отступ между блоком «Разминочные» и рабочими упражнениями */
+.sectionLabeled + .section {
+  margin-top: 20px;
+}
+
+.sectionTitle {
+  margin: 0;
+  padding: 0 2px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+.sectionList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dropZone {
+  position: absolute;
+  left: 36px;
+  right: 0;
+  z-index: 0;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  box-sizing: border-box;
+  pointer-events: none;
+  transition: top 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.addRow {
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition:
+    max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    margin-top 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.3s ease;
+}
+
+.addRowVisible {
+  max-height: var(--action-level2-height);
+  margin-top: 10px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.listDragging {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.listItemEditing {
+  gap: 8px;
+}
+
+.listItemActive {
+  transition: none;
+  z-index: 3;
+}
+
+.listItemActive > article,
+.listItemReleasing > article {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.38);
+}
+
+.listItemReleasing {
+  z-index: 3;
+}
+
+.listNoAnim .listItem {
+  transition: none !important;
+}
+
+.dragHandleSlot {
+  flex: 0 0 auto;
+  width: 0;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition:
+    max-width 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dragHandleSlotVisible {
+  width: 28px;
+  max-width: 28px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dragHandle {
+  flex-shrink: 0;
+  width: 28px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-tertiary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+  color: var(--color-text-secondary);
+}
+
+.listItem > :last-child {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .listItem,
+  .dragHandleSlot {
+    transition: none;
+  }
+}
