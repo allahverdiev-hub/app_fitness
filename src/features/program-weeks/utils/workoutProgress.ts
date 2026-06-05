@@ -86,6 +86,23 @@ export function enrichProgramOverview(
   };
 }
 
+/** Неделя с незавершёнными тренировками; если все завершены — последняя */
+export function getActiveProgramWeek(
+  overview: EnrichedProgramOverview,
+): EnrichedProgramWeek | null {
+  const sortedWeeks = [...overview.weeks].sort(
+    (a, b) => a.weekNumber - b.weekNumber,
+  );
+
+  for (const week of sortedWeeks) {
+    if (week.workouts.some((workout) => workout.status !== "completed")) {
+      return week;
+    }
+  }
+
+  return sortedWeeks[sortedWeeks.length - 1] ?? null;
+}
+
 export function computeProgramWorkoutStats(
   weeks: readonly EnrichedProgramWeek[],
 ): WeekWorkoutStats {

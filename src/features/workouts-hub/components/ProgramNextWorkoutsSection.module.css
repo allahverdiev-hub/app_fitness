@@ -1,0 +1,24 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-exercise-list-title-size);
+  font-weight: var(--text-exercise-list-title-weight);
+  line-height: var(--text-exercise-list-title-line-height);
+  letter-spacing: var(--text-exercise-list-title-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}

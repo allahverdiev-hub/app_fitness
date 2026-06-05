@@ -1,0 +1,9 @@
+.tabLabel {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.count {
+  color: var(--color-text-secondary);
+}

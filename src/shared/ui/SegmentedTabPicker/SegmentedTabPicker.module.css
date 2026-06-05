@@ -1,0 +1,19 @@
+.wrap {
+  composes: wrap from "@/shared/styles/segmentedTabPickerSurfaces.module.css";
+}
+
+.track {
+  composes: track from "@/shared/styles/segmentedTabPickerSurfaces.module.css";
+}
+
+.indicator {
+  composes: indicator from "@/shared/styles/segmentedTabPickerSurfaces.module.css";
+}
+
+.item {
+  composes: item from "@/shared/styles/segmentedTabPickerSurfaces.module.css";
+}
+
+.itemActive {
+  composes: itemActive from "@/shared/styles/segmentedTabPickerSurfaces.module.css";
+}

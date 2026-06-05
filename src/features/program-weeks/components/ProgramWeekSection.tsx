@@ -20,10 +20,11 @@ export function ProgramWeekSection({
     >
       <div className={styles.intro}>
         <div className={styles.header}>
-          <h2 className={styles.title} id={`week-${week.id}`}>
-            {week.title}
-          </h2>
-          <DifficultyBadge difficulty={week.difficulty} />
+          <DifficultyBadge
+            id={`week-${week.id}`}
+            difficulty={week.difficulty}
+            weekTitle={week.title}
+          />
         </div>
         <p className={styles.description}>{week.description}</p>
       </div>

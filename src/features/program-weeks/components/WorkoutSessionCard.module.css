@@ -29,7 +29,7 @@
   flex-direction: column;
   justify-content: center;
   gap: var(--space-sm);
-  min-height: 56px;
+  min-height: 73.92px;
 }
 
 .bodySingleLine {

@@ -18,9 +18,16 @@ function buildWeekWorkouts(
   }));
 }
 
+const upperLowerWeek1Workouts = [
+  { id: "ul-w1-d1", dayLabel: "День 1", title: "Верх" },
+  { id: "ul-w1-d2", dayLabel: "День 2", title: "Низ" },
+  { id: "ul-w1-d3", dayLabel: "День 3", title: "Верх" },
+  { id: "ul-w1-d4", dayLabel: "День 4", title: "Низ" },
+] as const;
+
 export const mockProgramOverview: ProgramOverview = {
   id: "program-upper-lower",
-  title: "Верх и низ без осевых",
+  title: "Full body",
   weeks: [
     {
       id: "week-1",
@@ -72,6 +79,49 @@ export const mockProgramOverview: ProgramOverview = {
         "Ноги + пресс",
         undefined,
       ]),
+    },
+  ],
+};
+
+export const mockUpperLowerSplitOverview: ProgramOverview = {
+  id: "program-upper-lower-split",
+  title: "Верх и низ",
+  weeks: [
+    {
+      id: "week-1",
+      weekNumber: 1,
+      title: "Неделя 1",
+      difficulty: "light",
+      description:
+        "Неделя состоит из 4 лёгких тренировок: чередование верха и низа для адаптации",
+      workouts: [...upperLowerWeek1Workouts],
+    },
+    {
+      id: "week-2",
+      weekNumber: 2,
+      title: "Неделя 2",
+      difficulty: "medium",
+      description:
+        "Неделя состоит из 4 тренировок средней интенсивности с чередованием верха и низа",
+      workouts: buildWeekWorkouts("ul-w2", ["Верх", "Низ", "Верх", "Низ"]),
+    },
+    {
+      id: "week-3",
+      weekNumber: 3,
+      title: "Неделя 3",
+      difficulty: "medium",
+      description:
+        "Неделя состоит из 4 тренировок средней интенсивности с акцентом на технику",
+      workouts: buildWeekWorkouts("ul-w3", ["Верх", "Низ", "Верх", "Низ"]),
+    },
+    {
+      id: "week-4",
+      weekNumber: 4,
+      title: "Неделя 4",
+      difficulty: "heavy",
+      description:
+        "Неделя состоит из 4 тяжёлых тренировок для пиковой нагрузки",
+      workouts: buildWeekWorkouts("ul-w4", ["Верх", "Низ", "Верх", "Низ"]),
     },
   ],
 };

@@ -232,30 +232,53 @@
 
   --program-accent: #c4ff62;
 
+  /* Хаб тренировок (список программ) */
+  --hub-bottom-inset: calc(
+    var(--tab-nav-island-clearance) + var(--safe-bottom) + var(--space-lg)
+  );
+  --hub-streak-bg: var(--color-surface);
+  --hub-streak-accent: var(--program-accent);
+  /* Подпись жеста масштаба календаря («Месяц» / «Неделя») */
+  --hub-calendar-scale-label-size: 12px;
+  --hub-calendar-scale-label-weight: 500;
+  --hub-calendar-scale-label-line-height: 1;
+  --hub-calendar-scale-label-color: var(--color-text-secondary);
+  --program-card-cover-inset: 6px;
+  /* Сегментированный таб-пикер (недели программы, Мои/Каталог на хабе) */
+  --segmented-tab-picker-track-padding: 6px;
+  --segmented-tab-picker-track-border-color: var(--tab-nav-border-color);
+  --segmented-tab-picker-item-height: 40px;
+  --segmented-tab-picker-item-padding-x: 12px;
+  --segmented-tab-picker-indicator-inset-x: 0px;
+  --segmented-tab-picker-active-scale: 1;
+  --segmented-tab-picker-inactive-font-size: var(--action-level2-font-size);
+  --segmented-tab-picker-inactive-font-weight: var(--action-level2-font-weight);
+  --segmented-tab-picker-inactive-line-height: var(--action-level2-line-height);
+  --segmented-tab-picker-inactive-letter-spacing: var(--action-level2-letter-spacing);
+  --segmented-tab-picker-inactive-color: var(--color-text-secondary);
+  --segmented-tab-picker-active-font-size: var(--action-level2-font-size);
+  --segmented-tab-picker-active-font-weight: var(--action-level2-font-weight);
+  --segmented-tab-picker-active-line-height: var(--action-level2-line-height);
+  --segmented-tab-picker-active-letter-spacing: var(--action-level2-letter-spacing);
+  --segmented-tab-picker-active-color: #000000;
+  --segmented-tab-picker-height: calc(
+    var(--segmented-tab-picker-item-height) +
+      2 * var(--segmented-tab-picker-track-padding)
+  );
+
   /* Страница программы (недели и тренировки) */
+  --program-week-tab-active-padding-x: 16px;
+  --program-week-tab-active-width-ratio: 1.55;
   --program-weeks-bottom-inset: calc(
     var(--tab-nav-island-clearance) + var(--safe-bottom) + var(--space-lg)
   );
-  /* Табы недель (ProgramWeekPicker) */
-  --program-week-tab-track-padding: 6px;
-  --program-week-tab-track-border-color: var(--tab-nav-border-color);
-  --program-week-tab-active-height: 40px;
-  --program-week-tab-padding-x: 8px;
-  --program-week-tab-active-scale: 1.05;
-  --program-week-tab-inactive-font-size: var(--action-level2-font-size);
-  --program-week-tab-inactive-font-weight: var(--action-level2-font-weight);
-  --program-week-tab-inactive-line-height: var(--action-level2-line-height);
-  --program-week-tab-inactive-letter-spacing: var(--action-level2-letter-spacing);
-  --program-week-tab-inactive-color: var(--color-text-secondary);
-  --program-week-tab-active-font-size: var(--action-level2-font-size);
-  --program-week-tab-active-font-weight: var(--action-level2-font-weight);
-  --program-week-tab-active-line-height: var(--action-level2-line-height);
-  --program-week-tab-active-letter-spacing: var(--action-level2-letter-spacing);
-  --program-week-tab-active-color: #000000;
-  --program-week-picker-height: calc(
-    var(--program-week-tab-active-height) + 2 * var(--program-week-tab-track-padding)
-  );
   --program-workout-progress-high: var(--program-accent, #c4ff62);
+  /* Процент в кольце прогресса тренировки */
+  --program-workout-progress-label-size: calc(var(--font-size-sm) * 1.32);
+  --program-workout-progress-label-weight: 600;
+  --program-workout-progress-label-line-height: 1.2;
+  --program-workout-progress-label-letter-spacing: 0.01em;
+  --program-workout-progress-label-color: var(--color-text-primary);
   /* Подпись дня под названием тренировки («День 1», «День 2»…) */
   --program-workout-day-label-size: var(--font-size-sm);
   --program-workout-day-label-weight: 500;
@@ -268,9 +291,16 @@
   --program-workout-day-label-primary-letter-spacing: var(--text-exercise-list-title-letter-spacing);
   --program-workout-day-label-primary-color: var(--color-text-primary);
   /* Бейдж тяжести недели (DifficultyBadge) */
+  --program-week-difficulty-badge-light-label-size: var(--text-exercise-list-title-size);
+  --program-week-difficulty-badge-light-label-weight: var(--text-exercise-list-title-weight);
+  --program-week-difficulty-badge-light-label-line-height: var(--text-exercise-list-title-line-height);
+  --program-week-difficulty-badge-light-label-letter-spacing: var(--text-exercise-list-title-letter-spacing);
   --program-week-difficulty-badge-bg: rgba(0, 0, 0, 0.12);
   --program-week-difficulty-color-light: var(--program-accent);
   --program-week-difficulty-color-medium: var(--color-difficulty-medium);
   --program-week-difficulty-color-heavy: var(--color-difficulty-heavy);
+  --program-week-difficulty-border-light: rgba(110, 133, 0, 0.6);
+  --program-week-difficulty-border-medium: rgba(133, 126, 0, 0.6);
+  --program-week-difficulty-border-heavy: rgba(133, 72, 0, 0.6);
   --program-week-difficulty-icon-inactive-color: rgba(255, 255, 255, 0.22);
 }

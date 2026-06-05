@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 export type IconProps = { size?: number; className?: string };
 
 const base = ({ size = 18, className }: IconProps) => ({
@@ -308,6 +310,94 @@ export function IconSignalBars({
           fill={index < activeCount ? activeColor : inactiveColor}
         />
       ))}
+    </svg>
+  );
+}
+
+export function IconFlame({ size, className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" {...base({ size, className })}>
+      <path
+        d="M12 3c1.2 2.4 3.4 3.8 3.4 6.6 0 1.2-.4 2.2-1 3 .6-.2 1.1-.6 1.5-1.1.8 1.1 1.1 2.4 1.1 3.7 0 3.3-2.4 6-5.5 6S5 15.5 5 12.2c0-2.2 1-4.1 2.6-5.5C8.8 4.8 10.2 3.6 12 3Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+/** solar_fire-bold.svg — иконка серии тренировок */
+export function IconSolarFireBold({ size = 20, className }: IconProps) {
+  const filterId = useId().replace(/:/g, "");
+  const resolvedSize = size ?? 20;
+  const height = Math.round(resolvedSize * (65 / 61));
+  const flamePath =
+    "M32.3867 48.0791C37.5967 47.0358 44.3333 43.2874 44.3333 33.5958C44.3333 24.7774 37.8783 18.9041 33.2367 16.2058C32.205 15.6058 31 16.3941 31 17.5858V20.6324C31 23.0358 29.99 27.4224 27.1833 29.2474C25.75 30.1791 24.2 28.7841 24.0267 27.0841L23.8833 25.6874C23.7167 24.0641 22.0633 23.0791 20.7667 24.0691C18.435 25.8441 16 28.9608 16 33.5941C16 45.4458 24.815 48.4108 29.2217 48.4108C29.4794 48.4108 29.7483 48.4025 30.0283 48.3858C27.8517 48.2008 24.3333 46.8508 24.3333 42.4841C24.3333 39.0674 26.825 36.7591 28.7183 35.6341C29.2283 35.3341 29.8233 35.7258 29.8233 36.3174V37.3008C29.8233 38.0508 30.115 39.2258 30.8067 40.0291C31.59 40.9391 32.7383 39.9858 32.83 38.7891C32.86 38.4124 33.24 38.1724 33.5667 38.3624C34.635 38.9874 36 40.3208 36 42.4841C36 45.8974 34.1183 47.4674 32.3867 48.0791Z";
+
+  return (
+    <svg
+      viewBox="0 0 61 65"
+      width={resolvedSize}
+      height={height}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
+    >
+      <path d={flamePath} fill="var(--hub-streak-accent, #c4ff62)" />
+      <g filter={`url(#${filterId})`}>
+        <path
+          d={flamePath}
+          fill="var(--hub-streak-accent, #c4ff62)"
+          fillOpacity="0.5"
+        />
+      </g>
+      <defs>
+        <filter
+          id={filterId}
+          x="0"
+          y="0"
+          width="60.3333"
+          height="64.4108"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="BackgroundImageFix"
+            result="shape"
+          />
+          <feGaussianBlur stdDeviation="8" result="effect1_foregroundBlur" />
+        </filter>
+      </defs>
+    </svg>
+  );
+}
+
+export function IconSync({ size, className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" {...base({ size, className })}>
+      <path
+        d="M12 6V3L8 7l4 4V8c2.2 0 4 1.8 4 4a4 4 0 01-4 4 4 4 0 01-3.5-2.1M12 18v3l4-4-4-4v3a4 4 0 00-4-4 4 4 0 014-4 4 4 0 013.5 2.1"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Уличный комплекс (турники / брусья) */
+export function IconOutdoorGym({ size, className }: IconProps) {
+  return (
+    <svg viewBox="0 0 80 56" width={size} height={Math.round((size ?? 18) * (56 / 80))} className={className} fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+      <path d="M8 48V10M72 48V10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path d="M8 18h64M8 30h64" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M24 48V34M56 48V34" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M24 34h32" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M34 48V40M46 48V40" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }

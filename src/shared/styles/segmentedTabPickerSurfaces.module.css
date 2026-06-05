@@ -1,0 +1,94 @@
+/* Сегментированный таб-пикер (недели программы, Мои/Каталог на хабе) */
+.wrap {
+  flex-shrink: 0;
+}
+
+.track {
+  composes: frostedPlate from "@/shared/styles/frostedPlateSurfaces.module.css";
+  --segment-width: calc(
+    (100% - 2 * var(--segmented-tab-picker-track-padding)) / var(--tab-count, 2)
+  );
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  padding: var(--segmented-tab-picker-track-padding);
+  border: 1px solid var(--segmented-tab-picker-track-border-color);
+  border-radius: var(--radius-pill);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.indicator {
+  position: absolute;
+  top: var(--segmented-tab-picker-track-padding);
+  bottom: var(--segmented-tab-picker-track-padding);
+  left: calc(
+    var(--segmented-tab-picker-track-padding) + var(--active-index, 0) *
+      var(--segment-width) + var(--segmented-tab-picker-indicator-inset-x, 0px)
+  );
+  z-index: 0;
+  width: calc(
+    var(--segment-width) - 2 * var(--segmented-tab-picker-indicator-inset-x, 0px)
+  );
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-btn-bg);
+  transform: scaleX(var(--segmented-tab-picker-active-scale, 1));
+  transform-origin: center;
+  transition:
+    left 0.32s cubic-bezier(0.33, 1, 0.68, 1),
+    transform 0.32s cubic-bezier(0.33, 1, 0.68, 1);
+  pointer-events: none;
+  will-change: left, transform;
+}
+
+.item {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  min-width: 0;
+  height: var(--segmented-tab-picker-item-height);
+  padding-block: 0;
+  padding-inline: var(--segmented-tab-picker-item-padding-x);
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--segmented-tab-picker-inactive-color);
+  font-family: inherit;
+  font-size: var(--segmented-tab-picker-inactive-font-size);
+  font-weight: var(--segmented-tab-picker-inactive-font-weight);
+  line-height: var(--segmented-tab-picker-inactive-line-height);
+  letter-spacing: var(--segmented-tab-picker-inactive-letter-spacing);
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    color 0.22s ease,
+    padding 0.22s ease;
+}
+
+.itemActive {
+  padding-inline: var(
+    --segmented-tab-picker-active-item-padding-x,
+    var(--segmented-tab-picker-item-padding-x)
+  );
+  color: var(--segmented-tab-picker-active-color);
+  font-size: var(--segmented-tab-picker-active-font-size);
+  font-weight: var(--segmented-tab-picker-active-font-weight);
+  line-height: var(--segmented-tab-picker-active-line-height);
+  letter-spacing: var(--segmented-tab-picker-active-letter-spacing);
+}
+
+.item:active {
+  opacity: 0.88;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicator {
+    transition: none;
+  }
+}

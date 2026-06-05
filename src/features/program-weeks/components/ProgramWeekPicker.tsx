@@ -1,5 +1,7 @@
 import type { CSSProperties, MouseEvent } from "react";
 import { useMemo } from "react";
+import { useWeekTabIndicator } from "@/features/program-weeks/hooks/useWeekTabIndicator";
+import { SegmentedTabPicker, segmentedTabPickerStyles } from "@/shared/ui/SegmentedTabPicker";
 import styles from "./ProgramWeekPicker.module.css";
 
 export type ProgramWeekPickerOption = {
@@ -13,6 +15,8 @@ type ProgramWeekPickerProps = {
   activeWeekNumber: number;
   onAnchorNavigate?: (option: ProgramWeekPickerOption) => void;
 };
+
+const ACTIVE_TAB_WIDTH_RATIO = 1.55;
 
 export function ProgramWeekPicker({
   options,
@@ -28,10 +32,24 @@ export function ProgramWeekPicker({
     [options, activeWeekNumber],
   );
 
-  const trackStyle = {
-    "--tab-count": String(options.length),
-    "--active-index": String(activeIndex),
-  } as CSSProperties;
+  const { trackRef, setTabRef, indicatorStyle } = useWeekTabIndicator({
+    activeIndex,
+    tabCount: options.length,
+  });
+
+  const trackStyle = useMemo(
+    () =>
+      ({
+        gridTemplateColumns: options
+          .map((_, index) =>
+            index === activeIndex
+              ? `minmax(0, ${ACTIVE_TAB_WIDTH_RATIO}fr)`
+              : "minmax(0, 1fr)",
+          )
+          .join(" "),
+      }) as CSSProperties,
+    [activeIndex, options],
+  );
 
   const handleAnchorClick = (
     event: MouseEvent<HTMLAnchorElement>,
@@ -42,43 +60,37 @@ export function ProgramWeekPicker({
   };
 
   return (
-    <div className={styles.wrap}>
-      <div
-        className={styles.track}
-        style={trackStyle}
-        role="tablist"
-        aria-label="Недели программы"
-      >
-        <div className={styles.indicator} aria-hidden />
-        {options.map((option) => {
-          const isActive = option.weekNumber === activeWeekNumber;
+    <SegmentedTabPicker
+      className={styles.weekPicker}
+      trackClassName={styles.weekTrack}
+      trackStyle={trackStyle}
+      trackRef={trackRef}
+      indicatorClassName={styles.weekIndicator}
+      indicatorStyle={indicatorStyle}
+      tabCount={options.length}
+      activeIndex={activeIndex}
+      ariaLabel="Недели программы"
+    >
+      {options.map((option, index) => {
+        const isActive = option.weekNumber === activeWeekNumber;
 
-          return (
-            <a
-              key={option.id}
-              href={`#${option.anchorId}`}
-              role="tab"
-              aria-selected={isActive}
-              aria-label={`Неделя ${option.weekNumber}`}
-              className={`${styles.item} ${isActive ? styles.itemActive : ""}`}
-              onClick={(event) => handleAnchorClick(event, option)}
-            >
-              <span className={styles.labelWrap} aria-hidden>
-                <span
-                  className={`${styles.label} ${styles.labelShort} ${isActive ? styles.labelHidden : ""}`}
-                >
-                  {option.weekNumber}
-                </span>
-                <span
-                  className={`${styles.label} ${styles.labelLong} ${isActive ? "" : styles.labelHidden}`}
-                >
-                  Неделя {option.weekNumber}
-                </span>
-              </span>
-            </a>
-          );
-        })}
-      </div>
-    </div>
+        return (
+          <a
+            key={option.id}
+            ref={setTabRef(index)}
+            href={`#${option.anchorId}`}
+            role="tab"
+            aria-selected={isActive}
+            aria-label={`Неделя ${option.weekNumber}`}
+            className={`${segmentedTabPickerStyles.item} ${styles.weekTab} ${isActive ? `${segmentedTabPickerStyles.itemActive} ${styles.weekTabActive}` : ""}`}
+            onClick={(event) => handleAnchorClick(event, option)}
+          >
+            <span className={styles.label} aria-hidden>
+              {isActive ? `Неделя ${option.weekNumber}` : option.weekNumber}
+            </span>
+          </a>
+        );
+      })}
+    </SegmentedTabPicker>
   );
 }

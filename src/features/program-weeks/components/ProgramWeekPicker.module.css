@@ -1,115 +1,27 @@
-.wrap {
-  flex-shrink: 0;
+.weekPicker .weekTrack {
+  display: grid;
 }
 
-.track {
-  composes: frostedPlate from "@/shared/styles/frostedPlateSurfaces.module.css";
-  --segment-width: calc(
-    (100% - 2 * var(--program-week-tab-track-padding)) / var(--tab-count, 4)
-  );
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  width: 100%;
-  padding: var(--program-week-tab-track-padding);
-  border: 1px solid var(--program-week-tab-track-border-color);
-  border-radius: var(--radius-pill);
+.weekPicker .weekTab {
   box-sizing: border-box;
-  overflow: hidden;
-}
-
-.indicator {
-  position: absolute;
-  top: var(--program-week-tab-track-padding);
-  bottom: var(--program-week-tab-track-padding);
-  left: calc(
-    var(--program-week-tab-track-padding) + var(--active-index, 0) *
-      var(--segment-width)
-  );
-  z-index: 0;
-  width: var(--segment-width);
-  border-radius: var(--radius-pill);
-  background: var(--color-primary-btn-bg);
-  transform: scaleX(var(--program-week-tab-active-scale));
-  transform-origin: center;
-  transition:
-    left 0.32s cubic-bezier(0.33, 1, 0.68, 1),
-    transform 0.32s cubic-bezier(0.33, 1, 0.68, 1);
-  pointer-events: none;
-  will-change: left, transform;
-}
-
-.item {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
+  width: 100%;
   justify-content: center;
-  flex: 1 1 0;
   min-width: 0;
-  height: var(--program-week-tab-active-height);
-  padding: 0 var(--program-week-tab-padding-x);
-  border: none;
-  border-radius: var(--radius-pill);
-  background: transparent;
-  color: var(--program-week-tab-inactive-color);
-  font-family: inherit;
-  font-size: var(--program-week-tab-inactive-font-size);
-  font-weight: var(--program-week-tab-inactive-font-weight);
-  line-height: var(--program-week-tab-inactive-line-height);
-  letter-spacing: var(--program-week-tab-inactive-letter-spacing);
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  padding-inline: var(--segmented-tab-picker-item-padding-x);
   transition: color 0.22s ease;
 }
 
-.itemActive {
-  color: var(--program-week-tab-active-color);
-  font-size: var(--program-week-tab-active-font-size);
-  font-weight: var(--program-week-tab-active-font-weight);
-  line-height: var(--program-week-tab-active-line-height);
-  letter-spacing: var(--program-week-tab-active-letter-spacing);
+.weekPicker .weekTabActive {
+  padding-inline: var(--segmented-tab-picker-item-padding-x);
 }
 
-.itemActive .label {
-  padding-inline-end: var(--program-week-tab-active-letter-spacing);
-}
-
-.labelWrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-  max-width: 100%;
+.weekPicker .weekIndicator {
+  transform: none;
 }
 
 .label {
+  display: block;
+  width: 100%;
+  text-align: center;
   white-space: nowrap;
-  /* Компенсация хвостового letter-spacing у uppercase */
-  padding-inline-end: var(--program-week-tab-inactive-letter-spacing);
-  transition: opacity 0.18s ease;
-}
-
-.labelHidden {
-  position: absolute;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.item:active {
-  opacity: 0.88;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .indicator {
-    transition: none;
-  }
-
-  .label {
-    transition: none;
-  }
 }

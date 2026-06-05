@@ -6,21 +6,34 @@ import styles from "./DifficultyBadge.module.css";
 
 type DifficultyBadgeProps = {
   difficulty: ProgramDifficulty;
+  weekTitle?: string;
+  id?: string;
 };
 
-export function DifficultyBadge({ difficulty }: DifficultyBadgeProps) {
-  const { label, color, activeBars } = getDifficultyStyle(difficulty);
+export function DifficultyBadge({
+  difficulty,
+  weekTitle,
+  id,
+}: DifficultyBadgeProps) {
+  const { label, color, borderColor, activeBars } = getDifficultyStyle(difficulty);
+  const hasWeekTitle = Boolean(weekTitle);
+  const ariaLabel = weekTitle ? `${weekTitle}, ${label}` : label;
 
   return (
     <span
-      className={styles.badge}
+      id={id}
+      className={`${styles.badge} ${hasWeekTitle ? styles.badgeWithWeek : ""}`}
+      aria-label={ariaLabel}
       style={
         {
           "--program-week-difficulty-tone": color,
+          border: `1px solid ${borderColor}`,
         } as CSSProperties
       }
     >
-      <span className={styles.label}>{label}</span>
+      {hasWeekTitle ? (
+        <span className={styles.weekTitle}>{weekTitle}</span>
+      ) : null}
       <span className={styles.iconWrap}>
         <IconSignalBars
           size={16}

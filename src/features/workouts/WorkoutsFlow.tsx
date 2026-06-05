@@ -13,6 +13,8 @@ import {
 } from "@/features/workouts/mocks/workoutSession";
 import { applyExerciseDeletion } from "@/features/workouts/utils/deleteExercise";
 import { applyExerciseReplacement } from "@/features/workouts/utils/replaceExercise";
+import { WorkoutsHubPage } from "@/features/workouts-hub/WorkoutsHubPage";
+import { getProgramOverviewById } from "@/features/workouts-hub/utils/programRegistry";
 import {
   defaultProgramWorkoutId,
   mockProgramOverview,
@@ -27,11 +29,12 @@ import {
 } from "@/shared/lib/workoutElapsed";
 import { useTabPopSignal } from "@/shared/lib/tabStackNavigation";
 
-export type WorkoutsScreen = "program" | "list" | "exercise";
+export type WorkoutsScreen = "hub" | "program" | "list" | "exercise";
 
 export function popWorkoutsScreen(screen: WorkoutsScreen): WorkoutsScreen {
   if (screen === "exercise") return "list";
   if (screen === "list") return "program";
+  if (screen === "program") return "hub";
   return screen;
 }
 
@@ -45,7 +48,8 @@ export function WorkoutsFlow({
   onScreenChange,
   popSignal = 0,
 }: WorkoutsFlowProps = {}) {
-  const [screen, setScreen] = useState<WorkoutsScreen>("program");
+  const [screen, setScreen] = useState<WorkoutsScreen>("hub");
+  const [activeProgramId, setActiveProgramId] = useState(mockProgramOverview.id);
   const [activeWorkoutId, setActiveWorkoutId] = useState(defaultProgramWorkoutId);
   const [exerciseId, setExerciseId] = useState(mockWorkout.activeExerciseId);
   const [workoutActive, setWorkoutActive] = useState(false);
@@ -163,14 +167,30 @@ export function WorkoutsFlow({
 
   useTabPopSignal(popSignal, popWorkoutsScreen, setScreen);
 
-  const activeWorkoutTitle = useMemo(
-    () =>
-      getProgramWorkoutTitleById(mockProgramOverview, activeWorkoutId) ??
-      mockWorkoutOverview.title,
-    [activeWorkoutId],
+  const activeProgramOverview = useMemo(
+    () => getProgramOverviewById(activeProgramId) ?? mockProgramOverview,
+    [activeProgramId],
   );
 
+  const activeWorkoutTitle = useMemo(
+    () =>
+      getProgramWorkoutTitleById(activeProgramOverview, activeWorkoutId) ??
+      mockWorkoutOverview.title,
+    [activeProgramOverview, activeWorkoutId],
+  );
+
+  const openProgram = useCallback((programId: string) => {
+    setActiveProgramId(programId);
+    setScreen("program");
+  }, []);
+
   const openWorkoutList = useCallback((workoutId: string) => {
+    setActiveWorkoutId(workoutId);
+    setScreen("list");
+  }, []);
+
+  const openProgramWorkout = useCallback((programId: string, workoutId: string) => {
+    setActiveProgramId(programId);
     setActiveWorkoutId(workoutId);
     setScreen("list");
   }, []);
@@ -188,9 +208,24 @@ export function WorkoutsFlow({
     );
   }
 
+  if (screen === "hub") {
+    return (
+      <WorkoutsHubPage
+        sessionProgress={{
+          sessionExerciseIds,
+          completedSetsById,
+          setsByExerciseId: workoutExerciseSetsById,
+        }}
+        onOpenProgram={openProgram}
+        onOpenWorkout={openProgramWorkout}
+      />
+    );
+  }
+
   if (screen === "program") {
     return (
       <ProgramWeeksPage
+        programOverview={activeProgramOverview}
         onOpenWorkout={openWorkoutList}
         sessionExerciseIds={sessionExerciseIds}
         completedSetsById={completedSetsById}

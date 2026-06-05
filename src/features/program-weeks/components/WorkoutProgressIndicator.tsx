@@ -3,8 +3,8 @@ import { getWorkoutProgressRingColor } from "@/features/program-weeks/utils/work
 import type { WorkoutSessionStatus } from "@/features/program-weeks/types/programWeeks";
 import styles from "./WorkoutProgressIndicator.module.css";
 
-const SIZE = 56;
-const STROKE = 3.5;
+const SIZE = 73.92;
+const STROKE = 6.6;
 const RADIUS = (SIZE - STROKE) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
@@ -20,7 +20,7 @@ export function WorkoutProgressIndicator({
   if (status === "completed") {
     return (
       <span className={styles.done} aria-hidden>
-        <IconCheck size={24} className={styles.doneIcon} />
+        <IconCheck size={32} className={styles.doneIcon} />
       </span>
     );
   }

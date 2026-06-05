@@ -1,0 +1,44 @@
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.card {
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-muted);
+}
+
+.detailList {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.term {
+  margin: 0;
+  font-size: var(--progress-label-size);
+  font-weight: var(--progress-label-weight);
+  line-height: var(--progress-label-line-height);
+  color: var(--progress-label-color);
+}
+
+.value {
+  margin: 0;
+  font-size: var(--description-m-size);
+  font-weight: var(--description-m-weight);
+  line-height: var(--description-m-line-height);
+  color: var(--color-text-primary);
+}

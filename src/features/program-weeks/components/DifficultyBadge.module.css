@@ -2,14 +2,31 @@
   --program-week-difficulty-tone: var(--program-week-difficulty-color-medium);
 
   composes: difficultyBadge from "@/shared/styles/programWeekDifficultyBadgeSurfaces.module.css";
+  gap: var(--space-lg);
+  width: 24px;
+  padding: 0 4px;
 }
 
-.label {
-  composes: difficultyBadgeLabel from "@/shared/styles/programWeekDifficultyBadgeSurfaces.module.css";
+.badgeWithWeek {
+  width: auto;
+  height: auto;
+  min-height: 24px;
+  padding: 6px 12px;
+}
+
+.weekTitle {
+  font-size: var(--program-week-difficulty-badge-light-label-size);
+  font-weight: var(--program-week-difficulty-badge-light-label-weight);
+  line-height: var(--program-week-difficulty-badge-light-label-line-height);
+  letter-spacing: var(--program-week-difficulty-badge-light-label-letter-spacing);
+  text-transform: uppercase;
+  color: var(--program-week-difficulty-tone);
+  white-space: nowrap;
 }
 
 .iconWrap {
   composes: difficultyBadgeIconWrap from "@/shared/styles/programWeekDifficultyBadgeSurfaces.module.css";
+  transform: translateY(-2px);
 }
 
 .icon {

@@ -1,0 +1,84 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.card {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 16px;
+}
+
+.cardPending {
+  composes: pending from "@/shared/styles/workoutCardSurfaces.module.css";
+}
+
+.mainBtn {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mainBtn:active {
+  opacity: 0.88;
+}
+
+.thumbWrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-surface-elevated);
+}
+
+.thumbInset {
+  position: absolute;
+  inset: var(--program-card-cover-inset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+}
+
+.thumb {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: var(--program-workout-day-label-size);
+  font-weight: var(--program-workout-day-label-weight);
+  line-height: var(--program-workout-day-label-line-height);
+  color: var(--program-workout-day-label-color);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 2px 0;
+}

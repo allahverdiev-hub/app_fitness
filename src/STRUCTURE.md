@@ -13,8 +13,9 @@ src/
 └── features/
     ├── catalog/                 # Заглушка таба «Справочник»
     ├── profile/                 # Заглушка таба «Профиль»
+    ├── workouts-hub/            # Хаб программ (корень таба «Тренировки»)
     ├── workouts/                # Оркестратор таба «Тренировки»
-    │   ├── WorkoutsFlow.tsx     # Стек: program → list → exercise
+    │   ├── WorkoutsFlow.tsx     # Стек: hub → program → list → exercise
     │   ├── hooks/, mocks/, utils/
     ├── program-weeks/           # Экран программы (недели, карточки)
     ├── workout-list/            # Листинг упражнений

@@ -15,7 +15,7 @@ function findProgramWorkoutSession(
 }
 
 /** Как на карточке: title, иначе dayLabel */
-function getProgramWorkoutDisplayTitle(
+export function getProgramWorkoutDisplayTitle(
   workout: ProgramWorkoutSession,
 ): string {
   return workout.title ?? workout.dayLabel;
@@ -27,4 +27,16 @@ export function getProgramWorkoutTitleById(
 ): string | undefined {
   const workout = findProgramWorkoutSession(overview, workoutId);
   return workout ? getProgramWorkoutDisplayTitle(workout) : undefined;
+}
+
+export function findProgramWorkoutWeekNumber(
+  overview: ProgramOverview,
+  workoutId: string,
+): number | undefined {
+  for (const week of overview.weeks) {
+    if (week.workouts.some((item) => item.id === workoutId)) {
+      return week.weekNumber;
+    }
+  }
+  return undefined;
 }

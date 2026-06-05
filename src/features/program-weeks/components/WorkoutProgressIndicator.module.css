@@ -1,8 +1,8 @@
 .ringWrap {
   position: relative;
   flex-shrink: 0;
-  width: 56px;
-  height: 56px;
+  width: 73.92px;
+  height: 73.92px;
   display: grid;
   place-items: center;
 }
@@ -23,18 +23,18 @@
 .label {
   position: relative;
   z-index: 1;
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
+  font-size: var(--program-workout-progress-label-size);
+  font-weight: var(--program-workout-progress-label-weight);
+  line-height: var(--program-workout-progress-label-line-height);
+  letter-spacing: var(--program-workout-progress-label-letter-spacing);
   text-transform: uppercase;
-  color: var(--color-text-primary);
+  color: var(--program-workout-progress-label-color);
 }
 
 .done {
   flex-shrink: 0;
-  width: 56px;
-  height: 56px;
+  width: 73.92px;
+  height: 73.92px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  mockProgramOverview,
-  mockProgramWeekPicker,
-} from "@/features/program-weeks/mocks/programWeeksMock";
+import { mockProgramWeekPicker } from "@/features/program-weeks/mocks/programWeeksMock";
+import type { ProgramOverview } from "@/features/program-weeks/types/programWeeks";
 import {
   ProgramWeekPicker,
   type ProgramWeekPickerOption,
@@ -18,6 +16,7 @@ import styles from "./ProgramWeeksPage.module.css";
 const ANCHOR_SCROLL_RELEASE_MS = 900;
 
 type ProgramWeeksPageProps = {
+  programOverview: ProgramOverview;
   onOpenWorkout?: (workoutId: string) => void;
   sessionExerciseIds: readonly string[];
   completedSetsById: Record<string, number>;
@@ -25,6 +24,7 @@ type ProgramWeeksPageProps = {
 };
 
 export function ProgramWeeksPage({
+  programOverview,
   onOpenWorkout,
   sessionExerciseIds,
   completedSetsById,
@@ -40,12 +40,12 @@ export function ProgramWeeksPage({
   const overview = useMemo(
     () =>
       enrichProgramOverview(
-        mockProgramOverview,
+        programOverview,
         sessionExerciseIds,
         completedSetsById,
         setsByExerciseId,
       ),
-    [sessionExerciseIds, completedSetsById, setsByExerciseId],
+    [programOverview, sessionExerciseIds, completedSetsById, setsByExerciseId],
   );
 
   const programStats = useMemo(
