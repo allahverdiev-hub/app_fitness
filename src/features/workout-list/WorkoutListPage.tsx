@@ -17,6 +17,7 @@ import {
 import { ReplaceExerciseSheet } from "@/features/exercise-page/components/replace-exercise-sheet/ReplaceExerciseSheet";
 import { ReplaceExerciseCatalogPage } from "@/features/exercise-page/components/replace-exercise-catalog/ReplaceExerciseCatalogPage";
 import { DeleteExerciseConfirmSheet } from "@/features/workout-list/components/DeleteExerciseConfirmSheet";
+import { DELETE_COLLAPSE_DELAY_MS } from "@/shared/ui/ThanosDissolve";
 
 import type { WorkoutListExerciseItem } from "@/features/workout-list/types/workoutOverview";
 
@@ -143,11 +144,17 @@ export function WorkoutListPage({
     setDeleteTargetId(null);
   }, [deleteTargetId]);
 
-  const handleDissolveComplete = useCallback((targetId: string) => {
-    setCollapsingId(targetId);
-  }, []);
+  // Строка начинает схлопываться, пока пыль ещё в воздухе.
+  useEffect(() => {
+    if (!dissolvingId) return undefined;
+    const timer = window.setTimeout(() => {
+      setCollapsingId(dissolvingId);
+    }, DELETE_COLLAPSE_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [dissolvingId]);
 
-  const handleCollapseComplete = useCallback(
+  // Удаляем из данных только когда пыль полностью осела.
+  const handleDissolveComplete = useCallback(
     (targetId: string) => {
       onDeleteExercise(targetId);
       setDissolvingId((current) => (current === targetId ? null : current));
@@ -155,6 +162,8 @@ export function WorkoutListPage({
     },
     [onDeleteExercise],
   );
+
+  const handleCollapseComplete = useCallback(() => undefined, []);
 
   const handleSaveWorkout = useCallback(() => {
     baselineExercisesRef.current = exercises;
