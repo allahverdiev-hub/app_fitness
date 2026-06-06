@@ -1,4 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  ProgramSettingsSheet,
+  type ProgramSettingsAction,
+} from "@/features/program-weeks/components/ProgramSettingsSheet";
 import { mockProgramWeekPicker } from "@/features/program-weeks/mocks/programWeeksMock";
 import type { ProgramOverview } from "@/features/program-weeks/types/programWeeks";
 import {
@@ -21,6 +25,8 @@ type ProgramWeeksPageProps = {
   sessionExerciseIds: readonly string[];
   completedSetsById: Record<string, number>;
   setsByExerciseId: Record<string, number>;
+  onResetProgramToBaseline?: () => void;
+  onRefreshProgramProgress?: () => void;
 };
 
 export function ProgramWeeksPage({
@@ -29,8 +35,11 @@ export function ProgramWeeksPage({
   sessionExerciseIds,
   completedSetsById,
   setsByExerciseId,
+  onResetProgramToBaseline,
+  onRefreshProgramProgress,
 }: ProgramWeeksPageProps) {
   const [activeWeekNumber, setActiveWeekNumber] = useState(1);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const pageRef = useRef<HTMLDivElement>(null);
   const pickerStickyRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -159,6 +168,17 @@ export function ProgramWeeksPage({
     };
   }, [sortedWeeks]);
 
+  const handleSettingsAction = useCallback(
+    (action: ProgramSettingsAction) => {
+      if (action === "reset") {
+        onResetProgramToBaseline?.();
+      } else {
+        onRefreshProgramProgress?.();
+      }
+    },
+    [onRefreshProgramProgress, onResetProgramToBaseline],
+  );
+
   return (
     <div ref={pageRef} className={styles.page}>
       <div ref={scrollRef} className={styles.scroll}>
@@ -174,6 +194,7 @@ export function ProgramWeeksPage({
             title={overview.title}
             completedWorkouts={programStats.completedWorkouts}
             totalWorkouts={programStats.totalWorkouts}
+            onSettings={() => setSettingsOpen(true)}
           />
           <div className={styles.weeks}>
             {sortedWeeks.map((week) => (
@@ -186,6 +207,12 @@ export function ProgramWeeksPage({
           </div>
         </div>
       </div>
+      <ProgramSettingsSheet
+        open={settingsOpen}
+        programTitle={overview.title}
+        onClose={() => setSettingsOpen(false)}
+        onAction={handleSettingsAction}
+      />
     </div>
   );
 }

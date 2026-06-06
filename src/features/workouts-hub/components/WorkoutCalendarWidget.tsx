@@ -7,14 +7,16 @@ import {
   formatDayNumber,
   formatMonthTitle,
   formatWeekdayShort,
-  getMaxDurationForDates,
   getMonthGridCells,
   getSessionsForDate,
   getWeekDays,
   groupSessionsByDate,
   isSameDay,
+  parseISODate,
   toISODate,
 } from "@/features/workouts-hub/utils/workoutCalendar";
+import { getCalendarSessionDisplay } from "@/features/workouts-hub/utils/calendarSessionDisplay";
+import { DEMO_TODAY } from "@/features/workouts-hub/utils/workoutReport";
 import styles from "./WorkoutCalendarWidget.module.css";
 
 const WEEKDAY_HEADERS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"] as const;
@@ -22,12 +24,15 @@ const WEEKDAY_HEADERS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
 type WorkoutCalendarWidgetProps = {
   sessions: readonly WorkoutCalendarSession[];
   referenceDate?: Date;
+  /** Прокрутить месячный вид к дате отчёта (ISO) */
+  focusDate?: string | null;
   onDayOpen?: (date: string) => void;
 };
 
 export function WorkoutCalendarWidget({
   sessions,
-  referenceDate = new Date(2026, 5, 5),
+  referenceDate = DEMO_TODAY,
+  focusDate = null,
   onDayOpen,
 }: WorkoutCalendarWidgetProps) {
   const [monthExpanded, setMonthExpanded] = useState(false);
@@ -46,16 +51,20 @@ export function WorkoutCalendarWidget({
     [sessions],
   );
 
-  const weekDays = useMemo(() => getWeekDays(viewDate), [viewDate]);
+  const weekDays = useMemo(
+    () => getWeekDays(referenceDate),
+    [referenceDate],
+  );
+
+  useEffect(() => {
+    if (!focusDate) return;
+    const focused = parseISODate(focusDate);
+    setViewDate(new Date(focused.getFullYear(), focused.getMonth(), 1));
+  }, [focusDate]);
 
   const monthCells = useMemo(
     () => getMonthGridCells(viewDate.getFullYear(), viewDate.getMonth()),
     [viewDate],
-  );
-
-  const maxWeekDuration = useMemo(
-    () => getMaxDurationForDates(sessionsByDate, weekDays),
-    [sessionsByDate, weekDays],
   );
 
   const openDay = (iso: string) => {
@@ -99,25 +108,15 @@ export function WorkoutCalendarWidget({
             }}
             aria-hidden={progress > 0.92}
           >
-            <p className={styles.caption}>{formatMonthTitle(viewDate)}</p>
+            <p className={styles.caption}>{formatMonthTitle(referenceDate)}</p>
             <div className={styles.weekChart}>
               {weekDays.map((day) => {
                 const iso = toISODate(day);
                 const daySessions = sessionsByDate.get(iso) ?? [];
-                const totalMinutes = daySessions.reduce(
-                  (sum, session) => sum + session.durationMinutes,
-                  0,
-                );
+                const { visible: visibleSessions, overflowCount } =
+                  getCalendarSessionDisplay(daySessions);
                 const hasWorkout = daySessions.length > 0;
                 const isToday = isSameDay(day, referenceDate);
-                const barHeight =
-                  maxWeekDuration > 0
-                    ? Math.max(
-                        8,
-                        Math.round((totalMinutes / maxWeekDuration) * 100),
-                      )
-                    : 0;
-
                 return (
                   <button
                     key={iso}
@@ -126,24 +125,35 @@ export function WorkoutCalendarWidget({
                     disabled={!hasWorkout}
                     aria-label={
                       hasWorkout
-                        ? `${formatWeekdayShort(day)} ${formatDayNumber(day)}, тренировка`
+                        ? `${formatWeekdayShort(day)} ${formatDayNumber(day)}, ${daySessions.length} тренировок`
                         : `${formatWeekdayShort(day)} ${formatDayNumber(day)}, без тренировки`
                     }
                     onClick={() => openDay(iso)}
                   >
                     <span className={styles.weekBarTrack} aria-hidden>
                       {hasWorkout ? (
-                        <span
-                          className={styles.weekBar}
-                          style={{ height: `${barHeight}%` }}
-                        />
+                        <span className={styles.weekBarGroup}>
+                          {visibleSessions.map((session) => (
+                            <span
+                              key={session.id}
+                              className={`${styles.weekBar} ${styles[`weekBarTone_${session.weekDifficulty}`]}`}
+                            />
+                          ))}
+                          {overflowCount > 0 ? (
+                            <span className={styles.weekBarOverflow}>
+                              +{overflowCount}
+                            </span>
+                          ) : null}
+                        </span>
                       ) : null}
                     </span>
-                    <span className={styles.weekDayLabel}>
-                      {formatWeekdayShort(day)}
-                    </span>
-                    <span className={styles.weekDateLabel}>
-                      {formatDayNumber(day)}
+                    <span className={styles.weekDayBottom}>
+                      <span className={styles.weekDayLabel}>
+                        {formatWeekdayShort(day)}
+                      </span>
+                      <span className={styles.weekDateLabel}>
+                        {formatDayNumber(day)}
+                      </span>
                     </span>
                   </button>
                 );
@@ -186,33 +196,24 @@ export function WorkoutCalendarWidget({
               ))}
             </div>
             <div className={styles.monthGrid} role="grid">
-              {monthCells.map((day, index) => {
-                if (!day) {
-                  return (
-                    <span
-                      key={`empty-${viewDate.getMonth()}-${index}`}
-                      className={styles.monthCellEmpty}
-                      role="gridcell"
-                      aria-hidden
-                    />
-                  );
-                }
-
+              {monthCells.map(({ date: day, inMonth }) => {
                 const iso = toISODate(day);
                 const daySessions = sessionsByDate.get(iso) ?? [];
+                const { visible: visibleSessions, overflowCount } =
+                  getCalendarSessionDisplay(daySessions);
                 const hasWorkout = daySessions.length > 0;
-                const isToday = isSameDay(day, referenceDate);
+                const isToday = inMonth && isSameDay(day, referenceDate);
 
                 return (
                   <button
-                    key={iso}
+                    key={`${iso}-${inMonth ? "in" : "out"}`}
                     type="button"
                     role="gridcell"
-                    className={`${styles.monthCell} ${hasWorkout ? styles.monthCellDone : ""} ${isToday ? styles.monthCellToday : ""}`}
+                    className={`${styles.monthCell} ${!inMonth ? styles.monthCellOutside : ""} ${hasWorkout ? styles.monthCellDone : ""} ${isToday ? styles.monthCellToday : ""}`}
                     disabled={!hasWorkout}
                     aria-label={
                       hasWorkout
-                        ? `${formatDayNumber(day)}, тренировка`
+                        ? `${formatDayNumber(day)}, ${daySessions.length} тренировок`
                         : `${formatDayNumber(day)}, без тренировки`
                     }
                     onClick={() => openDay(iso)}
@@ -221,7 +222,19 @@ export function WorkoutCalendarWidget({
                       {formatDayNumber(day)}
                     </span>
                     {hasWorkout ? (
-                      <span className={styles.monthDot} aria-hidden />
+                      <span className={styles.monthDots} aria-hidden>
+                        {visibleSessions.map((session) => (
+                          <span
+                            key={session.id}
+                            className={`${styles.monthDot} ${styles[`monthDotTone_${session.weekDifficulty}`]}`}
+                          />
+                        ))}
+                        {overflowCount > 0 ? (
+                          <span className={styles.monthDotOverflow}>
+                            +{overflowCount}
+                          </span>
+                        ) : null}
+                      </span>
                     ) : null}
                   </button>
                 );

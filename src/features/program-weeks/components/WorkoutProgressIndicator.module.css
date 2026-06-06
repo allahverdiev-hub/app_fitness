@@ -23,12 +23,12 @@
 .label {
   position: relative;
   z-index: 1;
-  font-size: var(--program-workout-progress-label-size);
-  font-weight: var(--program-workout-progress-label-weight);
-  line-height: var(--program-workout-progress-label-line-height);
-  letter-spacing: var(--program-workout-progress-label-letter-spacing);
+  font-size: var(--workout-progress-percent-size);
+  font-weight: var(--workout-progress-percent-weight);
+  line-height: var(--workout-progress-percent-line-height);
+  letter-spacing: var(--workout-progress-percent-letter-spacing);
   text-transform: uppercase;
-  color: var(--program-workout-progress-label-color);
+  color: var(--workout-progress-percent-color);
 }
 
 .done {

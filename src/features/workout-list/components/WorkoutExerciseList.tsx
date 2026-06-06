@@ -12,6 +12,7 @@ import {
 import { WorkoutExerciseCard } from "@/features/workout-list/components/WorkoutExerciseCard";
 import { DeleteAnimatedListItem } from "@/features/workout-list/components/DeleteAnimatedListItem";
 import { ThanosDissolve } from "@/shared/ui/ThanosDissolve";
+import { ReplaceReveal } from "@/shared/ui/ReplaceReveal";
 import styles from "./WorkoutExerciseList.module.css";
 
 type WorkoutExerciseListProps = {
@@ -19,8 +20,10 @@ type WorkoutExerciseListProps = {
   editing: boolean;
   dissolvingId?: string | null;
   collapsingId?: string | null;
+  replaceRevealId?: string | null;
   onDissolveComplete?: (exerciseId: string) => void;
   onCollapseComplete?: (exerciseId: string) => void;
+  onReplaceRevealComplete?: (exerciseId: string) => void;
   onReorder: (exercises: WorkoutListExerciseItem[]) => void;
   onOpenExercise?: (exerciseId: string) => void;
   onMenu?: (exercise: WorkoutListExerciseItem) => void;
@@ -32,8 +35,10 @@ export function WorkoutExerciseList({
   editing,
   dissolvingId = null,
   collapsingId = null,
+  replaceRevealId = null,
   onDissolveComplete,
   onCollapseComplete,
+  onReplaceRevealComplete,
   onReorder,
   onOpenExercise,
   onMenu,
@@ -123,17 +128,25 @@ export function WorkoutExerciseList({
                         active={dissolvingId === exercise.id}
                         onComplete={() => onDissolveComplete?.(exercise.id)}
                       >
-                        <WorkoutExerciseCard
-                          exercise={exercise}
-                          onPress={
-                            editing || isDeleting
-                              ? undefined
-                              : () => onOpenExercise?.(exercise.id)
+                        <ReplaceReveal
+                          active={replaceRevealId === exercise.id}
+                          onComplete={() =>
+                            onReplaceRevealComplete?.(exercise.id)
                           }
-                          onMenu={
-                            isDeleting ? undefined : () => onMenu?.(exercise)
-                          }
-                        />
+                        >
+                          <WorkoutExerciseCard
+                            exercise={exercise}
+                            revealingReplace={replaceRevealId === exercise.id}
+                            onPress={
+                              editing || isDeleting
+                                ? undefined
+                                : () => onOpenExercise?.(exercise.id)
+                            }
+                            onMenu={
+                              isDeleting ? undefined : () => onMenu?.(exercise)
+                            }
+                          />
+                        </ReplaceReveal>
                       </ThanosDissolve>
                     </DeleteAnimatedListItem>
                   );

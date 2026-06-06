@@ -1,0 +1,12 @@
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.actions .actionBtn {
+  width: 100%;
+  height: var(--action-control-height);
+  min-height: var(--action-control-height);
+  box-sizing: border-box;
+}

@@ -4,19 +4,19 @@ import {
   Level2ActionButton,
   PrimaryActionButton,
 } from "@/shared/ui/ActionButton";
-import styles from "./DeleteExerciseConfirmSheet.module.css";
+import styles from "./FinishWorkoutConfirmSheet.module.css";
 
-type DeleteExerciseConfirmSheetProps = {
+type FinishWorkoutConfirmSheetProps = {
   open: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 };
 
-export function DeleteExerciseConfirmSheet({
+export function FinishWorkoutConfirmSheet({
   open,
   onConfirm,
   onCancel,
-}: DeleteExerciseConfirmSheetProps) {
+}: FinishWorkoutConfirmSheetProps) {
   useEffect(() => {
     if (!open) return undefined;
     const onKey = (e: KeyboardEvent) => {
@@ -29,12 +29,12 @@ export function DeleteExerciseConfirmSheet({
   return (
     <ActionPopup
       open={open}
-      title="Вы уверены, что хотите удалить упражнение?"
+      title="Вы уверены, что хотите завершить тренировку?"
       onClose={onCancel}
     >
       <div className={styles.actions}>
         <Level2ActionButton block className={styles.actionBtn} onClick={onCancel}>
-          Отмена
+          Нет
         </Level2ActionButton>
         <PrimaryActionButton className={styles.actionBtn} onClick={onConfirm}>
           Да

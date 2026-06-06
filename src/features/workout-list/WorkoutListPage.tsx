@@ -18,6 +18,7 @@ import { ReplaceExerciseSheet } from "@/features/exercise-page/components/replac
 import { ReplaceExerciseCatalogPage } from "@/features/exercise-page/components/replace-exercise-catalog/ReplaceExerciseCatalogPage";
 import { DeleteExerciseConfirmSheet } from "@/features/workout-list/components/DeleteExerciseConfirmSheet";
 import { DELETE_COLLAPSE_DELAY_MS } from "@/shared/ui/ThanosDissolve";
+import { ExerciseReplacedNotice } from "@/shared/ui/ExerciseReplacedNotice";
 
 import type { WorkoutListExerciseItem } from "@/features/workout-list/types/workoutOverview";
 
@@ -30,7 +31,6 @@ type WorkoutListPageProps = {
   workoutPaused?: boolean;
   onStartWorkout?: (exercisePageId: string) => void;
   onFinishWorkout?: () => void;
-  onToggleWorkoutPause?: () => void;
   onOpenExercise?: (exercisePageId: string) => void;
   completedSetsById: Record<string, number>;
   exercises: WorkoutListExerciseItem[];
@@ -47,7 +47,6 @@ export function WorkoutListPage({
   workoutPaused = false,
   onStartWorkout,
   onFinishWorkout,
-  onToggleWorkoutPause,
   onOpenExercise,
   completedSetsById,
   exercises: exercisesFromParent,
@@ -60,7 +59,7 @@ export function WorkoutListPage({
     () => ({ ...mockWorkoutOverview, title: workoutTitle }),
     [workoutTitle],
   );
-  const baselineExercisesRef = useRef(exercisesFromParent);
+  const savedExercisesRef = useRef(exercisesFromParent);
 
   const [editing, setEditing] = useState(false);
   const [exercises, setExercises] = useState<WorkoutListExerciseItem[]>(
@@ -70,8 +69,14 @@ export function WorkoutListPage({
   useEffect(() => {
     if (editing) return;
     setExercises(exercisesFromParent);
-    baselineExercisesRef.current = exercisesFromParent;
+    savedExercisesRef.current = exercisesFromParent;
   }, [exercisesFromParent, editing]);
+
+  useEffect(() => {
+    return () => {
+      setEditing(false);
+    };
+  }, []);
 
   const exercisesWithProgress = useMemo(
     () =>
@@ -108,6 +113,8 @@ export function WorkoutListPage({
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const [dissolvingId, setDissolvingId] = useState<string | null>(null);
   const [collapsingId, setCollapsingId] = useState<string | null>(null);
+  const [replaceRevealId, setReplaceRevealId] = useState<string | null>(null);
+  const [replaceNoticeOpen, setReplaceNoticeOpen] = useState(false);
 
   const openExercise = (exerciseId: string) => {
     onOpenExercise?.(exerciseId);
@@ -165,25 +172,34 @@ export function WorkoutListPage({
 
   const handleCollapseComplete = useCallback(() => undefined, []);
 
+  const handleReplaceExercise = useCallback(
+    (targetId: string, suggestionId: string) => {
+      onReplaceExercise(targetId, suggestionId);
+      setReplaceRevealId(targetId);
+      setReplaceNoticeOpen(true);
+      setReplaceCatalogOpen(false);
+      setReplaceTargetId(null);
+    },
+    [onReplaceExercise],
+  );
+
+  const handleReplaceRevealComplete = useCallback((targetId: string) => {
+    setReplaceRevealId((current) => (current === targetId ? null : current));
+  }, []);
+
   const handleSaveWorkout = useCallback(() => {
-    baselineExercisesRef.current = exercises;
+    savedExercisesRef.current = exercises;
     onExercisesChange?.(exercises);
-    console.log(
-      "workout save order",
-      exercises.map((item) => item.id),
-    );
   }, [exercises, onExercisesChange]);
 
   const handleEditingChange = useCallback(
     (next: boolean) => {
-      if (next) {
-        baselineExercisesRef.current = exercises;
-      } else {
-        setExercises(baselineExercisesRef.current);
+      if (!next) {
+        setExercises(savedExercisesRef.current);
       }
       setEditing(next);
     },
-    [exercises],
+    [],
   );
 
   const handleAddExercise = useCallback(() => {
@@ -200,8 +216,10 @@ export function WorkoutListPage({
             editing={editing}
             dissolvingId={dissolvingId}
             collapsingId={collapsingId}
+            replaceRevealId={replaceRevealId}
             onDissolveComplete={handleDissolveComplete}
             onCollapseComplete={handleCollapseComplete}
+            onReplaceRevealComplete={handleReplaceRevealComplete}
             onReorder={(next) => {
               setExercises(next);
               if (!editing) onExercisesChange?.(next);
@@ -222,7 +240,6 @@ export function WorkoutListPage({
           onStartWorkout={handleStart}
           onSaveWorkout={handleSaveWorkout}
           onFinishWorkout={onFinishWorkout}
-          onToggleWorkoutPause={onToggleWorkoutPause}
         />
       </div>
       <ExerciseActionsSheet
@@ -240,7 +257,7 @@ export function WorkoutListPage({
         }}
         onSelect={(suggestionId) => {
           if (!replaceTargetId) return;
-          onReplaceExercise(replaceTargetId, suggestionId);
+          handleReplaceExercise(replaceTargetId, suggestionId);
         }}
         onViewAll={() => setReplaceCatalogOpen(true)}
       />
@@ -249,9 +266,7 @@ export function WorkoutListPage({
           exerciseId={replaceTargetId}
           onBack={() => setReplaceCatalogOpen(false)}
           onConfirm={(suggestionId) => {
-            onReplaceExercise(replaceTargetId, suggestionId);
-            setReplaceCatalogOpen(false);
-            setReplaceTargetId(null);
+            handleReplaceExercise(replaceTargetId, suggestionId);
           }}
         />
       ) : null}
@@ -259,6 +274,10 @@ export function WorkoutListPage({
         open={deleteTargetId !== null}
         onCancel={() => setDeleteTargetId(null)}
         onConfirm={handleConfirmDelete}
+      />
+      <ExerciseReplacedNotice
+        open={replaceNoticeOpen}
+        onClose={() => setReplaceNoticeOpen(false)}
       />
     </div>
   );

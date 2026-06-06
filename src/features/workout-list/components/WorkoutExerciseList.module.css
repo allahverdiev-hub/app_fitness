@@ -132,31 +132,10 @@
   overflow: visible;
 }
 
-.listItemCollapsing {
-  overflow: hidden;
-  height: var(--collapse-from-height, 120px);
-  margin-bottom: var(--collapse-from-margin, 0px);
-  transition:
-    height var(--collapse-duration, 450ms) cubic-bezier(0.22, 1, 0.36, 1),
-    margin-bottom var(--collapse-duration, 450ms) cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: height, margin-bottom;
-  pointer-events: none;
-}
-
 .listItemCollapsing.listItem {
   transition:
     height var(--collapse-duration, 450ms) cubic-bezier(0.22, 1, 0.36, 1),
     margin-bottom var(--collapse-duration, 450ms) cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.listItemCollapsing > :last-child {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.listItemCollapsed {
-  height: 0 !important;
-  margin-bottom: 0 !important;
 }
 
 .listNoAnim .listItem {
@@ -216,8 +195,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .listItem,
-  .dragHandleSlot,
-  .listItemCollapsing {
+  .dragHandleSlot {
     transition: none;
   }
 }

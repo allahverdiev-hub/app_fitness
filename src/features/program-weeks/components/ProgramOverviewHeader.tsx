@@ -22,7 +22,7 @@ export function ProgramOverviewHeader({
       <div className={styles.titleRow}>
         <PageTitle className={styles.title}>{title}</PageTitle>
         <MutedIconActionButton
-          label="Настройки тренировки"
+          label="Настройки программы"
           className={styles.settingsBtn}
           onClick={onSettings}
         >

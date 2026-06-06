@@ -6,8 +6,6 @@ type SheetPopupHeaderProps = {
   titleId: string;
   onClose: () => void;
   className?: string;
-  /** Заголовок в несколько строк без сокращения */
-  titleWrap?: boolean;
 };
 
 export function SheetPopupHeader({
@@ -15,16 +13,10 @@ export function SheetPopupHeader({
   titleId,
   onClose,
   className = "",
-  titleWrap = false,
 }: SheetPopupHeaderProps) {
   return (
-    <header
-      className={`${styles.header} ${titleWrap ? styles.headerWrap : ""} ${className}`.trim()}
-    >
-      <h2
-        id={titleId}
-        className={`${styles.title} ${titleWrap ? styles.titleWrap : ""}`.trim()}
-      >
+    <header className={`${styles.header} ${className}`.trim()}>
+      <h2 id={titleId} className={styles.title}>
         {title}
       </h2>
       <button

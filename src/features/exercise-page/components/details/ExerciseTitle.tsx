@@ -13,6 +13,7 @@ type ExerciseTitleProps = {
   warmupVolumeType?: WarmupVolumeType;
   replacedFromTitle?: string;
   completed?: boolean;
+  revealingReplace?: boolean;
 };
 
 export function ExerciseTitle({
@@ -24,6 +25,7 @@ export function ExerciseTitle({
   warmupVolumeType,
   replacedFromTitle,
   completed = false,
+  revealingReplace = false,
 }: ExerciseTitleProps) {
   const volume = formatExercisePageVolume({
     sets,
@@ -40,6 +42,7 @@ export function ExerciseTitle({
           <WorkoutExerciseReplacedLabel
             previousTitle={replacedFromTitle}
             completed={completed}
+            entering={revealingReplace}
           />
         </div>
       ) : null}

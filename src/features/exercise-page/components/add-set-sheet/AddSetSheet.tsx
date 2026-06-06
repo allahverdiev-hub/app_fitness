@@ -34,10 +34,11 @@ export function AddSetSheet({
   const [weightKg, setWeightKg] = useState(defaults.weightKg);
   const [weightGrams, setWeightGrams] = useState(defaults.weightGrams);
   const [note, setNote] = useState("");
-  const sheetRef = useRef<HTMLDivElement>(null);
+  const sheetMotionRef = useRef<HTMLDivElement>(null);
   const { shouldRender, shown, unmount } = useBottomSheetMotion(
     open,
     BOTTOM_SHEET_DURATION_MS,
+    sheetMotionRef,
   );
   const [wheelsReady, setWheelsReady] = useState(false);
   const wheelsFallbackRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -63,7 +64,7 @@ export function AddSetSheet({
   }, []);
 
   useEffect(() => {
-    if (!shown) {
+    if (!shouldRender) {
       if (wheelsFallbackRef.current) {
         window.clearTimeout(wheelsFallbackRef.current);
         wheelsFallbackRef.current = null;
@@ -71,6 +72,8 @@ export function AddSetSheet({
       setWheelsReady(false);
       return undefined;
     }
+
+    if (!shown) return undefined;
 
     wheelsFallbackRef.current = window.setTimeout(
       enableWheels,
@@ -82,7 +85,7 @@ export function AddSetSheet({
         wheelsFallbackRef.current = null;
       }
     };
-  }, [shown, enableWheels]);
+  }, [shouldRender, shown, enableWheels]);
 
   useEffect(() => {
     if (!shouldRender) return undefined;
@@ -94,7 +97,9 @@ export function AddSetSheet({
   }, [shouldRender, open, onClose]);
 
   const handleSheetTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
-    if (e.target !== sheetRef.current || e.propertyName !== "transform") return;
+    if (e.target !== sheetMotionRef.current || e.propertyName !== "transform") {
+      return;
+    }
     if (open && shown) enableWheels();
     if (!open && !shown) unmount();
   };
@@ -119,20 +124,21 @@ export function AddSetSheet({
         tabIndex={shown ? 0 : -1}
       />
       <div
-        ref={sheetRef}
-        className={styles.sheet}
+        ref={sheetMotionRef}
+        className={styles.sheetMotion}
         role="dialog"
         aria-modal="true"
         aria-labelledby="add-set-title"
         onTransitionEnd={handleSheetTransitionEnd}
       >
-        <div className={styles.sheetBody}>
         <SheetPopupHeader
+          className={styles.sheetHeader}
           title="Добавить подход"
           titleId="add-set-title"
           onClose={onClose}
         />
 
+        <div className={styles.sheetScroll}>
         <div className={styles.pickers}>
           <div className={`${styles.pickerCard} ${styles.pickerCardReps}`}>
             <p className={`${styles.pickerCardTitle} ${styles.pickerCardTitleStatic}`}>
@@ -198,12 +204,12 @@ export function AddSetSheet({
             onChange={(e) => setNote(e.target.value)}
           />
         </label>
+        </div>
 
         <div className={styles.footer}>
           <PrimaryActionButton className={styles.submitBtn} onClick={handleSubmit}>
             Добавить
           </PrimaryActionButton>
-        </div>
         </div>
       </div>
     </div>

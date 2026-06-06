@@ -33,3 +33,16 @@ export function getDifficultyStyle(
 ): DifficultyStyle {
   return DIFFICULTY_STYLES[difficulty];
 }
+
+const DIFFICULTY_DISPLAY_LABELS: Record<ProgramDifficulty, string> = {
+  light: "Лёгкая",
+  medium: "Средняя",
+  heavy: "Тяжёлая",
+};
+
+/** Подпись сложности для отчётов и UI без капса */
+export function getDifficultyDisplayLabel(
+  difficulty: ProgramDifficulty,
+): string {
+  return DIFFICULTY_DISPLAY_LABELS[difficulty];
+}

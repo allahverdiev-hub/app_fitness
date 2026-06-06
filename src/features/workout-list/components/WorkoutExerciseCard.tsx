@@ -8,12 +8,14 @@ import styles from "./WorkoutExerciseCard.module.css";
 
 type WorkoutExerciseCardProps = {
   exercise: WorkoutListExerciseItem;
+  revealingReplace?: boolean;
   onPress?: () => void;
   onMenu?: () => void;
 };
 
 export function WorkoutExerciseCard({
   exercise,
+  revealingReplace = false,
   onPress,
   onMenu,
 }: WorkoutExerciseCardProps) {
@@ -83,6 +85,7 @@ export function WorkoutExerciseCard({
         <WorkoutExerciseReplacedLabel
           previousTitle={exercise.replacedFromTitle}
           completed={exercise.completed}
+          entering={revealingReplace}
         />
       ) : null}
     </div>

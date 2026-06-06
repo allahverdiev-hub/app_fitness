@@ -3,6 +3,7 @@
   --action-popup-backdrop-duration: 370ms;
   --action-popup-ease-open: cubic-bezier(0.22, 1, 0.36, 1);
   --action-popup-ease-close: cubic-bezier(0.4, 0, 0.2, 1);
+  --sheet-popup-max-height: calc(100% - var(--sheet-popup-top-gap));
 
   position: absolute;
   inset: 0;
@@ -36,13 +37,15 @@
     var(--action-popup-ease-open);
 }
 
-.sheet {
+.sheetMotion {
+  composes: sheetFrame from "@/shared/styles/sheetPopupScrollLayout.module.css";
+
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 1;
-  padding: var(--space-md) var(--page-gutter)
+  padding: 0 var(--page-gutter)
     calc(var(--space-lg) + var(--safe-bottom));
   background: var(--sheet-popup-bg);
   border-radius: var(--sheet-popup-top-radius) var(--sheet-popup-top-radius) 0 0;
@@ -52,18 +55,22 @@
   backface-visibility: hidden;
 }
 
-.rootShown .sheet {
+.rootShown .sheetMotion {
   transform: translate3d(0, 0, 0);
   transition: transform var(--action-popup-duration) var(--action-popup-ease-open);
 }
 
-.body {
-  min-width: 0;
+.sheetHeader {
+  composes: sheetHeader from "@/shared/styles/sheetPopupScrollLayout.module.css";
+}
+
+.scroll {
+  composes: sheetScroll from "@/shared/styles/sheetPopupScrollLayout.module.css";
 }
 
 @media (prefers-reduced-motion: reduce) {
   .backdrop,
-  .sheet {
+  .sheetMotion {
     transition: none;
   }
 
@@ -71,8 +78,8 @@
     opacity: 1;
   }
 
-  .rootShown .sheet,
-  .sheet {
+  .rootShown .sheetMotion,
+  .sheetMotion {
     transform: translate3d(0, 0, 0);
   }
 }

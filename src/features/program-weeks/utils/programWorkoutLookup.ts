@@ -1,4 +1,5 @@
 import type {
+  ProgramDifficulty,
   ProgramOverview,
   ProgramWorkoutSession,
 } from "@/features/program-weeks/types/programWeeks";
@@ -36,6 +37,18 @@ export function findProgramWorkoutWeekNumber(
   for (const week of overview.weeks) {
     if (week.workouts.some((item) => item.id === workoutId)) {
       return week.weekNumber;
+    }
+  }
+  return undefined;
+}
+
+export function findProgramWorkoutWeekDifficulty(
+  overview: ProgramOverview,
+  workoutId: string,
+): ProgramDifficulty | undefined {
+  for (const week of overview.weeks) {
+    if (week.workouts.some((item) => item.id === workoutId)) {
+      return week.difficulty;
     }
   }
   return undefined;

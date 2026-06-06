@@ -1,0 +1,63 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.content {
+  width: 100%;
+  transform-origin: center top;
+}
+
+.active .content {
+  animation: replaceContent 520ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.flashRing {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.active .flashRing {
+  animation: replaceFlash 520ms ease-out forwards;
+}
+
+@keyframes replaceFlash {
+  0% {
+    opacity: 0;
+    box-shadow: 0 0 0 0 rgba(212, 255, 0, 0);
+  }
+
+  22% {
+    opacity: 0.9;
+    box-shadow: 0 0 0 2px rgba(212, 255, 0, 0.95);
+  }
+
+  100% {
+    opacity: 0;
+    box-shadow: 0 0 0 6px rgba(212, 255, 0, 0);
+  }
+}
+
+@keyframes replaceContent {
+  0% {
+    transform: scale(0.985);
+    filter: brightness(1.12);
+  }
+
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .active .content,
+  .active .flashRing {
+    animation: none;
+  }
+}

@@ -1,9 +1,21 @@
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
+import { lockSheetHeight, unlockSheetHeight } from "./sheetMotion";
 
 /**
  * Монтирование bottom sheet: один кадр «закрыто», затем transition в «открыто».
+ * При закрытии фиксирует высоту листа до старта transform-анимации.
  */
-export function useBottomSheetMotion(open: boolean, durationMs: number) {
+export function useBottomSheetMotion(
+  open: boolean,
+  durationMs: number,
+  sheetRef?: RefObject<HTMLElement | null>,
+) {
   const [mounted, setMounted] = useState(open);
   const [shown, setShown] = useState(false);
   const exitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -26,15 +38,20 @@ export function useBottomSheetMotion(open: boolean, durationMs: number) {
   const unmount = useCallback(() => {
     clearExitTimer();
     cancelEnterRaf();
+    if (sheetRef?.current) {
+      unlockSheetHeight(sheetRef.current);
+    }
     setMounted(false);
     setShown(false);
-  }, [clearExitTimer, cancelEnterRaf]);
+  }, [clearExitTimer, cancelEnterRaf, sheetRef]);
 
   useLayoutEffect(() => {
     cancelEnterRaf();
+    const sheetEl = sheetRef?.current ?? null;
 
     if (open) {
       clearExitTimer();
+      if (sheetEl) unlockSheetHeight(sheetEl);
       setMounted(true);
       setShown(false);
 
@@ -50,6 +67,7 @@ export function useBottomSheetMotion(open: boolean, durationMs: number) {
       return cancelEnterRaf;
     }
 
+    if (sheetEl) lockSheetHeight(sheetEl);
     setShown(false);
     clearExitTimer();
     exitTimerRef.current = setTimeout(unmount, durationMs + 32);
@@ -58,7 +76,7 @@ export function useBottomSheetMotion(open: boolean, durationMs: number) {
       clearExitTimer();
       cancelEnterRaf();
     };
-  }, [open, durationMs, clearExitTimer, cancelEnterRaf, unmount]);
+  }, [open, durationMs, clearExitTimer, cancelEnterRaf, unmount, sheetRef]);
 
   const shouldRender = mounted || open;
 

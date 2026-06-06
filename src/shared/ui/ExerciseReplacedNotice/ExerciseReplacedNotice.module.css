@@ -1,0 +1,62 @@
+.host {
+  position: absolute;
+  left: var(--page-gutter);
+  right: var(--page-gutter);
+  bottom: var(--replace-notice-bottom);
+  z-index: var(--replace-notice-z-index);
+  pointer-events: none;
+}
+
+.plate {
+  margin: 0;
+  padding: var(--replace-notice-padding-y) var(--replace-notice-padding-x);
+  border-radius: var(--replace-notice-radius);
+  text-align: center;
+  font-size: var(--replace-notice-font-size);
+  font-weight: var(--replace-notice-font-weight);
+  line-height: var(--replace-notice-line-height);
+  color: var(--replace-notice-color);
+  box-shadow: var(--replace-notice-shadow);
+  composes: pending from "@/shared/styles/workoutCardSurfaces.module.css";
+}
+
+.entering {
+  animation: replaceNoticeIn var(--replace-notice-enter-duration)
+    var(--replace-notice-enter-ease) forwards;
+}
+
+.leaving {
+  animation: replaceNoticeOut var(--replace-notice-leave-duration)
+    var(--replace-notice-leave-ease) forwards;
+}
+
+@keyframes replaceNoticeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(var(--replace-notice-enter-offset-y));
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes replaceNoticeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(var(--replace-notice-leave-offset-y));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entering,
+  .leaving {
+    animation: none;
+  }
+}

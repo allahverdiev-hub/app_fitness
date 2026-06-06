@@ -142,6 +142,9 @@
   --action-popup-title-weight: 600;
   --action-popup-close-size: 32px;
   --sheet-popup-header-gap-below: var(--space-md);
+  --sheet-popup-header-close-gap: 20px;
+  /* Задаётся на overlay-root (inset: 0): calc(100% - top-gap) */
+  --sheet-popup-max-height: calc(100% - var(--sheet-popup-top-gap));
 
   /* Плавающие островки (таб-бар, панели действий) */
   --floating-island-bg: #1c1c1e;
@@ -232,6 +235,13 @@
 
   --program-accent: #c4ff62;
 
+  /* Процент прогресса тренировки (кольцо WorkoutProgressIndicator, числа недели в календаре) */
+  --workout-progress-percent-size: calc(var(--font-size-sm) * 1.32);
+  --workout-progress-percent-weight: 600;
+  --workout-progress-percent-line-height: 1.2;
+  --workout-progress-percent-letter-spacing: 0.01em;
+  --workout-progress-percent-color: var(--color-text-primary);
+
   /* Хаб тренировок (список программ) */
   --hub-bottom-inset: calc(
     var(--tab-nav-island-clearance) + var(--safe-bottom) + var(--space-lg)
@@ -243,6 +253,96 @@
   --hub-calendar-scale-label-weight: 500;
   --hub-calendar-scale-label-line-height: 1;
   --hub-calendar-scale-label-color: var(--color-text-secondary);
+
+  /* WorkoutCalendarWidget — виджет календаря на хабе */
+  --calendar-widget-week-height: 168px;
+  --calendar-widget-month-height: 324px;
+  --calendar-widget-handle-height: 42px;
+  --calendar-widget-bg: var(--hub-streak-bg);
+  --calendar-widget-radius: var(--radius-card);
+  --calendar-widget-panel-padding-top: var(--space-lg);
+  --calendar-widget-panel-padding-x: var(--space-lg);
+  --calendar-widget-panel-padding-bottom: var(--space-sm);
+  --calendar-widget-panel-gap: var(--space-md);
+  --calendar-widget-grid-gap: var(--space-xs);
+  --calendar-caption-size: var(--progress-label-size);
+  --calendar-caption-weight: var(--progress-label-weight);
+  --calendar-caption-line-height: var(--progress-label-line-height);
+  --calendar-caption-color: var(--progress-label-color);
+  --calendar-caption-letter-spacing: 0.04em;
+  --calendar-week-day-label-size: 11px;
+  --calendar-week-day-label-weight: 600;
+  --calendar-week-day-label-line-height: 1;
+  --calendar-week-day-label-letter-spacing: 0.02em;
+  --calendar-week-day-label-color: var(--color-text-tertiary);
+  --calendar-week-date-size: var(--workout-progress-percent-size);
+  --calendar-week-date-weight: var(--workout-progress-percent-weight);
+  --calendar-week-date-line-height: 1;
+  --calendar-week-date-color: var(--color-text-secondary);
+  --calendar-week-date-today-color: var(--program-accent);
+  --calendar-week-bar-group-max-width: 36px;
+  --calendar-overflow-label-size: 8px;
+  --calendar-overflow-label-weight: 700;
+  --calendar-overflow-label-line-height: 1;
+  --calendar-overflow-label-letter-spacing: -0.02em;
+  --calendar-overflow-label-color: var(--color-text-tertiary);
+  --calendar-month-nav-btn-size: 40px;
+  --calendar-month-nav-btn-color: var(--color-text-secondary);
+  --calendar-month-nav-title-size: var(--progress-label-size);
+  --calendar-month-nav-title-weight: var(--progress-label-weight);
+  --calendar-month-nav-title-line-height: var(--progress-label-line-height);
+  --calendar-month-nav-title-color: var(--color-text-primary);
+  --calendar-month-nav-title-letter-spacing: 0.04em;
+  --calendar-month-weekday-size: 11px;
+  --calendar-month-weekday-weight: 600;
+  --calendar-month-weekday-line-height: 1;
+  --calendar-month-weekday-letter-spacing: 0.02em;
+  --calendar-month-weekday-color: var(--color-text-tertiary);
+  --calendar-month-cell-radius: var(--radius-md);
+  --calendar-month-cell-color: var(--color-text-secondary);
+  --calendar-month-cell-done-bg: rgba(255, 255, 255, 0.04);
+  --calendar-month-day-number-size: var(--font-size-sm);
+  --calendar-month-day-number-weight: 600;
+  --calendar-month-day-number-line-height: 1;
+  --calendar-month-day-number-outside-color: rgba(255, 255, 255, 0.16);
+  --calendar-today-border-color: var(--program-accent);
+  --calendar-today-text-color: var(--program-accent);
+  --calendar-month-dots-bottom: 5px;
+  --calendar-month-dot-size: 5px;
+  --calendar-drag-handle-padding-top: 4px;
+  --calendar-drag-handle-padding-x: var(--space-lg);
+  --calendar-drag-handle-padding-bottom: 6px;
+  --calendar-drag-handle-gap: 4px;
+  --calendar-drag-grip-width: 44px;
+  --calendar-drag-grip-height: 4px;
+  --calendar-drag-grip-bg: var(--color-surface-muted);
+  --calendar-drag-grip-active-bg: var(--color-text-tertiary);
+
+  /* WorkoutDayDetailSheet / WorkoutFinishReportSheet — отчёт в календаре */
+  --calendar-report-list-gap: var(--space-md);
+  --calendar-report-card-padding: var(--space-md);
+  --calendar-report-card-radius: var(--radius-md);
+  --calendar-report-card-bg: var(--color-surface);
+  --calendar-report-title-size: 15px;
+  --calendar-report-title-weight: 600;
+  --calendar-report-title-line-height: 1.2;
+  --calendar-report-title-color: var(--color-text-primary);
+  --calendar-report-row-gap: var(--space-sm);
+  --calendar-report-label-gap: 2px;
+  --calendar-report-label-size: var(--progress-label-size);
+  --calendar-report-label-weight: var(--progress-label-weight);
+  --calendar-report-label-line-height: var(--progress-label-line-height);
+  --calendar-report-label-color: var(--progress-label-color);
+  --calendar-report-value-size: var(--description-m-size);
+  --calendar-report-value-weight: var(--description-m-weight);
+  --calendar-report-value-line-height: var(--description-m-line-height);
+  --calendar-report-value-color: var(--color-text-primary);
+  --calendar-report-multi-dot-gap: 3px;
+  --calendar-week-bar-gap: 3px;
+  --calendar-week-bar-height: 40px;
+  --calendar-visible-reports-max: 3;
+  --calendar-week-label-gap: var(--space-sm);
+  --calendar-week-day-gap: 4px;
   --program-card-cover-inset: 6px;
   /* Сегментированный таб-пикер (недели программы, Мои/Каталог на хабе) */
   --segmented-tab-picker-track-padding: 6px;
@@ -273,12 +373,12 @@
     var(--tab-nav-island-clearance) + var(--safe-bottom) + var(--space-lg)
   );
   --program-workout-progress-high: var(--program-accent, #c4ff62);
-  /* Процент в кольце прогресса тренировки */
-  --program-workout-progress-label-size: calc(var(--font-size-sm) * 1.32);
-  --program-workout-progress-label-weight: 600;
-  --program-workout-progress-label-line-height: 1.2;
-  --program-workout-progress-label-letter-spacing: 0.01em;
-  --program-workout-progress-label-color: var(--color-text-primary);
+  /* Алиас `--program-workout-progress-label-*` → `--workout-progress-percent-*` */
+  --program-workout-progress-label-size: var(--workout-progress-percent-size);
+  --program-workout-progress-label-weight: var(--workout-progress-percent-weight);
+  --program-workout-progress-label-line-height: var(--workout-progress-percent-line-height);
+  --program-workout-progress-label-letter-spacing: var(--workout-progress-percent-letter-spacing);
+  --program-workout-progress-label-color: var(--workout-progress-percent-color);
   /* Подпись дня под названием тренировки («День 1», «День 2»…) */
   --program-workout-day-label-size: var(--font-size-sm);
   --program-workout-day-label-weight: 500;
@@ -338,4 +438,31 @@
   --page-back-btn-bg: var(--color-workout-card);
   --page-back-btn-color: var(--color-text-primary);
   --page-back-btn-icon-size: 18px;
+
+  /* ExerciseReplacedNotice — уведомление «Упражнение заменено» */
+  --replace-notice-duration-ms: 2000;
+  --replace-notice-enter-duration: 220ms;
+  --replace-notice-leave-duration: 180ms;
+  --replace-notice-bottom-gap: 14px;
+  --replace-notice-bottom: calc(
+    var(--workout-actions-bottom) + var(--action-control-height) +
+      var(--replace-notice-bottom-gap)
+  );
+  --replace-notice-bottom-exercise-page: calc(
+    var(--exercise-page-footer-bottom) + var(--bottom-bar-control-height) +
+      var(--replace-notice-bottom-gap)
+  );
+  --replace-notice-padding-y: var(--space-md);
+  --replace-notice-padding-x: var(--space-lg);
+  --replace-notice-radius: var(--radius-lg);
+  --replace-notice-font-size: var(--font-size-sm);
+  --replace-notice-font-weight: 500;
+  --replace-notice-line-height: 1.25;
+  --replace-notice-color: var(--color-text-primary);
+  --replace-notice-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  --replace-notice-z-index: 14;
+  --replace-notice-enter-offset-y: 10px;
+  --replace-notice-leave-offset-y: 6px;
+  --replace-notice-enter-ease: cubic-bezier(0.33, 1, 0.68, 1);
+  --replace-notice-leave-ease: ease-in;
 }

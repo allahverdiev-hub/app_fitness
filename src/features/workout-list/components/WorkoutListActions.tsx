@@ -15,7 +15,6 @@ type WorkoutListActionsProps = {
   onStartWorkout?: () => void;
   onSaveWorkout?: () => void;
   onFinishWorkout?: () => void;
-  onToggleWorkoutPause?: () => void;
 };
 
 export function WorkoutListActions({
@@ -27,7 +26,6 @@ export function WorkoutListActions({
   onStartWorkout,
   onSaveWorkout,
   onFinishWorkout,
-  onToggleWorkoutPause,
 }: WorkoutListActionsProps) {
   const openEdit = useCallback(() => {
     onEditingChange(true);
@@ -101,7 +99,6 @@ export function WorkoutListActions({
               elapsed={workoutElapsed}
               isPaused={workoutPaused}
               onFinish={onFinishWorkout}
-              onTogglePause={onToggleWorkoutPause}
             />
           </div>
           <PrimaryActionButton

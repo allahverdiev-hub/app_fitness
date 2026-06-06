@@ -1,0 +1,17 @@
+.value {
+  font-size: var(--calendar-report-value-size);
+  font-weight: var(--calendar-report-value-weight);
+  line-height: var(--calendar-report-value-line-height);
+}
+
+.tone_light {
+  color: var(--program-week-difficulty-color-light);
+}
+
+.tone_medium {
+  color: var(--program-week-difficulty-color-medium);
+}
+
+.tone_heavy {
+  color: var(--program-week-difficulty-color-heavy);
+}

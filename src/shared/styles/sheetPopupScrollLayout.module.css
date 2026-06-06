@@ -1,0 +1,41 @@
+/**
+ * Bottom sheet: высота растёт вместе с контентом до верхней границы экрана
+ * (--sheet-popup-max-height на overlay-root). После упора — шапка фикс,
+ * прокручивается только тело (sheetScroll).
+ */
+
+.sheetFrame {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  max-height: var(--sheet-popup-max-height);
+  overflow: hidden;
+}
+
+.sheetHeader {
+  flex-shrink: 0;
+  padding-top: var(--space-md);
+}
+
+.sheetScroll {
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sheetScroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.sheetFooter {
+  flex-shrink: 0;
+}

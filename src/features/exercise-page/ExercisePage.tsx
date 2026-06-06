@@ -37,6 +37,8 @@ import { AddSetSheet } from "@/features/exercise-page/components/add-set-sheet/A
 import { TechniqueVideoSheet } from "@/features/exercise-page/components/technique-video-sheet/TechniqueVideoSheet";
 import { ReplaceExerciseSheet } from "@/features/exercise-page/components/replace-exercise-sheet/ReplaceExerciseSheet";
 import { ReplaceExerciseCatalogPage } from "@/features/exercise-page/components/replace-exercise-catalog/ReplaceExerciseCatalogPage";
+import { ReplaceReveal } from "@/shared/ui/ReplaceReveal";
+import { ExerciseReplacedNotice } from "@/shared/ui/ExerciseReplacedNotice";
 import { defaultTechniqueVideoUrl } from "@/features/exercise-page/config/techniqueVideo";
 import styles from "./ExercisePage.module.css";
 
@@ -56,6 +58,7 @@ type ExercisePageProps = {
   completedSetsById: Record<string, number>;
   onCompletedSetsChange: Dispatch<SetStateAction<Record<string, number>>>;
   onReplaceExercise: (targetId: string, suggestionId: string) => void;
+  onFinishWorkout?: () => void;
 };
 
 export function ExercisePage({
@@ -65,6 +68,7 @@ export function ExercisePage({
   completedSetsById,
   onCompletedSetsChange,
   onReplaceExercise,
+  onFinishWorkout,
 }: ExercisePageProps) {
   const bodyRef = useRef<HTMLDivElement>(null);
   const contentScrollRef = useRef<HTMLDivElement>(null);
@@ -81,6 +85,8 @@ export function ExercisePage({
   const [techniqueOpen, setTechniqueOpen] = useState(false);
   const [replaceOpen, setReplaceOpen] = useState(false);
   const [replaceCatalogOpen, setReplaceCatalogOpen] = useState(false);
+  const [replaceRevealActive, setReplaceRevealActive] = useState(false);
+  const [replaceNoticeOpen, setReplaceNoticeOpen] = useState(false);
   const [addSetBarPhase, setAddSetBarPhase] = useState<AddSetBarPhase>("idle");
   const { elapsed, isPaused, onTogglePause } = sessionTimer;
   const [loggedSetsById, setLoggedSetsById] = useState<
@@ -209,6 +215,19 @@ export function ExercisePage({
     setReplaceOpen(true);
   }, []);
 
+  const handleReplaceExercise = useCallback(
+    (targetId: string, suggestionId: string) => {
+      onReplaceExercise(targetId, suggestionId);
+      if (targetId === activeId) {
+        setReplaceRevealActive(true);
+      }
+      setReplaceNoticeOpen(true);
+      setReplaceCatalogOpen(false);
+      setReplaceOpen(false);
+    },
+    [activeId, onReplaceExercise],
+  );
+
   const activeExerciseIndex = exercises.findIndex((e) => e.id === activeId);
   const hasNextExercise =
     activeExerciseIndex >= 0 && activeExerciseIndex < exercises.length - 1;
@@ -219,8 +238,8 @@ export function ExercisePage({
   );
 
   const handleFinishWorkout = useCallback(() => {
-    console.log("finish workout");
-  }, []);
+    onFinishWorkout?.();
+  }, [onFinishWorkout]);
 
   const handleNextExercise = useCallback(() => {
     if (!hasNextExercise) return;
@@ -296,16 +315,22 @@ export function ExercisePage({
                   onSelect={setActiveId}
                 />
               </div>
-              <ExerciseTitle
-                title={active.title}
-                muscles={active.muscles}
-                sets={active.sets}
-                repsRange={active.repsRange}
-                isWarmup={active.isWarmup}
-                warmupVolumeType={active.warmupVolumeType}
-                replacedFromTitle={active.replacedFromTitle}
-                completed={active.status === "completed"}
-              />
+              <ReplaceReveal
+                active={replaceRevealActive}
+                onComplete={() => setReplaceRevealActive(false)}
+              >
+                <ExerciseTitle
+                  title={active.title}
+                  muscles={active.muscles}
+                  sets={active.sets}
+                  repsRange={active.repsRange}
+                  isWarmup={active.isWarmup}
+                  warmupVolumeType={active.warmupVolumeType}
+                  replacedFromTitle={active.replacedFromTitle}
+                  completed={active.status === "completed"}
+                  revealingReplace={replaceRevealActive}
+                />
+              </ReplaceReveal>
               <ActionButtonRow
                 description={active.description}
                 onTechnique={handleOpenTechnique}
@@ -357,9 +382,7 @@ export function ExercisePage({
         open={replaceOpen && !replaceCatalogOpen}
         exerciseId={active.id}
         onClose={() => setReplaceOpen(false)}
-        onSelect={(suggestionId) =>
-          onReplaceExercise(active.id, suggestionId)
-        }
+        onSelect={(suggestionId) => handleReplaceExercise(active.id, suggestionId)}
         onViewAll={() => {
           setReplaceOpen(false);
           setReplaceCatalogOpen(true);
@@ -370,8 +393,7 @@ export function ExercisePage({
           exerciseId={active.id}
           onBack={() => setReplaceCatalogOpen(false)}
           onConfirm={(suggestionId) => {
-            onReplaceExercise(active.id, suggestionId);
-            setReplaceCatalogOpen(false);
+            handleReplaceExercise(active.id, suggestionId);
           }}
         />
       ) : null}
@@ -379,6 +401,11 @@ export function ExercisePage({
         open={chartPointDetail !== null}
         detail={chartPointDetail}
         onClose={() => setChartPointDetail(null)}
+      />
+      <ExerciseReplacedNotice
+        open={replaceNoticeOpen}
+        onClose={() => setReplaceNoticeOpen(false)}
+        bottomOffset="var(--replace-notice-bottom-exercise-page)"
       />
     </div>
   );

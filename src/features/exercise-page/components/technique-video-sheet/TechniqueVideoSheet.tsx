@@ -24,6 +24,7 @@ export function TechniqueVideoSheet({
   const { shouldRender, shown, unmount } = useBottomSheetMotion(
     open,
     BOTTOM_SHEET_DURATION_MS,
+    sheetRef,
   );
 
   const embedUrl = useMemo(() => toKinescopeEmbedUrl(videoUrl), [videoUrl]);

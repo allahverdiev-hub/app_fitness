@@ -6,7 +6,7 @@ import {
   type ReactNode,
 } from "react";
 import { DELETE_COLLAPSE_MS } from "@/shared/ui/ThanosDissolve/deleteAnimationTiming";
-import styles from "./WorkoutExerciseList.module.css";
+import styles from "@/shared/styles/deleteListItemCollapse.module.css";
 
 type DeleteAnimatedListItemProps = {
   itemKey: string;

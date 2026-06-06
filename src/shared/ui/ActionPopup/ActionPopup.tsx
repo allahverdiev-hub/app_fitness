@@ -1,4 +1,4 @@
-import { useCallback, useId, useRef, type ReactNode } from "react";
+import { useCallback, useId, useLayoutEffect, useRef, type ReactNode } from "react";
 import {
   BOTTOM_SHEET_DURATION_MS,
   useBottomSheetMotion,
@@ -13,29 +13,39 @@ export type ActionPopupProps = {
   children: ReactNode;
   /** Для aria-labelledby; по умолчанию генерируется */
   titleId?: string;
-  /** Заголовок в несколько строк без сокращения */
-  titleWrap?: boolean;
 };
 
+/**
+ * Bottom sheet с закреплённой шапкой: если контент не помещается,
+ * прокручивается только область под заголовком (без видимого скроллбара).
+ */
 export function ActionPopup({
   open,
   title,
   onClose,
   children,
   titleId: titleIdProp,
-  titleWrap = false,
 }: ActionPopupProps) {
   const autoTitleId = useId();
   const titleId = titleIdProp ?? autoTitleId;
-  const sheetRef = useRef<HTMLDivElement>(null);
+  const sheetMotionRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const { shouldRender, shown, unmount } = useBottomSheetMotion(
     open,
     BOTTOM_SHEET_DURATION_MS,
+    sheetMotionRef,
   );
+
+  useLayoutEffect(() => {
+    if (!open || !shown || !scrollRef.current) return;
+    scrollRef.current.scrollTop = 0;
+  }, [open, shown, title]);
 
   const handleSheetTransitionEnd = useCallback(
     (e: React.TransitionEvent<HTMLDivElement>) => {
-      if (e.target !== sheetRef.current || e.propertyName !== "transform") return;
+      if (e.target !== sheetMotionRef.current || e.propertyName !== "transform") {
+        return;
+      }
       if (!open) unmount();
     },
     [open, unmount],
@@ -56,20 +66,22 @@ export function ActionPopup({
         tabIndex={shown ? 0 : -1}
       />
       <div
-        ref={sheetRef}
-        className={styles.sheet}
+        ref={sheetMotionRef}
+        className={styles.sheetMotion}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
         onTransitionEnd={handleSheetTransitionEnd}
       >
         <SheetPopupHeader
+          className={styles.sheetHeader}
           title={title}
           titleId={titleId}
           onClose={onClose}
-          titleWrap={titleWrap}
         />
-        <div className={styles.body}>{children}</div>
+        <div ref={scrollRef} className={styles.scroll}>
+          {children}
+        </div>
       </div>
     </div>
   );

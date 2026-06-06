@@ -1,32 +1,5 @@
-.list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.list:has(.listItemDissolving) {
-  overflow: visible;
-}
-
-.listItem {
-  min-width: 0;
-  margin-bottom: var(--calendar-report-list-gap);
-}
-
-.listItem:last-child {
-  margin-bottom: 0;
-}
-
-.listItemDissolving {
-  z-index: 5;
-  pointer-events: none;
-  overflow: visible;
-}
-
 .card {
+  margin: 0;
   padding: var(--calendar-report-card-padding);
   border-radius: var(--calendar-report-card-radius);
   background: var(--calendar-report-card-bg);
@@ -70,6 +43,7 @@
   color: var(--calendar-report-value-color);
 }
 
-.deleteBtn {
-  margin-top: var(--space-md);
+.doneBtn {
+  width: 100%;
+  margin-top: var(--space-lg);
 }

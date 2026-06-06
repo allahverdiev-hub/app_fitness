@@ -67,22 +67,40 @@ export function getWeekDays(reference: Date): Date[] {
   });
 }
 
-export function getMonthGridCells(year: number, month: number): (Date | null)[] {
+export type MonthGridCell = {
+  date: Date;
+  inMonth: boolean;
+};
+
+export function getMonthGridCells(year: number, month: number): MonthGridCell[] {
   const first = new Date(year, month, 1);
   const startOffset = (first.getDay() + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const cells: (Date | null)[] = [];
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+  const cells: MonthGridCell[] = [];
 
   for (let i = 0; i < startOffset; i += 1) {
-    cells.push(null);
+    const day = daysInPrevMonth - startOffset + 1 + i;
+    cells.push({
+      date: new Date(year, month - 1, day),
+      inMonth: false,
+    });
   }
 
   for (let day = 1; day <= daysInMonth; day += 1) {
-    cells.push(new Date(year, month, day));
+    cells.push({
+      date: new Date(year, month, day),
+      inMonth: true,
+    });
   }
 
+  let trailingDay = 1;
   while (cells.length % 7 !== 0) {
-    cells.push(null);
+    cells.push({
+      date: new Date(year, month + 1, trailingDay),
+      inMonth: false,
+    });
+    trailingDay += 1;
   }
 
   return cells;

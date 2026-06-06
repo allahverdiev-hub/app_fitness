@@ -1,4 +1,5 @@
 .root {
+  --sheet-popup-max-height: calc(100% - var(--sheet-popup-top-gap));
   --add-set-sheet-duration: 420ms;
   --add-set-sheet-backdrop-duration: 370ms;
   --add-set-sheet-ease-open: cubic-bezier(0.32, 0.72, 0, 1);
@@ -38,16 +39,15 @@
     var(--add-set-sheet-ease-open);
 }
 
-.sheet {
+.sheetMotion {
+  composes: sheetFrame from "@/shared/styles/sheetPopupScrollLayout.module.css";
+
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  max-height: 78%;
-  padding: var(--space-md) var(--page-gutter)
+  padding: 0 var(--page-gutter)
     calc(var(--space-lg) + var(--safe-bottom));
   background: var(--sheet-popup-bg);
   border-radius: var(--sheet-popup-top-radius) var(--sheet-popup-top-radius) 0 0;
@@ -58,22 +58,26 @@
   backface-visibility: hidden;
 }
 
-.rootShown .sheet {
+.sheetHeader {
+  composes: sheetHeader from "@/shared/styles/sheetPopupScrollLayout.module.css";
+}
+
+.sheetScroll {
+  composes: sheetScroll from "@/shared/styles/sheetPopupScrollLayout.module.css";
+}
+
+.rootShown .sheetMotion {
   transform: translate3d(0, 0, 0);
   transition: transform var(--add-set-sheet-duration)
     var(--add-set-sheet-ease-open);
 }
 
-.sheetBody {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
+.sheetScroll {
   opacity: 0;
   transition: opacity 0.22s var(--add-set-sheet-ease-close);
 }
 
-.rootShown .sheetBody {
+.rootShown .sheetScroll {
   opacity: 1;
   transition:
     opacity 0.28s var(--add-set-sheet-ease-open)
@@ -82,8 +86,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .backdrop,
-  .sheet,
-  .sheetBody {
+  .sheetMotion,
+  .sheetScroll {
     transition: none;
   }
 
@@ -91,13 +95,13 @@
     opacity: 1;
   }
 
-  .rootShown .sheet,
-  .sheet {
+  .rootShown .sheetMotion,
+  .sheetMotion {
     transform: translate3d(0, 0, 0);
   }
 
-  .sheetBody,
-  .rootShown .sheetBody {
+  .sheetScroll,
+  .rootShown .sheetScroll {
     opacity: 1;
   }
 }
@@ -220,7 +224,7 @@
 }
 
 .footer {
-  flex-shrink: 0;
+  composes: sheetFooter from "@/shared/styles/sheetPopupScrollLayout.module.css";
 }
 
 .submitBtn {

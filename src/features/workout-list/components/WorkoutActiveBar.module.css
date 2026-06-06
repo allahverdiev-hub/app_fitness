@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 6px 0 14px;
+  padding: 0 14px;
   border-radius: var(--radius-pill);
   background: var(--color-surface-elevated);
   color: var(--color-text-primary);
@@ -26,9 +26,8 @@
 }
 
 .finishBtn {
-  flex: 1;
-  min-width: 0;
-  margin: 0;
+  flex-shrink: 0;
+  margin: 0 0 0 auto;
   padding: 0;
   border: none;
   background: transparent;
@@ -38,7 +37,7 @@
   font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  text-align: center;
+  text-align: right;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -47,31 +46,3 @@
   opacity: 0.75;
 }
 
-.stopBtn {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  margin: 0;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: var(--color-surface-muted);
-  color: var(--color-text-primary);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.stopBtn svg {
-  width: 16px;
-  height: 16px;
-}
-
-.stopBtn:active {
-  opacity: 0.85;
-}
-
-.stopBtnPaused {
-  opacity: 0.55;
-}
