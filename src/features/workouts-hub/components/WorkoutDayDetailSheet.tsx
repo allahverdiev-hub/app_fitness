@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { WorkoutCalendarSession } from "@/features/workouts-hub/types/workoutsHub";
 
@@ -14,7 +14,7 @@ import { CalendarReportDifficultyValue } from "@/features/workouts-hub/component
 
 import { DeleteReportConfirmSheet } from "@/features/workouts-hub/components/DeleteReportConfirmSheet";
 
-import { DeleteAnimatedListItem } from "@/features/workout-list/components/DeleteAnimatedListItem";
+import { DeleteAnimatedListItem } from "@/shared/ui/exercise-list";
 
 import { IconTrash } from "@/shared/icons";
 
@@ -59,6 +59,14 @@ export function WorkoutDayDetailSheet({
   const [dissolvingId, setDissolvingId] = useState<string | null>(null);
 
   const [collapsingId, setCollapsingId] = useState<string | null>(null);
+
+  const displayedSessionsRef = useRef<readonly WorkoutCalendarSession[]>(sessions);
+
+  if (open && sessions.length > 0) {
+    displayedSessionsRef.current = sessions;
+  }
+
+  const displayedSessions = displayedSessionsRef.current;
 
 
 
@@ -144,9 +152,9 @@ export function WorkoutDayDetailSheet({
 
   const title =
 
-    sessions.length > 0
+    displayedSessions.length > 0
 
-      ? formatSessionDateLabel(sessions[0].date)
+      ? formatSessionDateLabel(displayedSessions[0].date)
 
       : "Тренировка";
 
@@ -156,11 +164,11 @@ export function WorkoutDayDetailSheet({
 
     <>
 
-      <ActionPopup open={open && sessions.length > 0} title={title} onClose={onClose}>
+      <ActionPopup open={open} title={title} onClose={onClose}>
 
         <ul className={styles.list}>
 
-          {sessions.map((session) => {
+          {displayedSessions.map((session) => {
 
             const isDeleting =
 

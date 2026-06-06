@@ -13,6 +13,10 @@ import {
   workoutSessionExercises,
   type WorkoutSessionExerciseDef,
 } from "@/features/workouts/mocks/workoutSession";
+import {
+  applyExerciseVolumeChange,
+  type ExerciseVolumeUpdate,
+} from "@/features/workouts/utils/applyExerciseVolumeChange";
 import { applyExerciseDeletion } from "@/features/workouts/utils/deleteExercise";
 import { applyExerciseReplacement } from "@/features/workouts/utils/replaceExercise";
 import { WorkoutsHubPage } from "@/features/workouts-hub/WorkoutsHubPage";
@@ -101,6 +105,21 @@ export function WorkoutsFlow({
   );
   const workoutExerciseSetsById = useMemo(
     () => buildWorkoutExerciseSetsById(exerciseDefs),
+    [exerciseDefs],
+  );
+  const exerciseVolumeById = useMemo(
+    () =>
+      Object.fromEntries(
+        exerciseDefs.map((def) => [
+          def.id,
+          {
+            sets: def.sets,
+            repsRange: def.repsRange,
+            isWarmup: def.isWarmup ?? Boolean(def.listSection),
+            warmupVolumeType: def.warmupVolumeType,
+          },
+        ]),
+      ),
     [exerciseDefs],
   );
   const sessionExerciseIds = useMemo(
@@ -298,6 +317,24 @@ export function WorkoutsFlow({
     [],
   );
 
+  const handleEditExerciseVolume = useCallback(
+    (exerciseId: string, update: ExerciseVolumeUpdate) => {
+      setExerciseDefs((prev) =>
+        prev.map((def) =>
+          def.id === exerciseId
+            ? applyExerciseVolumeChange(def, update)
+            : def,
+        ),
+      );
+      setCompletedSetsById((prev) => {
+        const done = prev[exerciseId] ?? 0;
+        if (done <= update.sets) return prev;
+        return { ...prev, [exerciseId]: update.sets };
+      });
+    },
+    [],
+  );
+
   const handleDeleteExercise = useCallback(
     (targetId: string) => {
       setExerciseDefs((prev) => applyExerciseDeletion(prev, targetId));
@@ -424,6 +461,8 @@ export function WorkoutsFlow({
         onOpenExercise={openExercise}
         onReplaceExercise={handleReplaceExercise}
         onDeleteExercise={handleDeleteExercise}
+        exerciseVolumeById={exerciseVolumeById}
+        onEditExerciseVolume={handleEditExerciseVolume}
       />
     );
   }

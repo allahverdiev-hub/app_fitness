@@ -1,6 +1,8 @@
 import type { ReplaceSuggestionItem } from "@/features/exercise-page/mocks/replaceSuggestions";
-import { WorkoutExerciseMuscleLabel } from "@/features/workout-list/components/WorkoutExerciseMuscleLabel";
-import { WorkoutExerciseTitle } from "@/features/workout-list/components/WorkoutExerciseTitle";
+import {
+  WorkoutExerciseMuscleLabel,
+  WorkoutExerciseTitle,
+} from "@/shared/ui/exercise-list";
 import sharedStyles from "./replaceExerciseShared.module.css";
 
 type ReplaceExerciseOptionCardProps = {

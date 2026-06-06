@@ -14,21 +14,19 @@ export function WorkoutActiveBar({
   className = "",
 }: WorkoutActiveBarProps) {
   return (
-    <div className={`${styles.bar} ${className}`.trim()}>
+    <button
+      type="button"
+      className={`${styles.bar} ${className}`.trim()}
+      onClick={onFinish}
+      aria-label={`Завершить тренировку, прошло ${elapsed}`}
+    >
       <span
         className={`${styles.time} ${isPaused ? styles.timePaused : ""}`}
-        aria-live="polite"
+        aria-hidden
       >
         {elapsed}
       </span>
-      <button
-        type="button"
-        className={styles.finishBtn}
-        onClick={onFinish}
-        aria-label="Завершить тренировку"
-      >
-        Завершить
-      </button>
-    </div>
+      <span className={styles.finishLabel}>Завершить</span>
+    </button>
   );
 }

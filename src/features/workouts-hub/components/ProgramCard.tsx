@@ -2,7 +2,7 @@ import { programCoverSrc } from "@/features/workouts-hub/config/programMedia";
 
 import type { HubProgramCard } from "@/features/workouts-hub/types/workoutsHub";
 
-import { WorkoutExerciseTitle } from "@/features/workout-list/components/WorkoutExerciseTitle";
+import { WorkoutExerciseTitle } from "@/shared/ui/exercise-list";
 
 import styles from "./ProgramCard.module.css";
 

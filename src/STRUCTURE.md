@@ -6,7 +6,7 @@ src/
 ├── app/                         # App, табы, tabNavigation
 ├── shell/                       # MobileFrame, BottomTabNav (обёртка), PlaceholderTabFlow
 ├── shared/
-│   ├── ui/                      # ActionButton, BottomTabNav (базовый), ProgressOverview, …
+│   ├── ui/                      # ActionButton, ActionPopup, bottom-sheet, exercise-list, …
 │   ├── icons/
 │   ├── styles/                  # global, tokens, frostedPlate, pageScrollLayout, …
 │   └── lib/                     # formatDuration, workoutElapsed, tabStackNavigation, …
@@ -18,9 +18,12 @@ src/
     │   ├── WorkoutsFlow.tsx     # Стек: hub → program → list → exercise
     │   ├── hooks/, mocks/, utils/
     ├── program-weeks/           # Экран программы (недели, карточки)
-    ├── workout-list/            # Листинг упражнений
+    ├── workout-list/            # Листинг упражнений (экран + actions)
     └── exercise-page/           # Страница упражнения
 ```
 
-**Моки сессии:** `workouts/mocks/workoutSession.ts` — листинг и карусель.  
+**Общие UI листинга:** `shared/ui/exercise-list/` — заголовок, объём, группа мышц, «Заменено», `DeleteAnimatedListItem`.
+
+**Моки сессии:** `workouts/mocks/workoutSession.ts` — листинг и карусель.
+
 **Импорты:** `@/` → `src/` (`vite.config.ts`).

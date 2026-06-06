@@ -74,9 +74,6 @@ export function ExerciseDiary({
                           type="button"
                           className={styles.menuBtn}
                           aria-label={`Действия с подходом ${set.setNumber}`}
-                          onClick={() =>
-                            console.log("diary set menu", session.id, set.setNumber)
-                          }
                         >
                           <IconMore size={20} />
                         </button>

@@ -10,7 +10,7 @@ import {
   reorderExercisesWithSections,
 } from "@/features/workout-list/utils/buildExerciseSections";
 import { WorkoutExerciseCard } from "@/features/workout-list/components/WorkoutExerciseCard";
-import { DeleteAnimatedListItem } from "@/features/workout-list/components/DeleteAnimatedListItem";
+import { DeleteAnimatedListItem } from "@/shared/ui/exercise-list";
 import { ThanosDissolve } from "@/shared/ui/ThanosDissolve";
 import { ReplaceReveal } from "@/shared/ui/ReplaceReveal";
 import styles from "./WorkoutExerciseList.module.css";

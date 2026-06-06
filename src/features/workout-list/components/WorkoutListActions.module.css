@@ -51,7 +51,7 @@
 }
 
 .clusterWorkoutActive:not(.clusterEditing) {
-  --slot-right-surface: var(--color-surface-elevated);
+  --slot-right-surface: var(--workout-active-bar-bg);
 }
 
 .leftCircleBtn {
@@ -184,7 +184,8 @@
 }
 
 .activeBarSurface {
-  background: transparent;
+  background: var(--workout-active-bar-bg);
+  color: var(--workout-active-bar-color);
 }
 
 @media (prefers-reduced-motion: reduce) {

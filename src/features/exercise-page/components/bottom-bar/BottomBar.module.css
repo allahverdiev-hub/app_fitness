@@ -107,6 +107,9 @@
   );
 
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--bottom-bar-gap);
   width: 100%;
   min-height: var(--bottom-bar-control-height);
 }
@@ -119,22 +122,31 @@
   position: relative;
   z-index: 1;
   display: flex;
+  flex: 1 1 auto;
   justify-content: center;
   align-items: center;
   width: var(--add-set-slot-width);
+  min-width: 0;
+  height: var(--bottom-bar-control-height);
   min-height: var(--bottom-bar-control-height);
-  transition: width var(--next-drop-duration) var(--next-drop-ease);
+  transition:
+    width var(--next-drop-duration) var(--next-drop-ease),
+    flex var(--next-drop-duration) var(--next-drop-ease);
 }
 
 .addSetClusterSplit .addSetMorphTrack {
   --add-set-slot-width: calc(
     100% - var(--bottom-bar-control-height) - var(--bottom-bar-gap)
   );
+  flex: 1 1 0;
 }
 
 .addSet {
   width: 100%;
   min-width: 0;
+  height: var(--bottom-bar-control-height);
+  min-height: var(--bottom-bar-control-height);
+  max-height: var(--bottom-bar-control-height);
   flex-shrink: 0;
 }
 
@@ -146,8 +158,13 @@
 
 .nextExercise {
   position: absolute;
-  top: 0;
-  left: calc(100% - var(--action-control-height));
+  top: 50%;
+  right: 0;
+  width: var(--bottom-bar-control-height);
+  height: var(--bottom-bar-control-height);
+  min-width: var(--bottom-bar-control-height);
+  min-height: var(--bottom-bar-control-height);
+  margin-top: calc(var(--bottom-bar-control-height) / -2);
   opacity: 0;
   transform: translateX(calc(-0.92 * var(--next-travel))) scale(0);
   transform-origin: center center;
@@ -157,6 +174,7 @@
   pointer-events: none;
   z-index: 2;
   will-change: transform, opacity;
+  box-sizing: border-box;
 }
 
 .nextExerciseIcon {
@@ -164,6 +182,11 @@
 }
 
 .addSetClusterSplit .nextExercise {
+  position: relative;
+  top: auto;
+  right: auto;
+  margin-top: 0;
+  flex-shrink: 0;
   animation: nextDropDetach var(--next-drop-duration) var(--next-drop-ease) forwards;
   pointer-events: auto;
 }
@@ -192,6 +215,10 @@
     transform: translateX(0) scale(1);
     opacity: 1;
   }
+}
+
+.addSetClusterSplit {
+  align-items: center;
 }
 
 @keyframes nextDropIcon {
@@ -227,6 +254,10 @@
   }
 
   .addSetClusterSplit .nextExercise {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-top: 0;
     animation: none;
     transform: translateX(0) scale(1);
     opacity: 1;

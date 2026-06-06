@@ -1,9 +1,11 @@
 import { IconCheck, IconMore } from "@/shared/icons";
 import type { WorkoutListExerciseItem } from "@/features/workout-list/types/workoutOverview";
-import { WorkoutExerciseMuscleLabel } from "@/features/workout-list/components/WorkoutExerciseMuscleLabel";
-import { WorkoutExerciseReplacedLabel } from "@/features/workout-list/components/WorkoutExerciseReplacedLabel";
-import { WorkoutExerciseTitle } from "@/features/workout-list/components/WorkoutExerciseTitle";
-import { WorkoutExerciseVolumeLabel } from "@/features/workout-list/components/WorkoutExerciseVolumeLabel";
+import {
+  WorkoutExerciseMuscleLabel,
+  WorkoutExerciseReplacedLabel,
+  WorkoutExerciseTitle,
+  WorkoutExerciseVolumeLabel,
+} from "@/shared/ui/exercise-list";
 import styles from "./WorkoutExerciseCard.module.css";
 
 type WorkoutExerciseCardProps = {

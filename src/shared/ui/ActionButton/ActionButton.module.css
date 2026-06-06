@@ -10,7 +10,7 @@
   padding: 0 var(--action-level2-padding-x);
   border: none;
   border-radius: var(--radius-pill);
-  background: var(--color-surface-elevated);
+  background: var(--action-level2-bg);
   color: var(--color-text-primary);
   font-size: var(--action-level2-font-size);
   font-weight: var(--action-level2-font-weight);

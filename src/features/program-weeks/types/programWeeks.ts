@@ -22,8 +22,3 @@ export type ProgramOverview = {
   title: string;
   weeks: ProgramWeek[];
 };
-
-export type ProgramWeekPickerItem = {
-  id: string;
-  weekNumber: number;
-};

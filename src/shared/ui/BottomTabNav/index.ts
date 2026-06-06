@@ -1,5 +1,1 @@
-export {
-  BottomTabNav,
-  type BottomTabNavItem,
-  type BottomTabNavProps,
-} from "./BottomTabNav";
+export { BottomTabNav, type BottomTabNavItem } from "./BottomTabNav";

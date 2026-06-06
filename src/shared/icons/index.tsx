@@ -39,20 +39,6 @@ export function IconChevronRight({ size, className }: IconProps) {
   );
 }
 
-export function IconChevronDown({ size, className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base({ size, className })}>
-      <path
-        d="M6 9l6 6 6-6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export function IconMore({ size, className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" {...base({ size, className })}>
@@ -171,35 +157,6 @@ export function IconList({ size, className }: IconProps) {
   );
 }
 
-/** Секундомер — залитая иконка */
-export function IconTimer({ size, className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base({ size, className })}>
-      <path
-        fillRule="evenodd"
-        fill="currentColor"
-        d="M12 5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15Zm0 2.25a5.25 5.25 0 1 1 0 10.5 5.25 5.25 0 0 1 0-10.5Z"
-      />
-      <path fill="currentColor" d="M11.25 7.75h1.5v4.75h-1.5V7.75Z" />
-      <path fill="currentColor" d="M9 3.25h6a1 1 0 0 1 1 1v1.25H9V4.25a1 1 0 0 1 1-1Z" />
-      <path fill="currentColor" d="M17.35 7.1l1.85-1.35L20.4 7l-1.85 1.35-1.2-1.25Z" />
-    </svg>
-  );
-}
-
-export function IconPlus({ size, className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base({ size, className })}>
-      <path
-        d="M12 5v14M5 12h14"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
 export function IconSettings({ size, className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" {...base({ size, className })}>
@@ -208,50 +165,6 @@ export function IconSettings({ size, className }: IconProps) {
         clipRule="evenodd"
         d="M14.2793 2.152C13.9093 2 13.4393 2 12.5003 2C11.5613 2 11.0923 2 10.7213 2.152C10.4772 2.25175 10.2552 2.39878 10.0682 2.58465C9.88109 2.77051 9.73263 2.99154 9.63132 3.235C9.53732 3.458 9.50132 3.719 9.48632 4.098C9.47918 4.3725 9.40238 4.64068 9.26314 4.87736C9.1239 5.11403 8.92679 5.31142 8.69032 5.451C8.44906 5.5851 8.17786 5.65615 7.90184 5.65754C7.62582 5.65894 7.35392 5.59065 7.11132 5.459C6.77332 5.281 6.52832 5.183 6.28632 5.151C5.7569 5.08192 5.22158 5.2242 4.79632 5.547C4.47832 5.789 4.24332 6.193 3.77432 7C3.30432 7.807 3.07032 8.21 3.01732 8.605C2.94732 9.131 3.09132 9.663 3.41732 10.084C3.56532 10.276 3.77432 10.437 4.09732 10.639C4.57432 10.936 4.88032 11.442 4.88032 12C4.88032 12.558 4.57432 13.064 4.09832 13.36C3.77432 13.563 3.56532 13.724 3.41632 13.916C3.25588 14.1242 3.13806 14.362 3.0696 14.6158C3.00114 14.8696 2.98337 15.1343 3.01732 15.395C3.07032 15.789 3.30432 16.193 3.77432 17C4.24432 17.807 4.47832 18.21 4.79632 18.453C5.22032 18.776 5.75632 18.918 6.28632 18.849C6.52832 18.817 6.77332 18.719 7.11132 18.541C7.35404 18.4092 7.62613 18.3408 7.90234 18.3422C8.17855 18.3436 8.44994 18.4147 8.69132 18.549C9.17732 18.829 9.46532 19.344 9.48632 19.902C9.50132 20.282 9.53732 20.542 9.63132 20.765C9.83532 21.255 10.2273 21.645 10.7213 21.848C11.0913 22 11.5613 22 12.5003 22C13.4393 22 13.9093 22 14.2793 21.848C14.5234 21.7483 14.7454 21.6012 14.9325 21.4154C15.1195 21.2295 15.268 21.0085 15.3693 20.765C15.4633 20.542 15.4993 20.282 15.5143 19.902C15.5343 19.344 15.8233 18.828 16.3103 18.549C16.5516 18.4149 16.8228 18.3439 17.0988 18.3425C17.3748 18.3411 17.6467 18.4093 17.8893 18.541C18.2273 18.719 18.4723 18.817 18.7143 18.849C19.2443 18.919 19.7803 18.776 20.2043 18.453C20.5223 18.211 20.7573 17.807 21.2263 17C21.6963 16.193 21.9303 15.79 21.9833 15.395C22.0171 15.1343 21.9992 14.8695 21.9306 14.6157C21.8619 14.3619 21.7439 14.1241 21.5833 13.916C21.4353 13.724 21.2263 13.563 20.9033 13.361C20.4263 13.064 20.1203 12.558 20.1203 12C20.1203 11.442 20.4263 10.936 20.9023 10.64C21.2263 10.437 21.4353 10.276 21.5843 10.084C21.7447 9.87579 21.8626 9.63799 21.931 9.38422C21.9995 9.13044 22.0173 8.86565 21.9833 8.605C21.9303 8.211 21.6963 7.807 21.2263 7C20.7563 6.193 20.5223 5.79 20.2043 5.547C19.779 5.2242 19.2437 5.08192 18.7143 5.151C18.4723 5.183 18.2273 5.281 17.8893 5.459C17.6466 5.59083 17.3745 5.65922 17.0983 5.65782C16.8221 5.65642 16.5507 5.58528 16.3093 5.451C16.073 5.3113 15.8761 5.11385 15.7371 4.87719C15.598 4.64052 15.5213 4.37241 15.5143 4.098C15.4993 3.718 15.4633 3.458 15.3693 3.235C15.268 2.99154 15.1195 2.77051 14.9325 2.58465C14.7454 2.39878 14.5234 2.25175 14.2793 2.152ZM12.5003 15C14.1703 15 15.5233 13.657 15.5233 12C15.5233 10.343 14.1693 9 12.5003 9C10.8313 9 9.47732 10.343 9.47732 12C9.47732 13.657 10.8313 15 12.5003 15Z"
         fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-export function IconTrophy({ size, className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base({ size, className })}>
-      <path
-        d="M8 4h8v3a4 4 0 01-8 0V4zM6 4H4v2a2 2 0 002 2M18 4h2v2a2 2 0 01-2 2M9 18h6M12 14v4"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
-  );
-}
-
-export function IconBook({ size, className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base({ size, className })}>
-      <path
-        d="M6 5.5A2.5 2.5 0 018.5 3H18v16H8.5A2.5 2.5 0 006 16.5V5.5zM6 16.5A2.5 2.5 0 004 19v-14a2.5 2.5 0 012.5-2.5"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
-  );
-}
-
-export function IconProfile({ size, className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base({ size, className })}>
-      <circle cx="12" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.75" fill="none" />
-      <path
-        d="M6 19c0-3.3 2.7-5 6-5s6 1.7 6 5"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-        fill="none"
       />
     </svg>
   );
@@ -310,17 +223,6 @@ export function IconSignalBars({
           fill={index < activeCount ? activeColor : inactiveColor}
         />
       ))}
-    </svg>
-  );
-}
-
-export function IconFlame({ size, className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base({ size, className })}>
-      <path
-        d="M12 3c1.2 2.4 3.4 3.8 3.4 6.6 0 1.2-.4 2.2-1 3 .6-.2 1.1-.6 1.5-1.1.8 1.1 1.1 2.4 1.1 3.7 0 3.3-2.4 6-5.5 6S5 15.5 5 12.2c0-2.2 1-4.1 2.6-5.5C8.8 4.8 10.2 3.6 12 3Z"
-        fill="currentColor"
-      />
     </svg>
   );
 }
@@ -385,19 +287,6 @@ export function IconSync({ size, className }: IconProps) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-    </svg>
-  );
-}
-
-/** Уличный комплекс (турники / брусья) */
-export function IconOutdoorGym({ size, className }: IconProps) {
-  return (
-    <svg viewBox="0 0 80 56" width={size} height={Math.round((size ?? 18) * (56 / 80))} className={className} fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-      <path d="M8 48V10M72 48V10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-      <path d="M8 18h64M8 30h64" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M24 48V34M56 48V34" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M24 34h32" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M34 48V40M46 48V40" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }

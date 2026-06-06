@@ -17,8 +17,14 @@ import {
 import { ReplaceExerciseSheet } from "@/features/exercise-page/components/replace-exercise-sheet/ReplaceExerciseSheet";
 import { ReplaceExerciseCatalogPage } from "@/features/exercise-page/components/replace-exercise-catalog/ReplaceExerciseCatalogPage";
 import { DeleteExerciseConfirmSheet } from "@/features/workout-list/components/DeleteExerciseConfirmSheet";
+import {
+  EditExerciseVolumeSheet,
+  type ExerciseVolumeSnapshot,
+} from "@/features/workout-list/components/EditExerciseVolumeSheet";
 import { DELETE_COLLAPSE_DELAY_MS } from "@/shared/ui/ThanosDissolve";
 import { ExerciseReplacedNotice } from "@/shared/ui/ExerciseReplacedNotice";
+import type { ExerciseVolumeUpdate } from "@/features/workouts/utils/applyExerciseVolumeChange";
+import { formatExerciseListVolume } from "@/features/workouts/utils/formatExerciseListVolume";
 
 import type { WorkoutListExerciseItem } from "@/features/workout-list/types/workoutOverview";
 
@@ -38,6 +44,8 @@ type WorkoutListPageProps = {
   onExercisesChange?: (exercises: WorkoutListExerciseItem[]) => void;
   onReplaceExercise: (targetId: string, suggestionId: string) => void;
   onDeleteExercise: (targetId: string) => void;
+  exerciseVolumeById: Record<string, ExerciseVolumeSnapshot>;
+  onEditExerciseVolume?: (exerciseId: string, update: ExerciseVolumeUpdate) => void;
 };
 
 export function WorkoutListPage({
@@ -54,6 +62,8 @@ export function WorkoutListPage({
   onExercisesChange,
   onReplaceExercise,
   onDeleteExercise,
+  exerciseVolumeById,
+  onEditExerciseVolume,
 }: WorkoutListPageProps) {
   const overview = useMemo(
     () => ({ ...mockWorkoutOverview, title: workoutTitle }),
@@ -108,6 +118,7 @@ export function WorkoutListPage({
 
   const [menuExercise, setMenuExercise] =
     useState<WorkoutListExerciseItem | null>(null);
+  const [editTargetId, setEditTargetId] = useState<string | null>(null);
   const [replaceTargetId, setReplaceTargetId] = useState<string | null>(null);
   const [replaceCatalogOpen, setReplaceCatalogOpen] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
@@ -142,8 +153,41 @@ export function WorkoutListPage({
       return;
     }
 
-    console.log(`workout exercise ${action}`, targetId);
+    if (action === "edit") {
+      setEditTargetId(targetId);
+    }
   };
+
+  const editTargetExercise = useMemo(
+    () => exercises.find((item) => item.id === editTargetId) ?? null,
+    [exercises, editTargetId],
+  );
+
+  const handleConfirmEditVolume = useCallback(
+    (update: ExerciseVolumeUpdate) => {
+      if (!editTargetId) return;
+      const volume = exerciseVolumeById[editTargetId];
+      onEditExerciseVolume?.(editTargetId, update);
+      setExercises((prev) =>
+        prev.map((item) =>
+          item.id === editTargetId
+            ? {
+                ...item,
+                subtitle: formatExerciseListVolume({
+                  sets: update.sets,
+                  repsRange: update.repsRange,
+                  isWarmup: volume?.isWarmup ?? false,
+                  warmupVolumeType:
+                    update.warmupVolumeType ?? volume?.warmupVolumeType,
+                }),
+              }
+            : item,
+        ),
+      );
+      setEditTargetId(null);
+    },
+    [editTargetId, exerciseVolumeById, onEditExerciseVolume],
+  );
 
   const handleConfirmDelete = useCallback(() => {
     if (!deleteTargetId) return;
@@ -202,9 +246,7 @@ export function WorkoutListPage({
     [],
   );
 
-  const handleAddExercise = useCallback(() => {
-    console.log("workout add exercise");
-  }, []);
+  const handleAddExercise = useCallback(() => {}, []);
 
   return (
     <div className={styles.page}>
@@ -270,6 +312,13 @@ export function WorkoutListPage({
           }}
         />
       ) : null}
+      <EditExerciseVolumeSheet
+        open={editTargetId !== null}
+        exerciseTitle={editTargetExercise?.title ?? ""}
+        volume={editTargetId ? exerciseVolumeById[editTargetId] ?? null : null}
+        onClose={() => setEditTargetId(null)}
+        onConfirm={handleConfirmEditVolume}
+      />
       <DeleteExerciseConfirmSheet
         open={deleteTargetId !== null}
         onCancel={() => setDeleteTargetId(null)}

@@ -13,7 +13,7 @@ import {
 import type { LoggedSet } from "@/features/exercise-page/types/set";
 import type { ChartPointDetail } from "@/features/exercise-page/utils/chartPointDetail";
 import { buildChartPointDetail } from "@/features/exercise-page/utils/chartPointDetail";
-import { WorkoutExerciseTitle } from "@/features/workout-list/components/WorkoutExerciseTitle";
+import { WorkoutExerciseTitle } from "@/shared/ui/exercise-list";
 import { LoadFilterTabPicker } from "./LoadFilterTabPicker";
 import {
   buildAreaPath,

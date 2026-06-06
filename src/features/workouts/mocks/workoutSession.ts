@@ -214,7 +214,7 @@ export function cloneWorkoutSessionExercises(): WorkoutSessionExerciseDef[] {
   return workoutSessionExercises.map((def) => ({ ...def }));
 }
 
-export function buildMockWorkoutSession(): WorkoutSession {
+function buildMockWorkoutSession(): WorkoutSession {
   const exercises = workoutSessionExercises.map(toExerciseItem);
   const active =
     exercises.find((e) => e.status === "active") ??
@@ -228,7 +228,7 @@ export function buildMockWorkoutSession(): WorkoutSession {
   };
 }
 
-export function buildWorkoutOverview(): WorkoutOverview {
+function buildWorkoutOverview(): WorkoutOverview {
   const exercises = workoutSessionExercises.map((def) => ({
     id: def.id,
     title: def.title,
@@ -249,12 +249,6 @@ export function buildWorkoutOverview(): WorkoutOverview {
     exercises,
   };
 }
-
-/** Число подходов по id — для синхронизации листинга со страницей упражнения */
-export const workoutExerciseSetsById: Record<string, number> =
-  Object.fromEntries(
-    workoutSessionExercises.map((def) => [def.id, def.sets]),
-  );
 
 export const mockWorkout = buildMockWorkoutSession();
 export const mockWorkoutOverview = buildWorkoutOverview();

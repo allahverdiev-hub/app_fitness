@@ -25,12 +25,13 @@ export function App() {
     <MobileFrame>
       <div className={styles.shell}>
         <main className={styles.main}>
-          {activeTab === "workouts" ? (
-            <WorkoutsFlow
-              key="workouts-flow"
-              popSignal={tabPopSignals.workouts}
-            />
-          ) : null}
+          <div
+            className={styles.flowLayer}
+            hidden={activeTab !== "workouts"}
+            aria-hidden={activeTab !== "workouts"}
+          >
+            <WorkoutsFlow popSignal={tabPopSignals.workouts} />
+          </div>
           {activeTab === "catalog" ? (
             <CatalogFlow
               key="catalog-flow"

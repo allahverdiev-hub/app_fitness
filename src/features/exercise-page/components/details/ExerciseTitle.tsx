@@ -1,7 +1,7 @@
 import { PageTitle } from "@/shared/ui/PageTitle/PageTitle";
 import type { WarmupVolumeType } from "@/features/exercise-page/types/exercise";
 import { formatExercisePageVolume } from "@/features/exercise-page/utils/formatExercisePageVolume";
-import { WorkoutExerciseReplacedLabel } from "@/features/workout-list/components/WorkoutExerciseReplacedLabel";
+import { WorkoutExerciseReplacedLabel } from "@/shared/ui/exercise-list";
 import styles from "./ExerciseTitle.module.css";
 
 type ExerciseTitleProps = {

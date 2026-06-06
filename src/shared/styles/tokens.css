@@ -15,6 +15,9 @@
   --color-divider: #38383a;
   --color-primary-btn-bg: #ffffff;
   --color-primary-btn-text: #000000;
+  /* WorkoutActiveBar — белый островок с чёрным таймером и «Завершить» */
+  --workout-active-bar-bg: var(--color-primary-btn-bg);
+  --workout-active-bar-color: var(--color-primary-btn-text);
   --radius-sm: 10px;
   --radius-md: 14px;
   --radius-lg: 22px;
@@ -99,6 +102,7 @@
   --action-level2-letter-spacing: var(--text-exercise-list-title-letter-spacing);
   --action-level2-gap: 6px;
   --action-level2-padding-x: 12px;
+  --action-level2-bg: var(--color-workout-card);
 
   /* Нижние действия (дизайн-система ActionButton) */
   --action-control-height: var(--bottom-bar-control-height);
@@ -407,7 +411,7 @@
   /* SearchField — поиск по названию (каталог упражнений и др.) */
   --search-field-padding-y: 14px;
   --search-field-padding-x: 16px;
-  --search-field-bg: var(--color-surface-elevated);
+  --search-field-bg: var(--color-workout-card);
   --search-field-border-color: var(--segmented-tab-picker-track-border-color);
   --search-field-font-size: var(--description-m-size);
   --search-field-font-weight: var(--description-m-weight);

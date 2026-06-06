@@ -1,0 +1,72 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding-top: var(--space-xs);
+}
+
+.pickerGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.pickerCol {
+  min-width: 0;
+}
+
+.pickerLabel {
+  margin: 0 0 var(--space-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.pickerRow {
+  display: flex;
+  justify-content: center;
+}
+
+.typeRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xs);
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--color-workout-card);
+}
+
+.typeBtn {
+  min-height: 40px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--action-level2-font-size);
+  font-weight: var(--action-level2-font-weight);
+  line-height: var(--action-level2-line-height);
+  letter-spacing: var(--action-level2-letter-spacing);
+  text-transform: uppercase;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.typeBtnActive {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-primary);
+}
+
+.hint {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.3;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.confirmBtn {
+  width: 100%;
+  margin-top: var(--space-xs);
+}

@@ -1,4 +1,1 @@
-export {
-  ProgressOverview,
-  type ProgressOverviewSpacing,
-} from "./ProgressOverview";
+export { ProgressOverview } from "./ProgressOverview";

@@ -231,7 +231,6 @@ export function ExercisePage({
   const activeExerciseIndex = exercises.findIndex((e) => e.id === activeId);
   const hasNextExercise =
     activeExerciseIndex >= 0 && activeExerciseIndex < exercises.length - 1;
-
   const workoutComplete = useMemo(
     () => isWorkoutComplete(sessionExercises, completedSetsById),
     [sessionExercises, completedSetsById],
