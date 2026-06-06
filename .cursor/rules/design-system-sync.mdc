@@ -1,0 +1,22 @@
+---
+description: Синхронизация дизайн-системы с Obsidian
+alwaysApply: false
+globs: src/**/*.css,src/**/*.tsx
+---
+
+# Design System Sync
+
+Obsidian: `D:\Хранилище\Global\projects\antitrainer\app\design_tokens.md`  
+Код: `src/shared/styles/tokens.css` + `*.module.css` компонентов.
+
+## При изменении UI / стилей
+
+Обновляй **и код, и** `design_tokens.md` (секция + changelog внизу файла).
+
+## Компоненты вне tokens.css
+
+Фиксируй в `design_tokens.md` в разделе «Компоненты» (размеры, бордер, отступы).
+
+## Пример записи в changelog
+
+`- 2026-06-06: DifficultyBadge — бордер rgba, alpha 0.6, только «Неделя N» + иконка`

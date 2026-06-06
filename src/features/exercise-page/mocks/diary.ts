@@ -15,6 +15,8 @@ export type DiarySetEntry = {
 export type DiarySession = {
   id: string;
   dateLabel: string;
+  /** Календарный день для связи с графиком (YYYY-MM-DD) */
+  dateISO: string;
   load: DiaryLoad;
   sets: DiarySetEntry[];
 };
@@ -28,10 +30,22 @@ export const diaryLoadMeta: Record<
   heavy: { label: loadFilterLabels.heavy, color: "#ff453a", signalBars: 3 },
 };
 
+function toDateISO(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+export function todayDateISO(referenceDate: Date = new Date()): string {
+  return toDateISO(referenceDate);
+}
+
 const defaultDiarySessions: DiarySession[] = [
   {
     id: "session-1",
     dateLabel: "15 марта",
+    dateISO: "2026-03-15",
     load: "light",
     sets: [
       {
@@ -48,6 +62,7 @@ const defaultDiarySessions: DiarySession[] = [
   {
     id: "session-2",
     dateLabel: "15 марта",
+    dateISO: "2026-03-15",
     load: "medium",
     sets: [
       { setNumber: 1, weightKg: 82, reps: 10 },
@@ -58,11 +73,102 @@ const defaultDiarySessions: DiarySession[] = [
   {
     id: "session-3",
     dateLabel: "12 марта",
+    dateISO: "2026-03-12",
     load: "heavy",
     sets: [
       { setNumber: 1, weightKg: 85, reps: 8 },
       { setNumber: 2, weightKg: 85, reps: 8 },
       { setNumber: 3, weightKg: 85, reps: 8 },
+    ],
+  },
+  {
+    id: "session-4",
+    dateLabel: "4 июня",
+    dateISO: "2026-06-04",
+    load: "light",
+    sets: [
+      { setNumber: 1, weightKg: 78, reps: 12 },
+      { setNumber: 2, weightKg: 78, reps: 12 },
+    ],
+  },
+  {
+    id: "session-5",
+    dateLabel: "4 июня",
+    dateISO: "2026-06-04",
+    load: "medium",
+    sets: [
+      { setNumber: 1, weightKg: 80, reps: 10 },
+      { setNumber: 2, weightKg: 80, reps: 10 },
+    ],
+  },
+  {
+    id: "session-6",
+    dateLabel: "2 июня",
+    dateISO: "2026-06-02",
+    load: "heavy",
+    sets: [
+      { setNumber: 1, weightKg: 83, reps: 8 },
+      { setNumber: 2, weightKg: 83, reps: 8 },
+    ],
+  },
+  {
+    id: "session-7",
+    dateLabel: "1 июня",
+    dateISO: "2026-06-01",
+    load: "light",
+    sets: [
+      { setNumber: 1, weightKg: 77, reps: 12 },
+      { setNumber: 2, weightKg: 77, reps: 12 },
+    ],
+  },
+  {
+    id: "session-8",
+    dateLabel: "28 мая",
+    dateISO: "2026-05-28",
+    load: "medium",
+    sets: [
+      { setNumber: 1, weightKg: 76, reps: 10 },
+      { setNumber: 2, weightKg: 76, reps: 10 },
+    ],
+  },
+  {
+    id: "session-9",
+    dateLabel: "15 мая",
+    dateISO: "2026-05-15",
+    load: "heavy",
+    sets: [
+      { setNumber: 1, weightKg: 74, reps: 8 },
+      { setNumber: 2, weightKg: 74, reps: 8 },
+    ],
+  },
+  {
+    id: "session-10",
+    dateLabel: "20 апреля",
+    dateISO: "2026-04-20",
+    load: "light",
+    sets: [
+      { setNumber: 1, weightKg: 72, reps: 12 },
+      { setNumber: 2, weightKg: 72, reps: 12 },
+    ],
+  },
+  {
+    id: "session-11",
+    dateLabel: "10 февраля",
+    dateISO: "2026-02-10",
+    load: "medium",
+    sets: [
+      { setNumber: 1, weightKg: 68, reps: 10 },
+      { setNumber: 2, weightKg: 68, reps: 10 },
+    ],
+  },
+  {
+    id: "session-12",
+    dateLabel: "18 января",
+    dateISO: "2026-01-18",
+    load: "light",
+    sets: [
+      { setNumber: 1, weightKg: 65, reps: 12 },
+      { setNumber: 2, weightKg: 65, reps: 12 },
     ],
   },
 ];
@@ -86,6 +192,15 @@ function withNewestSetsFirst(session: DiarySession): DiarySession {
   return { ...session, sets: sortSetsNewestFirst(session.sets) };
 }
 
+/** Сессии: от более свежей даты к более старой */
+function sortSessionsNewestFirst(sessions: DiarySession[]): DiarySession[] {
+  return [...sessions].sort((left, right) => {
+    const byDate = right.dateISO.localeCompare(left.dateISO);
+    if (byDate !== 0) return byDate;
+    return left.id.localeCompare(right.id);
+  });
+}
+
 function filterHistorySessions(loadFilter: LoadFilter): DiarySession[] {
   if (loadFilter === "all") {
     return defaultDiarySessions;
@@ -99,8 +214,11 @@ export function buildExerciseDiarySessions(
   loadFilter: LoadFilter,
   workoutSets: LoggedSet[] = [],
   workoutSessionLoad?: DiaryLoad,
+  referenceDate: Date = new Date(),
 ): DiarySession[] {
-  const history = filterHistorySessions(loadFilter).map(withNewestSetsFirst);
+  const history = sortSessionsNewestFirst(
+    filterHistorySessions(loadFilter).map(withNewestSetsFirst),
+  );
 
   if (workoutSets.length === 0) {
     return history;
@@ -111,6 +229,7 @@ export function buildExerciseDiarySessions(
   const liveSession: DiarySession = {
     id: `workout-live-${exerciseId}`,
     dateLabel: "Сегодня",
+    dateISO: todayDateISO(referenceDate),
     load,
     sets: sortSetsNewestFirst(workoutSets.map(loggedSetToDiaryEntry)),
   };

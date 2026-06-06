@@ -1,0 +1,119 @@
+.summary {
+  margin: 0 0 var(--space-lg);
+  font-size: var(--description-m-size);
+  font-weight: var(--description-m-weight);
+  line-height: var(--description-m-line-height);
+  color: var(--color-text-secondary);
+}
+
+.summary strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.sessions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.dayList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-height: min(52vh, 420px);
+  overflow-y: auto;
+}
+
+.dayCard {
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.dayHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.dayDate {
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.dayMax {
+  font-size: var(--font-size-sm);
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.session {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.session + .session {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-divider);
+}
+
+.sessionHeader {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.intensityLabel {
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.setList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.setRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-height: 22px;
+}
+
+.setNumber {
+  flex-shrink: 0;
+  width: 14px;
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  text-align: center;
+}
+
+.setLine {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}

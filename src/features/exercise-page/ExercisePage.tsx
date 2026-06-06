@@ -27,6 +27,8 @@ import { ExerciseTitle } from "@/features/exercise-page/components/details/Exerc
 import { ActionButtonRow } from "@/features/exercise-page/components/details/ActionButtonRow";
 import { ExerciseDiary } from "@/features/exercise-page/components/diary/ExerciseDiary";
 import { ExerciseProgressChart } from "@/features/exercise-page/components/chart/ExerciseProgressChart";
+import { ChartPointDetailSheet } from "@/features/exercise-page/components/chart/ChartPointDetailSheet";
+import type { ChartPointDetail } from "@/features/exercise-page/utils/chartPointDetail";
 import {
   BottomBar,
   type AddSetBarPhase,
@@ -71,6 +73,9 @@ export function ExercisePage({
     () => initialExerciseId ?? sessionExercises[0]?.id ?? "",
   );
   const [loadFilter, setLoadFilter] = useState<LoadFilter>("light");
+  const [chartPointDetail, setChartPointDetail] = useState<ChartPointDetail | null>(
+    null,
+  );
   const [addSetOpen, setAddSetOpen] = useState(false);
   const [techniqueOpen, setTechniqueOpen] = useState(false);
   const [replaceOpen, setReplaceOpen] = useState(false);
@@ -302,6 +307,9 @@ export function ExercisePage({
                 exerciseId={active.id}
                 loadFilter={loadFilter}
                 onLoadFilterChange={setLoadFilter}
+                workoutSets={workoutSets}
+                workoutSessionLoad={workoutDiaryLoad}
+                onPointDetailChange={setChartPointDetail}
               />
               <ExerciseDiary
                 exerciseId={active.id}
@@ -345,6 +353,11 @@ export function ExercisePage({
           onReplaceExercise(active.id, suggestionId)
         }
         onViewAll={() => console.log("view all exercises", active.id)}
+      />
+      <ChartPointDetailSheet
+        open={chartPointDetail !== null}
+        detail={chartPointDetail}
+        onClose={() => setChartPointDetail(null)}
       />
     </div>
   );

@@ -1,0 +1,22 @@
+---
+description: Контекст app_fitness из Obsidian (antitrainer)
+alwaysApply: true
+---
+
+# Obsidian — antitrainer / app_fitness
+
+Заметки лежат в vault (не в репозитории):
+
+- Контекст: `D:\Хранилище\Global\projects\antitrainer\app\context.md`
+- Дизайн-токены: `D:\Хранилище\Global\projects\antitrainer\app\design_tokens.md`
+
+## Перед каждой задачей
+
+1. Прочитай оба файла по абсолютным путям выше.
+2. Сверь `design_tokens.md` с `src/shared/styles/tokens.css`.
+3. При расхождении — уточни у пользователя, что источник истины (Obsidian или код).
+
+## После задач
+
+- Обновляй `context.md`, если менялась архитектура, флоу или продуктовые решения.
+- В ответах ссылайся на эти заметки по пути.

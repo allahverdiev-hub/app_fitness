@@ -13,38 +13,8 @@
   color: var(--color-text-primary);
 }
 
-.periodStrip {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  width: 100%;
-  height: 46px;
-  padding: 4px;
+.loadFilterPicker {
   margin-bottom: var(--space-md);
-  background: var(--color-bg);
-  border: 1px solid var(--color-divider);
-  border-radius: var(--radius-pill);
-}
-
-.periodTab {
-  flex: 1;
-  height: 100%;
-  min-width: 0;
-  padding: 0 12px;
-  border-radius: var(--radius-pill);
-  font-size: 15px;
-  line-height: 1.2;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  background: transparent;
-  white-space: nowrap;
-}
-
-.periodTabActive {
-  font-size: 15px;
-  background: var(--color-primary-btn-bg);
-  color: var(--color-primary-btn-text);
-  font-weight: 600;
 }
 
 .chartCard {
@@ -52,6 +22,45 @@
   background: var(--color-surface);
   border-radius: var(--radius-md);
   overflow: hidden;
+}
+
+.chartHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  min-height: 20px;
+  margin-bottom: var(--space-xs);
+  padding: 0 var(--space-xs);
+}
+
+.chartHeader .chartHeaderTitle {
+  flex: 1;
+  min-width: 0;
+  color: var(--color-text-secondary);
+}
+
+.periodTabs {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.periodTab {
+  padding: 0;
+  font-size: var(--text-exercise-list-title-size);
+  font-weight: var(--text-exercise-list-title-weight);
+  line-height: var(--text-exercise-list-title-line-height);
+  letter-spacing: var(--text-exercise-list-title-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  background: transparent;
+  white-space: nowrap;
+}
+
+.periodTabActive {
+  color: var(--color-text-primary);
 }
 
 .chartViewport {
@@ -74,6 +83,7 @@
   width: 38px;
   height: var(--chart-height, 300px);
   margin-right: 2px;
+  animation: chartYAxisFade 0.4s ease;
 }
 
 .yAxisLabel {
@@ -132,6 +142,10 @@
   fill: var(--color-text-secondary);
 }
 
+.axisLabelsX {
+  animation: chartYAxisFade 0.4s ease;
+}
+
 .axisLabelX {
   font-size: 11px;
   font-weight: 500;
@@ -142,6 +156,11 @@
   fill: url(#progressAreaGradient);
 }
 
+.chartPlot .areaFill {
+  opacity: 0;
+  animation: chartAreaFade 0.55s ease 0.15s forwards;
+}
+
 .lineStroke {
   fill: none;
   stroke: var(--color-accent);
@@ -150,8 +169,77 @@
   stroke-linejoin: round;
 }
 
+.chartPlot .lineStroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: chartLineDraw 0.75s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+.chartPlot .gridLineV {
+  opacity: 0;
+  animation: chartGridFade 0.35s ease forwards;
+  animation-delay: calc(var(--point-index, 0) * 0.04s);
+}
+
 .dot {
   fill: var(--color-text-primary);
+  pointer-events: none;
+}
+
+.pointButton {
+  cursor: pointer;
+  outline: none;
+}
+
+.chartPlot .pointButton {
+  opacity: 0;
+  transform: scale(0.55);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: chartPointPop 0.48s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  animation-delay: calc(0.2s + var(--point-index, 0) * 0.07s);
+}
+
+.chartPlot .valueLabel,
+.chartPlot .valuePill,
+.chartPlot .valuePillText {
+  opacity: 0;
+  animation: chartLabelFade 0.35s ease forwards;
+  animation-delay: calc(0.28s + var(--point-index, 0) * 0.07s);
+}
+
+.pointHit {
+  fill: transparent;
+  stroke: none;
+}
+
+.pointRing {
+  fill: rgba(255, 255, 255, 0.08);
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 1.5;
+  pointer-events: none;
+  transition:
+    fill 0.15s ease,
+    stroke 0.15s ease;
+}
+
+.pointButton:hover .pointRing,
+.pointButton:focus-visible .pointRing {
+  fill: rgba(212, 255, 0, 0.12);
+  stroke: var(--color-accent);
+}
+
+.pointButton:active .pointRing {
+  fill: rgba(212, 255, 0, 0.22);
+}
+
+.pointButtonLast .pointRing {
+  fill: rgba(212, 255, 0, 0.2);
+  stroke: var(--color-accent);
+}
+
+.pointButtonLast .dot {
+  fill: var(--color-accent);
 }
 
 .valueLabel {
@@ -168,4 +256,65 @@
   font-size: 11px;
   font-weight: 700;
   fill: var(--color-accent-on);
+}
+
+@keyframes chartLineDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes chartAreaFade {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes chartPointPop {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes chartGridFade {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes chartLabelFade {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes chartYAxisFade {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chartPlot .lineStroke {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .chartPlot .areaFill,
+  .chartPlot .pointButton,
+  .chartPlot .gridLineV,
+  .chartPlot .valueLabel,
+  .chartPlot .valuePill,
+  .chartPlot .valuePillText,
+  .chartPlot .axisLabelsX,
+  .yAxis {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
