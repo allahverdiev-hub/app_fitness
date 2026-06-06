@@ -36,6 +36,7 @@ import {
 import { AddSetSheet } from "@/features/exercise-page/components/add-set-sheet/AddSetSheet";
 import { TechniqueVideoSheet } from "@/features/exercise-page/components/technique-video-sheet/TechniqueVideoSheet";
 import { ReplaceExerciseSheet } from "@/features/exercise-page/components/replace-exercise-sheet/ReplaceExerciseSheet";
+import { ReplaceExerciseCatalogPage } from "@/features/exercise-page/components/replace-exercise-catalog/ReplaceExerciseCatalogPage";
 import { defaultTechniqueVideoUrl } from "@/features/exercise-page/config/techniqueVideo";
 import styles from "./ExercisePage.module.css";
 
@@ -79,6 +80,7 @@ export function ExercisePage({
   const [addSetOpen, setAddSetOpen] = useState(false);
   const [techniqueOpen, setTechniqueOpen] = useState(false);
   const [replaceOpen, setReplaceOpen] = useState(false);
+  const [replaceCatalogOpen, setReplaceCatalogOpen] = useState(false);
   const [addSetBarPhase, setAddSetBarPhase] = useState<AddSetBarPhase>("idle");
   const { elapsed, isPaused, onTogglePause } = sessionTimer;
   const [loggedSetsById, setLoggedSetsById] = useState<
@@ -203,6 +205,7 @@ export function ExercisePage({
   const handleOpenReplace = useCallback(() => {
     setAddSetOpen(false);
     setTechniqueOpen(false);
+    setReplaceCatalogOpen(false);
     setReplaceOpen(true);
   }, []);
 
@@ -242,6 +245,7 @@ export function ExercisePage({
 
   useEffect(() => {
     setTechniqueOpen(false);
+    setReplaceCatalogOpen(false);
   }, [activeId]);
 
   const techniqueVideoUrl =
@@ -297,6 +301,10 @@ export function ExercisePage({
                 muscles={active.muscles}
                 sets={active.sets}
                 repsRange={active.repsRange}
+                isWarmup={active.isWarmup}
+                warmupVolumeType={active.warmupVolumeType}
+                replacedFromTitle={active.replacedFromTitle}
+                completed={active.status === "completed"}
               />
               <ActionButtonRow
                 description={active.description}
@@ -346,14 +354,27 @@ export function ExercisePage({
         onClose={() => setTechniqueOpen(false)}
       />
       <ReplaceExerciseSheet
-        open={replaceOpen}
+        open={replaceOpen && !replaceCatalogOpen}
         exerciseId={active.id}
         onClose={() => setReplaceOpen(false)}
         onSelect={(suggestionId) =>
           onReplaceExercise(active.id, suggestionId)
         }
-        onViewAll={() => console.log("view all exercises", active.id)}
+        onViewAll={() => {
+          setReplaceOpen(false);
+          setReplaceCatalogOpen(true);
+        }}
       />
+      {replaceCatalogOpen ? (
+        <ReplaceExerciseCatalogPage
+          exerciseId={active.id}
+          onBack={() => setReplaceCatalogOpen(false)}
+          onConfirm={(suggestionId) => {
+            onReplaceExercise(active.id, suggestionId);
+            setReplaceCatalogOpen(false);
+          }}
+        />
+      ) : null}
       <ChartPointDetailSheet
         open={chartPointDetail !== null}
         detail={chartPointDetail}

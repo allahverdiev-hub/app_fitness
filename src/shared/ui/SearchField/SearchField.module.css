@@ -1,0 +1,76 @@
+.wrap {
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--search-field-padding-y) var(--search-field-padding-x);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: var(--search-field-bg);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: var(--search-field-font-size);
+  font-weight: var(--search-field-font-weight);
+  line-height: var(--search-field-line-height);
+  outline: none;
+  transition:
+    border-color var(--search-field-transition-duration) ease,
+    background-color var(--search-field-transition-duration) ease,
+    padding-right var(--search-field-transition-duration) ease;
+}
+
+.wrapWithClear .input {
+  padding-right: calc(
+    var(--search-field-padding-x) + var(--search-field-clear-size) +
+      var(--search-field-clear-gap)
+  );
+}
+
+.input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.input:focus,
+.input:focus-visible {
+  border-color: var(--search-field-border-color);
+  background: transparent;
+}
+
+.input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.input::-ms-clear {
+  display: none;
+}
+
+.clearBtn {
+  position: absolute;
+  top: 50%;
+  right: var(--search-field-padding-x);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--search-field-clear-size);
+  height: var(--search-field-clear-size);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--search-field-clear-color);
+  cursor: pointer;
+  transform: translateY(-50%);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.clearBtn svg {
+  width: var(--search-field-clear-icon-size);
+  height: var(--search-field-clear-icon-size);
+}
+
+.clearBtn:active {
+  opacity: 0.7;
+}

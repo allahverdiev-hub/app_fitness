@@ -6,9 +6,8 @@
   margin-bottom: var(--space-lg);
 }
 
-.actionsRow {
+.actionsColumn {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
   gap: var(--space-sm);
 }

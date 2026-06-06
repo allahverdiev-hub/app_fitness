@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { ActionPopup } from "@/shared/ui/ActionPopup";
 import { Level2ActionButton } from "@/shared/ui/ActionButton";
-import actionStyles from "@/shared/ui/ActionButton/ActionButton.module.css";
 import { getReplaceSuggestions } from "@/features/exercise-page/mocks/replaceSuggestions";
-import { WorkoutExerciseMuscleLabel } from "@/features/workout-list/components/WorkoutExerciseMuscleLabel";
-import { WorkoutExerciseTitle } from "@/features/workout-list/components/WorkoutExerciseTitle";
+import { ReplaceExerciseOptionCard } from "./ReplaceExerciseOptionCard";
+import sharedStyles from "./replaceExerciseShared.module.css";
 import styles from "./ReplaceExerciseSheet.module.css";
 
 type ReplaceExerciseSheetProps = {
@@ -54,7 +53,6 @@ export function ReplaceExerciseSheet({
 
   const handleViewAll = () => {
     onViewAll?.();
-    onClose();
   };
 
   return (
@@ -63,37 +61,12 @@ export function ReplaceExerciseSheet({
         <ul className={styles.list} role="radiogroup" aria-label="Рекомендуемые упражнения">
           {suggestions.map((item) => (
             <li key={item.id}>
-              <label className={styles.card}>
-                <div className={styles.cardMain}>
-                  <div className={styles.thumbWrap}>
-                    <img
-                      className={styles.thumb}
-                      src={item.thumbnailSrc}
-                      alt=""
-                      width={72}
-                      height={72}
-                      draggable={false}
-                    />
-                  </div>
-                  <div className={styles.body}>
-                    <WorkoutExerciseTitle as="span">
-                      {item.title}
-                    </WorkoutExerciseTitle>
-                    {item.muscleGroup ? (
-                      <WorkoutExerciseMuscleLabel>
-                        {item.muscleGroup}
-                      </WorkoutExerciseMuscleLabel>
-                    ) : null}
-                  </div>
-                </div>
-                <input
-                  type="radio"
-                  name="replace-suggestion"
-                  className={styles.radio}
-                  checked={selectedId === item.id}
-                  onChange={() => setSelectedId(item.id)}
-                />
-              </label>
+              <ReplaceExerciseOptionCard
+                item={item}
+                checked={selectedId === item.id}
+                name="replace-suggestion"
+                onChange={() => setSelectedId(item.id)}
+              />
             </li>
           ))}
         </ul>
@@ -108,12 +81,12 @@ export function ReplaceExerciseSheet({
           </Level2ActionButton>
           <button
             type="button"
-            className={`${actionStyles.primary} ${styles.sheetAction} ${styles.confirmBtn}`}
+            className={sharedStyles.confirmBtn}
             disabled={!selectedExercise}
             onClick={handleConfirm}
           >
-            <span className={styles.confirmHint}>Заменить на</span>
-            <span className={styles.confirmTitle}>
+            <span className={sharedStyles.confirmHint}>Заменить на</span>
+            <span className={sharedStyles.confirmTitle}>
               {selectedExercise?.title ?? ""}
             </span>
           </button>

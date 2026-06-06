@@ -36,20 +36,13 @@ export function ActionButtonRow({
 
     <nav className={styles.column} aria-label="Действия с упражнением">
 
-      <div className={styles.actionsRow}>
-
-        <Level2ActionButton grow icon={<IconPlay size={18} />} onClick={onTechnique}>
-
+      <div className={styles.actionsColumn}>
+        <Level2ActionButton block icon={<IconPlay size={18} />} onClick={onTechnique}>
           Техника
-
         </Level2ActionButton>
-
-        <Level2ActionButton grow icon={<IconReplace size={18} />} onClick={onReplace}>
-
+        <Level2ActionButton block icon={<IconReplace size={18} />} onClick={onReplace}>
           Заменить
-
         </Level2ActionButton>
-
       </div>
 
       <ExerciseDescription description={description} />

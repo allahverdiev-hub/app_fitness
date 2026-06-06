@@ -303,4 +303,39 @@
   --program-week-difficulty-border-medium: rgba(133, 126, 0, 0.6);
   --program-week-difficulty-border-heavy: rgba(133, 72, 0, 0.6);
   --program-week-difficulty-icon-inactive-color: rgba(255, 255, 255, 0.22);
+
+  /* SearchField — поиск по названию (каталог упражнений и др.) */
+  --search-field-padding-y: 14px;
+  --search-field-padding-x: 16px;
+  --search-field-bg: var(--color-surface-elevated);
+  --search-field-border-color: var(--segmented-tab-picker-track-border-color);
+  --search-field-font-size: var(--description-m-size);
+  --search-field-font-weight: var(--description-m-weight);
+  --search-field-line-height: var(--description-m-line-height);
+  --search-field-clear-color: var(--color-text-secondary);
+  --search-field-clear-size: 24px;
+  --search-field-clear-icon-size: 16px;
+  --search-field-clear-gap: 8px;
+  --search-field-transition-duration: 0.18s;
+
+  /* FilterTag — фильтрующие теги (категории мышц) */
+  --filter-tag-padding-y: 6px;
+  --filter-tag-padding-x: 12px;
+  --filter-tag-border-width: 2px;
+  --filter-tag-bg: var(--color-workout-card);
+  --filter-tag-color: var(--color-text-secondary);
+  --filter-tag-font-size: var(--font-size-sm);
+  --filter-tag-font-weight: 500;
+  --filter-tag-line-height: 1.2;
+  --filter-tag-active-gap: 6px;
+  --filter-tag-check-size: 14px;
+  --filter-tag-row-gap: var(--space-sm);
+  --filter-tag-transition-duration: 0.32s;
+  --filter-tag-transition-ease: cubic-bezier(0.33, 1, 0.68, 1);
+
+  /* PageBackButton — кнопка «назад» в шапке экрана */
+  --page-back-btn-size: 36px;
+  --page-back-btn-bg: var(--color-workout-card);
+  --page-back-btn-color: var(--color-text-primary);
+  --page-back-btn-icon-size: 18px;
 }

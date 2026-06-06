@@ -15,6 +15,7 @@ import {
   type ExerciseMenuAction,
 } from "@/features/workout-list/components/ExerciseActionsSheet";
 import { ReplaceExerciseSheet } from "@/features/exercise-page/components/replace-exercise-sheet/ReplaceExerciseSheet";
+import { ReplaceExerciseCatalogPage } from "@/features/exercise-page/components/replace-exercise-catalog/ReplaceExerciseCatalogPage";
 import { DeleteExerciseConfirmSheet } from "@/features/workout-list/components/DeleteExerciseConfirmSheet";
 
 import type { WorkoutListExerciseItem } from "@/features/workout-list/types/workoutOverview";
@@ -102,6 +103,7 @@ export function WorkoutListPage({
   const [menuExercise, setMenuExercise] =
     useState<WorkoutListExerciseItem | null>(null);
   const [replaceTargetId, setReplaceTargetId] = useState<string | null>(null);
+  const [replaceCatalogOpen, setReplaceCatalogOpen] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const [dissolvingId, setDissolvingId] = useState<string | null>(null);
   const [collapsingId, setCollapsingId] = useState<string | null>(null);
@@ -121,6 +123,7 @@ export function WorkoutListPage({
 
     if (action === "replace") {
       setMenuExercise(null);
+      setReplaceCatalogOpen(false);
       setReplaceTargetId(targetId);
       return;
     }
@@ -220,15 +223,29 @@ export function WorkoutListPage({
         onAction={handleMenuAction}
       />
       <ReplaceExerciseSheet
-        open={replaceTargetId !== null}
+        open={replaceTargetId !== null && !replaceCatalogOpen}
         exerciseId={replaceTargetId ?? ""}
-        onClose={() => setReplaceTargetId(null)}
+        onClose={() => {
+          setReplaceCatalogOpen(false);
+          setReplaceTargetId(null);
+        }}
         onSelect={(suggestionId) => {
           if (!replaceTargetId) return;
           onReplaceExercise(replaceTargetId, suggestionId);
         }}
-        onViewAll={() => console.log("view all exercises", replaceTargetId)}
+        onViewAll={() => setReplaceCatalogOpen(true)}
       />
+      {replaceCatalogOpen && replaceTargetId ? (
+        <ReplaceExerciseCatalogPage
+          exerciseId={replaceTargetId}
+          onBack={() => setReplaceCatalogOpen(false)}
+          onConfirm={(suggestionId) => {
+            onReplaceExercise(replaceTargetId, suggestionId);
+            setReplaceCatalogOpen(false);
+            setReplaceTargetId(null);
+          }}
+        />
+      ) : null}
       <DeleteExerciseConfirmSheet
         open={deleteTargetId !== null}
         onCancel={() => setDeleteTargetId(null)}

@@ -3,6 +3,10 @@
   margin-bottom: var(--space-2xl);
 }
 
+.replacedWrap {
+  margin: calc(-1 * var(--page-title-gap-below) + var(--space-sm)) 0 var(--space-sm);
+}
+
 .volume {
   margin: 0 0 4px;
   font-size: 15px;

@@ -1,0 +1,24 @@
+.btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--page-back-btn-size);
+  height: var(--page-back-btn-size);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--page-back-btn-bg);
+  color: var(--page-back-btn-color);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn svg {
+  width: var(--page-back-btn-icon-size);
+  height: var(--page-back-btn-icon-size);
+}
+
+.btn:active {
+  opacity: 0.7;
+}

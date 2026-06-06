@@ -5,6 +5,8 @@ export interface ExerciseDescription {
   mistakes: string[];
 }
 
+export type WarmupVolumeType = "time" | "reps";
+
 export interface ExerciseItem {
   id: string;
   title: string;
@@ -21,6 +23,11 @@ export interface ExerciseItem {
   status: ExerciseStatus;
   /** Заполняется при отображении прогресса подходов */
   completedSets?: number;
+  /** Разминочное упражнение — объём без подходов */
+  isWarmup?: boolean;
+  warmupVolumeType?: WarmupVolumeType;
+  /** Название до замены */
+  replacedFromTitle?: string;
 }
 
 export interface WorkoutSession {

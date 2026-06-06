@@ -4,6 +4,7 @@ import { exerciseDescriptionsById } from "@/features/exercise-page/mocks/descrip
 import type {
   ExerciseDescription,
   ExerciseItem,
+  WarmupVolumeType,
   WorkoutSession,
 } from "@/features/exercise-page/types/exercise";
 import type {
@@ -29,6 +30,8 @@ export type WorkoutSessionExerciseDef = {
   description?: ExerciseDescription;
   /** Название до замены — для подписи в листинге */
   replacedFromTitle?: string;
+  isWarmup?: boolean;
+  warmupVolumeType?: WarmupVolumeType;
 };
 
 /** Единый порядок и содержание: листинг тренировки ↔ карусель на странице упражнения */
@@ -46,6 +49,8 @@ export const workoutSessionExercises: WorkoutSessionExerciseDef[] = [
     imageAlt: "Ходьба на беговой дорожке",
     completed: true,
     status: "completed",
+    isWarmup: true,
+    warmupVolumeType: "time",
   },
   {
     id: "ex-2",
@@ -148,6 +153,9 @@ export const workoutSessionExercises: WorkoutSessionExerciseDef[] = [
 ];
 
 export function toExerciseItem(def: WorkoutSessionExerciseDef): ExerciseItem {
+  const isWarmup =
+    def.isWarmup ?? def.listSection === WARMUP_SECTION_TITLE;
+
   return {
     id: def.id,
     title: def.title,
@@ -162,6 +170,9 @@ export function toExerciseItem(def: WorkoutSessionExerciseDef): ExerciseItem {
       def.description ?? exerciseDescriptionsById[def.id] ?? exerciseDescriptionsById["ex-3"],
     techniqueVideoUrl: defaultTechniqueVideoUrl,
     status: def.status ?? (def.completed ? "completed" : "upcoming"),
+    isWarmup,
+    warmupVolumeType: def.warmupVolumeType,
+    replacedFromTitle: def.replacedFromTitle,
   };
 }
 

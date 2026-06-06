@@ -1,0 +1,101 @@
+.row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--filter-tag-row-gap);
+  margin: 0 calc(-1 * var(--page-gutter));
+  padding: 0 var(--page-gutter);
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.row::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.tag {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  box-sizing: border-box;
+  padding: var(--filter-tag-padding-y) var(--filter-tag-padding-x);
+  border: var(--filter-tag-border-width) solid transparent;
+  border-radius: var(--radius-pill);
+  background: var(--filter-tag-bg);
+  color: var(--filter-tag-color);
+  font-family: inherit;
+  font-size: var(--filter-tag-font-size);
+  font-weight: var(--filter-tag-font-weight);
+  line-height: var(--filter-tag-line-height);
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    color var(--filter-tag-transition-duration) var(--filter-tag-transition-ease),
+    background-color var(--filter-tag-transition-duration)
+      var(--filter-tag-transition-ease),
+    border-color var(--filter-tag-transition-duration)
+      var(--filter-tag-transition-ease),
+    gap var(--filter-tag-transition-duration) var(--filter-tag-transition-ease);
+}
+
+.tagActive {
+  gap: var(--filter-tag-active-gap);
+  background: transparent;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.check {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 0;
+  opacity: 0;
+  color: var(--color-accent);
+  transform: scale(0.72);
+  transform-origin: center;
+  transition:
+    width var(--filter-tag-transition-duration) var(--filter-tag-transition-ease),
+    opacity calc(var(--filter-tag-transition-duration) * 0.75)
+      var(--filter-tag-transition-ease),
+    transform var(--filter-tag-transition-duration) var(--filter-tag-transition-ease);
+}
+
+.checkVisible {
+  width: var(--filter-tag-check-size);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.check svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.label {
+  line-height: var(--filter-tag-line-height);
+  transition: color var(--filter-tag-transition-duration)
+    var(--filter-tag-transition-ease);
+}
+
+.tag:active {
+  opacity: 0.88;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tag,
+  .check,
+  .label {
+    transition: none;
+  }
+}

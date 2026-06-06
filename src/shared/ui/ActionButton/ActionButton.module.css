@@ -21,6 +21,10 @@
   cursor: pointer;
 }
 
+.level2WithIcon {
+  justify-content: space-between;
+}
+
 .level2Grow {
   flex: 1;
 }
@@ -30,9 +34,23 @@
 }
 
 .level2Label {
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: center;
+}
+
+.level2WithIcon .level2Label {
+  flex: 1;
+  text-align: left;
+}
+
+.level2Icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
 }
 
 .level2 svg {

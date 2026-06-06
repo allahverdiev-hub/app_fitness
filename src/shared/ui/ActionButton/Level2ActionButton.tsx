@@ -26,6 +26,7 @@ export function Level2ActionButton({
       type={type}
       className={[
         styles.level2,
+        icon ? styles.level2WithIcon : "",
         grow ? styles.level2Grow : "",
         block ? styles.level2Block : "",
         danger ? styles.level2Danger : "",
@@ -35,8 +36,8 @@ export function Level2ActionButton({
         .join(" ")}
       {...props}
     >
-      {icon}
       <span className={styles.level2Label}>{children}</span>
+      {icon ? <span className={styles.level2Icon}>{icon}</span> : null}
     </button>
   );
 }

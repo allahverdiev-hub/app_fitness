@@ -1,4 +1,7 @@
 import { PageTitle } from "@/shared/ui/PageTitle/PageTitle";
+import type { WarmupVolumeType } from "@/features/exercise-page/types/exercise";
+import { formatExercisePageVolume } from "@/features/exercise-page/utils/formatExercisePageVolume";
+import { WorkoutExerciseReplacedLabel } from "@/features/workout-list/components/WorkoutExerciseReplacedLabel";
 import styles from "./ExerciseTitle.module.css";
 
 type ExerciseTitleProps = {
@@ -6,6 +9,10 @@ type ExerciseTitleProps = {
   muscles: string;
   sets: number;
   repsRange: string;
+  isWarmup?: boolean;
+  warmupVolumeType?: WarmupVolumeType;
+  replacedFromTitle?: string;
+  completed?: boolean;
 };
 
 export function ExerciseTitle({
@@ -13,14 +20,31 @@ export function ExerciseTitle({
   muscles,
   sets,
   repsRange,
+  isWarmup,
+  warmupVolumeType,
+  replacedFromTitle,
+  completed = false,
 }: ExerciseTitleProps) {
-  const volume = `${sets} x ${repsRange} повторений`;
+  const volume = formatExercisePageVolume({
+    sets,
+    repsRange,
+    isWarmup,
+    warmupVolumeType,
+  });
 
   return (
     <div className={styles.block}>
       <PageTitle>{title}</PageTitle>
+      {replacedFromTitle ? (
+        <div className={styles.replacedWrap}>
+          <WorkoutExerciseReplacedLabel
+            previousTitle={replacedFromTitle}
+            completed={completed}
+          />
+        </div>
+      ) : null}
       <p className={styles.volume}>{volume}</p>
-      <p className={styles.muscles}>{muscles}</p>
+      {!isWarmup ? <p className={styles.muscles}>{muscles}</p> : null}
     </div>
   );
 }
