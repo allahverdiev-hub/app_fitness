@@ -18,16 +18,14 @@ export function ProgramWeekSection({
       className={styles.section}
       aria-labelledby={`week-${week.id}`}
     >
-      <div className={styles.intro}>
-        <div className={styles.header}>
-          <DifficultyBadge
-            id={`week-${week.id}`}
-            difficulty={week.difficulty}
-            weekTitle={week.title}
-          />
-        </div>
-        <p className={styles.description}>{week.description}</p>
+      <div className={styles.header}>
+        <DifficultyBadge
+          id={`week-${week.id}`}
+          difficulty={week.difficulty}
+          weekTitle={week.title}
+        />
       </div>
+      <p className={styles.description}>{week.description}</p>
       <ul className={styles.list}>
         {week.workouts.map((workout) => (
           <li key={workout.id}>

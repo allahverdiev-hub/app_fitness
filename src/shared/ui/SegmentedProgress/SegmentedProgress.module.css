@@ -16,7 +16,7 @@
 
 .sizeMd .segment,
 .sizeMd .segmentDone {
-  height: var(--segmented-progress-height-md, 6px);
+  height: var(--segmented-progress-height-md, 4px);
 }
 
 .sizeSm .segment,

@@ -95,8 +95,22 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
   padding: 2px 0;
+}
+
+.volumeLabel {
+  margin-top: var(--workout-exercise-volume-label-margin-top);
+  font-family: var(--font-family);
+  font-weight: var(--workout-exercise-volume-label-weight);
+  font-synthesis: none;
+}
+
+.body .muscleLabel {
+  margin-top: var(--workout-exercise-volume-label-to-muscle-gap);
+  font-family: var(--font-family);
+  font-weight: var(--workout-exercise-muscle-label-weight);
+  font-synthesis: none;
 }
 
 .titleCompleted {

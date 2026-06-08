@@ -1,8 +1,8 @@
 .ringWrap {
   position: relative;
   flex-shrink: 0;
-  width: 73.92px;
-  height: 73.92px;
+  width: var(--program-workout-progress-ring-size);
+  height: var(--program-workout-progress-ring-size);
   display: grid;
   place-items: center;
 }
@@ -23,18 +23,17 @@
 .label {
   position: relative;
   z-index: 1;
-  font-size: var(--workout-progress-percent-size);
-  font-weight: var(--workout-progress-percent-weight);
-  line-height: var(--workout-progress-percent-line-height);
-  letter-spacing: var(--workout-progress-percent-letter-spacing);
-  text-transform: uppercase;
-  color: var(--workout-progress-percent-color);
+  font-size: var(--program-workout-progress-label-size);
+  font-weight: var(--program-workout-progress-label-weight);
+  line-height: var(--program-workout-progress-label-line-height);
+  letter-spacing: var(--program-workout-progress-label-letter-spacing);
+  color: var(--program-workout-progress-label-color);
 }
 
 .done {
   flex-shrink: 0;
-  width: 73.92px;
-  height: 73.92px;
+  width: var(--program-workout-progress-ring-size);
+  height: var(--program-workout-progress-ring-size);
   display: flex;
   align-items: center;
   justify-content: center;

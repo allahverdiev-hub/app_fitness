@@ -1,7 +1,10 @@
 import { PageTitle } from "@/shared/ui/PageTitle/PageTitle";
 import type { WarmupVolumeType } from "@/features/exercise-page/types/exercise";
 import { formatExercisePageVolume } from "@/features/exercise-page/utils/formatExercisePageVolume";
-import { WorkoutExerciseReplacedLabel } from "@/shared/ui/exercise-list";
+import {
+  WorkoutExerciseMuscleLabel,
+  WorkoutExerciseReplacedLabel,
+} from "@/shared/ui/exercise-list";
 import styles from "./ExerciseTitle.module.css";
 
 type ExerciseTitleProps = {
@@ -36,7 +39,13 @@ export function ExerciseTitle({
 
   return (
     <div className={styles.block}>
-      <PageTitle>{title}</PageTitle>
+      {!isWarmup && muscles ? (
+        <WorkoutExerciseMuscleLabel className={styles.muscleTag}>
+          {muscles}
+        </WorkoutExerciseMuscleLabel>
+      ) : null}
+      <PageTitle className={styles.exerciseTitle}>{title}</PageTitle>
+      <p className={styles.volume}>{volume}</p>
       {replacedFromTitle ? (
         <div className={styles.replacedWrap}>
           <WorkoutExerciseReplacedLabel
@@ -46,8 +55,6 @@ export function ExerciseTitle({
           />
         </div>
       ) : null}
-      <p className={styles.volume}>{volume}</p>
-      {!isWarmup ? <p className={styles.muscles}>{muscles}</p> : null}
     </div>
   );
 }

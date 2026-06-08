@@ -15,7 +15,7 @@ export function DifficultyBadge({
   weekTitle,
   id,
 }: DifficultyBadgeProps) {
-  const { label, color, borderColor, activeBars } = getDifficultyStyle(difficulty);
+  const { label, color, activeBars } = getDifficultyStyle(difficulty);
   const hasWeekTitle = Boolean(weekTitle);
   const ariaLabel = weekTitle ? `${weekTitle}, ${label}` : label;
 
@@ -24,25 +24,20 @@ export function DifficultyBadge({
       id={id}
       className={`${styles.badge} ${hasWeekTitle ? styles.badgeWithWeek : ""}`}
       aria-label={ariaLabel}
-      style={
-        {
-          "--program-week-difficulty-tone": color,
-          border: `1px solid ${borderColor}`,
-        } as CSSProperties
-      }
+      style={{ "--program-week-difficulty-tone": color } as CSSProperties}
     >
-      {hasWeekTitle ? (
-        <span className={styles.weekTitle}>{weekTitle}</span>
-      ) : null}
       <span className={styles.iconWrap}>
         <IconSignalBars
-          size={16}
+          size={20}
           activeCount={activeBars}
           activeColor="var(--program-week-difficulty-tone)"
           inactiveColor="var(--program-week-difficulty-icon-inactive-color)"
           className={styles.icon}
         />
       </span>
+      {hasWeekTitle ? (
+        <span className={styles.weekTitle}>{weekTitle}</span>
+      ) : null}
     </span>
   );
 }

@@ -1,5 +1,4 @@
 import { exerciseImages } from "@/features/exercise-page/config/media";
-import { WARMUP_SECTION_TITLE } from "@/features/workout-list/utils/buildExerciseSections";
 import type { WorkoutSessionExerciseDef } from "@/features/workouts/mocks/workoutSession";
 import { workoutSessionExercises } from "@/features/workouts/mocks/workoutSession";
 
@@ -209,9 +208,7 @@ export function getReplaceSuggestions(
 }
 
 function isReplaceableExercise(def: WorkoutSessionExerciseDef): boolean {
-  const isWarmup =
-    def.isWarmup ?? def.listSection === WARMUP_SECTION_TITLE;
-  return !isWarmup && def.id !== "ex-1";
+  return !def.isWarmup && def.id !== "ex-1";
 }
 
 /** Полный каталог упражнений для экрана «Все упражнения» */

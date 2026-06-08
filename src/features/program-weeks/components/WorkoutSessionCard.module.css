@@ -29,7 +29,7 @@
   flex-direction: column;
   justify-content: center;
   gap: var(--space-sm);
-  min-height: 73.92px;
+  min-height: var(--program-workout-progress-ring-size);
 }
 
 .bodySingleLine {
@@ -40,14 +40,6 @@
   color: var(--color-text-secondary);
 }
 
-.title {
-  font-size: var(--text-exercise-list-title-size);
-  font-weight: var(--text-exercise-list-title-weight);
-  line-height: var(--text-exercise-list-title-line-height);
-  letter-spacing: var(--text-exercise-list-title-letter-spacing);
-  text-transform: uppercase;
-}
-
 .dayLabel {
   font-size: var(--program-workout-day-label-size);
   font-weight: var(--program-workout-day-label-weight);
@@ -55,16 +47,7 @@
   color: var(--program-workout-day-label-color);
 }
 
-.dayLabelPrimary {
-  font-size: var(--program-workout-day-label-primary-size);
-  font-weight: var(--program-workout-day-label-primary-weight);
-  line-height: var(--program-workout-day-label-primary-line-height);
-  letter-spacing: var(--program-workout-day-label-primary-letter-spacing);
-  text-transform: uppercase;
-  color: var(--program-workout-day-label-primary-color);
-}
-
-.bodyDone .title,
+.bodyDone .sessionTitle,
 .bodyDone .dayLabel {
   color: inherit;
 }

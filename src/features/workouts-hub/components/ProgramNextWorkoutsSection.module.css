@@ -10,7 +10,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--workout-card-list-gap);
 }
 
 .title {

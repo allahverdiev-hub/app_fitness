@@ -61,7 +61,10 @@ export function WorkoutExerciseCard({
             >
               {exercise.title}
             </WorkoutExerciseTitle>
-            <WorkoutExerciseVolumeLabel completed={exercise.completed}>
+            <WorkoutExerciseVolumeLabel
+              completed={exercise.completed}
+              className={styles.volumeLabel}
+            >
               {exercise.subtitle}
             </WorkoutExerciseVolumeLabel>
             {exercise.muscleGroup ? (

@@ -1,4 +1,6 @@
 .nav {
+  --floating-island-bg: var(--tab-nav-island-bg);
+  --frosted-plate-bg: var(--tab-nav-island-bg);
   position: absolute;
   left: 0;
   right: 0;
@@ -8,15 +10,32 @@
     calc(var(--floating-island-inset-bottom) + var(--safe-bottom));
   pointer-events: none;
   background: transparent;
+  isolation: isolate;
+}
+
+.nav::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(var(--tab-nav-island-clearance) + var(--safe-bottom));
+  z-index: -1;
+  pointer-events: none;
+  background: var(--footer-scrim-gradient);
 }
 
 .islandShell {
-  composes: frostedPlate from "@/shared/styles/frostedPlateSurfaces.module.css";
   position: relative;
   width: 100%;
   pointer-events: auto;
-  padding: var(--floating-island-padding) 10px;
+  min-height: var(--tab-nav-island-outer-height);
+  padding: 0 10px;
   gap: 0;
+  background: var(--tab-nav-island-bg);
+  -webkit-backdrop-filter: blur(var(--tab-nav-blur));
+  backdrop-filter: blur(var(--tab-nav-blur));
+  box-shadow: none;
 }
 
 /* Бордер: сверху прозрачный → снизу непрозрачный */
@@ -64,11 +83,7 @@
   border: none;
   background: transparent;
   color: var(--tab-nav-inactive);
-  font-size: 11px;
-  font-weight: 500;
   font-family: inherit;
-  letter-spacing: 0.01em;
-  line-height: 1.2;
   text-align: center;
   cursor: pointer;
 }
@@ -78,12 +93,7 @@
 }
 
 .tabActive {
-  color: var(--color-text-primary);
-  font-weight: 600;
-}
-
-.tab:active {
-  opacity: 0.72;
+  color: var(--tab-nav-active);
 }
 
 .label {
@@ -92,4 +102,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
+  font-size: var(--tab-nav-label-size);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
 }
+
+.tab:active {
+  opacity: 0.72;
+}
+

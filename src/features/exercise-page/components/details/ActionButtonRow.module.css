@@ -11,3 +11,10 @@
   flex-direction: column;
   gap: var(--space-sm);
 }
+
+.topRow {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-sm);
+  min-width: 0;
+}

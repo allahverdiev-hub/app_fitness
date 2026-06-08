@@ -19,7 +19,7 @@
   display: inline-flex;
   flex-wrap: nowrap;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-sm);
   width: max-content;
   max-width: 100%;
   margin-inline: auto;

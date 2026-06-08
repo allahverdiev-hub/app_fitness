@@ -12,7 +12,7 @@ export function applyExerciseVolumeChange(
   def: WorkoutSessionExerciseDef,
   update: ExerciseVolumeUpdate,
 ): WorkoutSessionExerciseDef {
-  const isWarmup = def.isWarmup ?? Boolean(def.listSection);
+  const isWarmup = def.isWarmup ?? false;
 
   return {
     ...def,

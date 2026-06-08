@@ -33,14 +33,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   transform: translateY(-2px);
 }
 
 .difficultyBadgeIcon {
   display: block;
-  width: 16px;
+  width: 20px;
   height: auto;
 }

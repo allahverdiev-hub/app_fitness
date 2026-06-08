@@ -1,5 +1,6 @@
 import type { EnrichedProgramWorkoutSession } from "@/features/program-weeks/utils/workoutProgress";
 import { WorkoutProgressIndicator } from "@/features/program-weeks/components/WorkoutProgressIndicator";
+import { WorkoutExerciseTitle } from "@/shared/ui/exercise-list";
 import styles from "./WorkoutSessionCard.module.css";
 
 type WorkoutSessionCardProps = {
@@ -28,15 +29,17 @@ export function WorkoutSessionCard({
         className={`${styles.body} ${isDone ? styles.bodyDone : ""} ${isSingleLine ? styles.bodySingleLine : ""}`}
       >
         {workout.title ? (
-          <span className={styles.title}>{workout.title}</span>
+          <WorkoutExerciseTitle as="span" className={styles.sessionTitle}>
+            {workout.title}
+          </WorkoutExerciseTitle>
         ) : null}
-        <span
-          className={
-            workout.title ? styles.dayLabel : styles.dayLabelPrimary
-          }
-        >
-          {workout.dayLabel}
-        </span>
+        {workout.title ? (
+          <span className={styles.dayLabel}>{workout.dayLabel}</span>
+        ) : (
+          <WorkoutExerciseTitle as="span" className={styles.sessionTitle}>
+            {workout.dayLabel}
+          </WorkoutExerciseTitle>
+        )}
       </span>
     </button>
   );

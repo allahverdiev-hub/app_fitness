@@ -33,7 +33,7 @@
 .slotRight {
   flex: 1 1 0;
   min-width: 0;
-  border-radius: var(--radius-pill);
+  border-radius: var(--action-control-radius);
   transition:
     flex-grow var(--bar-morph-duration) var(--bar-morph-ease),
     flex-shrink var(--bar-morph-duration) var(--bar-morph-ease),
@@ -111,7 +111,7 @@
   height: 100%;
   margin: 0;
   border: none;
-  border-radius: var(--radius-pill);
+  border-radius: var(--action-control-radius);
   display: inline-flex;
   align-items: center;
   justify-content: center;

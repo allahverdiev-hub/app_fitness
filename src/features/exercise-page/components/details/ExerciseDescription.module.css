@@ -50,3 +50,29 @@
 .listMistakes li::marker {
   color: var(--color-text-secondary);
 }
+
+.panelEmbedded {
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  text-align: left;
+}
+
+.blockEmbedded {
+  padding: 0;
+}
+
+.blockEmbedded + .blockEmbedded {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-divider);
+}
+
+.listEmbedded {
+  font-family: var(--font-family);
+  font-size: var(--workout-page-subtitle-size);
+  font-weight: var(--workout-page-subtitle-weight);
+  font-synthesis: none;
+  line-height: var(--workout-page-subtitle-line-height);
+  color: var(--workout-page-subtitle-color);
+}

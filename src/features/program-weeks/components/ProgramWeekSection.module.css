@@ -1,14 +1,7 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xl);
   scroll-margin-top: var(--program-page-header-height);
-}
-
-.intro {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
 }
 
 .header {
@@ -29,18 +22,20 @@
 }
 
 .description {
-  margin: 0;
+  margin: var(--program-week-title-to-description-gap) 0 0;
+  font-family: var(--font-family);
   font-size: var(--description-m-size);
-  font-weight: var(--description-m-weight);
-  line-height: var(--description-m-line-height);
+  font-weight: var(--program-week-description-weight);
+  font-synthesis: none;
+  line-height: var(--program-week-description-line-height);
   color: var(--description-m-color);
 }
 
 .list {
-  margin: 0;
+  margin: var(--program-week-description-to-list-gap) 0 0;
   padding: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--workout-card-list-gap);
 }

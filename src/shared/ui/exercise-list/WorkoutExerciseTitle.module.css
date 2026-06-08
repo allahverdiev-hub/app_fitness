@@ -3,8 +3,10 @@
   margin: 0;
   min-width: 0;
   max-width: 100%;
+  font-family: var(--font-family);
   font-size: var(--text-exercise-list-title-size);
   font-weight: var(--text-exercise-list-title-weight);
+  font-synthesis: none;
   line-height: var(--text-exercise-list-title-line-height);
   letter-spacing: var(--text-exercise-list-title-letter-spacing);
   text-transform: uppercase;

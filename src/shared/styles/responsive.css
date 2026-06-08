@@ -8,7 +8,7 @@
   --app-shadow: none;
   --thumb-size: 76px;
   --hero-max-height: min(32dvh, 260px);
-  --page-title-size: 18px;
+  --page-title-size: 24px;
   --bottom-bar-height: 128px;
   --scroll-extra-bottom: 48px;
   --scroll-bottom-padding: calc(
@@ -26,7 +26,7 @@
     --page-gutter: 12px;
     --thumb-size: 68px;
     --hero-max-height: min(17dvh, 120px);
-    --page-title-size: 18px;
+    --page-title-size: 24px;
     --bottom-bar-height: 118px;
     --scroll-extra-bottom: 40px;
     --font-size-md: 14px;
@@ -68,7 +68,7 @@
     --hero-max-height: min(16dvh, 100px);
     --bottom-bar-height: 108px;
     --scroll-extra-bottom: 32px;
-    --page-title-size: 18px;
+    --page-title-size: 24px;
     --thumb-size: 64px;
     --stop-btn-size: 40px;
     --stop-icon-size: 18px;

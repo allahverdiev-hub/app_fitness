@@ -99,9 +99,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: var(--action-label-size);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
+  font-size: var(--action-control-font-size);
+  font-weight: var(--action-control-font-weight);
+  line-height: var(--action-control-line-height);
+  letter-spacing: var(--action-control-letter-spacing);
   text-transform: uppercase;
 }

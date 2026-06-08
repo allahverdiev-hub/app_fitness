@@ -18,44 +18,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0;
-}
-
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  list-style: none;
-}
-
-.sectionLabeled + .section {
-  margin-top: 20px;
-}
-
-.sectionTitle {
-  margin: 0;
-  padding: 0 2px;
-  font-size: var(--workout-section-title-size);
-  font-weight: var(--workout-section-title-weight);
-  line-height: var(--workout-section-title-line-height);
-  color: var(--workout-section-title-color);
-}
-
-.sectionList {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.sectionList > .listItem {
-  margin-bottom: 10px;
-}
-
-.sectionList > .listItem:last-child {
-  margin-bottom: 0;
+  gap: var(--workout-card-list-gap);
 }
 
 .dropZone {
@@ -128,7 +91,7 @@
   overflow: visible;
 }
 
-.sectionList:has(.listItemDissolving) {
+.list:has(.listItemDissolving) {
   overflow: visible;
 }
 

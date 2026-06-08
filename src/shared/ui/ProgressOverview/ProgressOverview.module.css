@@ -1,7 +1,7 @@
 .block {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--progress-overview-gap, var(--progress-label-to-bar-gap));
   width: 100%;
   max-width: 100%;
   min-width: 0;

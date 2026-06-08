@@ -25,6 +25,7 @@ import { ExerciseCarousel } from "@/features/exercise-page/components/carousel/E
 import { ExerciseHeroStage } from "@/features/exercise-page/components/hero/ExerciseHeroStage";
 import { ExerciseTitle } from "@/features/exercise-page/components/details/ExerciseTitle";
 import { ActionButtonRow } from "@/features/exercise-page/components/details/ActionButtonRow";
+import { ExerciseDescriptionSheet } from "@/features/exercise-page/components/details/ExerciseDescriptionSheet";
 import { ExerciseDiary } from "@/features/exercise-page/components/diary/ExerciseDiary";
 import { ExerciseProgressChart } from "@/features/exercise-page/components/chart/ExerciseProgressChart";
 import { ChartPointDetailSheet } from "@/features/exercise-page/components/chart/ChartPointDetailSheet";
@@ -83,6 +84,7 @@ export function ExercisePage({
   );
   const [addSetOpen, setAddSetOpen] = useState(false);
   const [techniqueOpen, setTechniqueOpen] = useState(false);
+  const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [replaceOpen, setReplaceOpen] = useState(false);
   const [replaceCatalogOpen, setReplaceCatalogOpen] = useState(false);
   const [replaceRevealActive, setReplaceRevealActive] = useState(false);
@@ -331,8 +333,8 @@ export function ExercisePage({
                 />
               </ReplaceReveal>
               <ActionButtonRow
-                description={active.description}
                 onTechnique={handleOpenTechnique}
+                onDescription={() => setDescriptionOpen(true)}
                 onReplace={handleOpenReplace}
               />
               <ExerciseProgressChart
@@ -376,6 +378,12 @@ export function ExercisePage({
         videoUrl={techniqueVideoUrl}
         title={`Техника · ${active.title}`}
         onClose={() => setTechniqueOpen(false)}
+      />
+      <ExerciseDescriptionSheet
+        open={descriptionOpen}
+        exerciseTitle={active.title}
+        description={active.description}
+        onClose={() => setDescriptionOpen(false)}
       />
       <ReplaceExerciseSheet
         open={replaceOpen && !replaceCatalogOpen}

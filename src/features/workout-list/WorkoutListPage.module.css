@@ -37,21 +37,16 @@
   isolation: isolate;
 }
 
-/* Тёмная заливка с размытием фона под кнопками */
 .actions::before {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(-1 * var(--footer-scrim-rise));
+  top: 0;
   bottom: calc(-1 * var(--workout-actions-bottom));
   z-index: -1;
   pointer-events: none;
-  background: var(--footer-scrim-bg);
-  backdrop-filter: blur(var(--footer-scrim-blur));
-  -webkit-backdrop-filter: blur(var(--footer-scrim-blur));
-  -webkit-mask-image: var(--footer-scrim-mask);
-  mask-image: var(--footer-scrim-mask);
+  background: var(--footer-scrim-gradient);
 }
 
 .actions > * {

@@ -2,6 +2,7 @@
   display: inline-flex;
   align-items: baseline;
   gap: 6px;
+  text-transform: var(--tab-switcher-text-transform);
 }
 
 .count {

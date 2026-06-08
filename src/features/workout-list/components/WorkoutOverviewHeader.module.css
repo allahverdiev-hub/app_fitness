@@ -8,12 +8,23 @@
 
 .hint {
   margin: 0;
-  font-size: var(--description-m-size);
-  font-weight: var(--description-m-weight);
-  line-height: var(--description-m-line-height);
-  color: var(--description-m-color);
+  font-family: var(--font-family);
+  font-size: var(--workout-page-subtitle-size);
+  font-weight: var(--workout-page-subtitle-weight);
+  font-synthesis: none;
+  line-height: var(--workout-page-subtitle-line-height);
+  color: var(--workout-page-subtitle-color);
+}
+
+.progress {
+  margin-bottom: var(--workout-progress-bar-to-list-gap);
 }
 
 .progressLabel {
-  composes: progressLabel from "@/shared/styles/progressLabelSurfaces.module.css";
+  font-family: var(--font-family);
+  font-size: var(--workout-progress-label-size);
+  font-weight: var(--workout-progress-label-weight);
+  font-synthesis: none;
+  line-height: var(--workout-progress-label-line-height);
+  color: var(--workout-progress-label-color);
 }

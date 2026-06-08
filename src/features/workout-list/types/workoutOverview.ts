@@ -2,8 +2,6 @@ export type WorkoutListExerciseItem = {
   id: string;
   title: string;
   subtitle: string;
-  /** Только WARMUP_SECTION_TITLE («Разминочные»); иначе — рабочая группа */
-  section?: string;
   muscleGroup?: string;
   thumbnailSrc: string;
   imageAlt: string;

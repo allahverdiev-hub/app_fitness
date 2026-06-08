@@ -24,6 +24,7 @@ export function ExerciseActionsSheet({
   return (
     <ActionPopup open={open} title={exerciseTitle} onClose={onClose}>
       <ActionPopupMenu
+        buttonLevel={3}
         items={[
           {
             id: "replace",

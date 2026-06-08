@@ -45,15 +45,16 @@
   flex-shrink: 0;
   align-items: center;
   gap: var(--space-md);
+  text-transform: var(--tab-switcher-text-transform);
 }
 
 .periodTab {
   padding: 0;
-  font-size: var(--text-exercise-list-title-size);
-  font-weight: var(--text-exercise-list-title-weight);
-  line-height: var(--text-exercise-list-title-line-height);
-  letter-spacing: var(--text-exercise-list-title-letter-spacing);
-  text-transform: uppercase;
+  font-size: var(--tab-switcher-font-size);
+  font-weight: var(--tab-switcher-font-weight);
+  line-height: var(--tab-switcher-line-height);
+  letter-spacing: var(--tab-switcher-letter-spacing);
+  text-transform: var(--tab-switcher-text-transform);
   color: var(--color-text-secondary);
   background: transparent;
   white-space: nowrap;

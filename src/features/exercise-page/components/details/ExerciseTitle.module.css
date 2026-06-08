@@ -3,20 +3,21 @@
   margin-bottom: var(--space-2xl);
 }
 
+.muscleTag {
+  margin: 0 0 var(--exercise-page-muscle-to-title-gap);
+}
+
+.exerciseTitle {
+  margin: 0 0 var(--exercise-page-title-to-volume-gap);
+}
+
 .replacedWrap {
-  margin: calc(-1 * var(--page-title-gap-below) + var(--space-sm)) 0 var(--space-sm);
+  margin: var(--space-sm) 0 0;
 }
 
 .volume {
-  margin: 0 0 4px;
-  font-size: 15px;
-  color: var(--color-text-primary);
-  font-weight: 500;
-}
-
-.muscles {
   margin: 0;
   font-size: 15px;
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   font-weight: 500;
 }

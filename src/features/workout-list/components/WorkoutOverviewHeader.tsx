@@ -19,7 +19,8 @@ export function WorkoutOverviewHeader({ overview }: WorkoutOverviewHeaderProps) 
         completed={done}
         total={total}
         variant="program"
-        spacing="section"
+        spacing="sectionTop"
+        className={styles.progress}
         labelClassName={styles.progressLabel}
         ariaLabel={`Выполнено упражнений: ${done} из ${total}`}
       />

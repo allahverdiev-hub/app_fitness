@@ -6,13 +6,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-sm);
+  gap: 0;
   padding: var(--page-gutter);
   background: var(--color-bg);
 }
 
 .title {
-  margin-bottom: var(--space-sm);
   text-align: center;
 }
 

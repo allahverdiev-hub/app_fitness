@@ -12,6 +12,7 @@
   display: flex;
   align-items: stretch;
   width: 100%;
+  text-transform: var(--tab-switcher-text-transform);
   padding: var(--segmented-tab-picker-track-padding);
   border: 1px solid var(--segmented-tab-picker-track-border-color);
   border-radius: var(--radius-pill);
@@ -62,7 +63,7 @@
   font-weight: var(--segmented-tab-picker-inactive-font-weight);
   line-height: var(--segmented-tab-picker-inactive-line-height);
   letter-spacing: var(--segmented-tab-picker-inactive-letter-spacing);
-  text-transform: uppercase;
+  text-transform: var(--tab-switcher-text-transform);
   text-decoration: none;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -81,6 +82,7 @@
   font-weight: var(--segmented-tab-picker-active-font-weight);
   line-height: var(--segmented-tab-picker-active-line-height);
   letter-spacing: var(--segmented-tab-picker-active-letter-spacing);
+  text-transform: var(--tab-switcher-text-transform);
 }
 
 .item:active {

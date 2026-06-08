@@ -40,11 +40,12 @@
   --font-size-xl: 22px;
   --font-size-2xl: 26px;
 
-  --page-title-size: 18px;
+  --page-title-size: 24px;
+  /* Montserrat SemiBold */
   --page-title-weight: 600;
-  --page-title-line-height: 1.12;
+  --page-title-line-height: 1;
   --page-title-letter-spacing: -0.03em;
-  --page-title-gap-below: 6px;
+  --page-title-gap-below: 16px;
 
   /* description_m — описание секции, подсказки под прогрессом */
   --description-m-size: 14px;
@@ -57,9 +58,10 @@
   --progress-label-weight: 500;
   --progress-label-line-height: 1.25;
   --progress-label-color: var(--color-text-secondary);
+  --progress-label-to-bar-gap: 12px;
 
   --segmented-progress-gap: 6px;
-  --segmented-progress-height-md: 6px;
+  --segmented-progress-height-md: 4px;
   --segmented-progress-height-sm: 4px;
   /* Деления прогресс-бара (листинг упражнений, страница недель) */
   --segmented-progress-segment-pending: var(--color-workout-card);
@@ -86,15 +88,15 @@
   --bottom-bar-scrim-bottom: rgba(0, 0, 0, 0.97);
   --bottom-bar-footer-blur: 24px;
   --bottom-bar-border-from: #3a3a3c;
-  --bottom-bar-control-height: 56px;
+  --bottom-bar-control-height: 50px;
 
-  /* Названия упражнений в листинге; тот же стиль — кнопки 2-го уровня */
+  /* Заголовки карточек (тренировки, упражнения, программы); кнопки 2-го уровня — Montserrat SemiBold 13px */
   --text-exercise-list-title-size: 13px;
   --text-exercise-list-title-weight: 600;
   --text-exercise-list-title-line-height: 1.2;
   --text-exercise-list-title-letter-spacing: 0.02em;
 
-  /* Кнопки 2-го уровня: Техника, Заменить, пункты action-popup */
+  /* Кнопки 2-го уровня: «Добавить упражнение», отмена в confirm-sheet и т.п. */
   --action-level2-height: 46px;
   --action-level2-font-size: var(--text-exercise-list-title-size);
   --action-level2-font-weight: var(--text-exercise-list-title-weight);
@@ -103,10 +105,26 @@
   --action-level2-gap: 6px;
   --action-level2-padding-x: 12px;
   --action-level2-bg: var(--color-workout-card);
+  --action-level2-radius: var(--radius-sm);
+
+  /* Кнопки 3-го уровня: Техника, Заменить, контекстное меню упражнения */
+  --action-level3-height: 40px;
+  --action-level3-radius: 20px;
+  --action-level3-font-size: 13px;
+  --action-level3-font-weight: 500;
+  --action-level3-line-height: 1.2;
+  --action-level3-gap: 8px;
+  --action-level3-padding-x: 12px;
+  --action-level3-bg: var(--color-workout-card);
 
   /* Нижние действия (дизайн-система ActionButton) */
   --action-control-height: var(--bottom-bar-control-height);
-  --action-label-size: clamp(12px, 3.2vw, 14px);
+  --action-control-radius: 12px;
+  --action-control-font-size: 13px;
+  --action-control-font-weight: 600;
+  --action-control-line-height: 1.2;
+  --action-control-letter-spacing: 0.02em;
+  --action-label-size: var(--action-control-font-size);
 
   /* Отступ контента от верха экрана */
   --page-top-inset: calc(var(--safe-top) + var(--space-lg));
@@ -157,44 +175,46 @@
   --floating-island-inset-bottom: 12px;
   --floating-island-gap: 6px;
 
-  /* Тёмная заливка под закреплёнными кнопками + размытие фона */
-  --footer-scrim-bg: rgba(0, 0, 0, 0.65);
-  --footer-scrim-blur: 20px;
-  /* Мягкое растворение верхнего края (без резкой границы) */
-  --footer-scrim-rise: 32px;
-  --footer-scrim-fade-top: 80px;
-  --footer-scrim-mask: linear-gradient(
-    to bottom,
-    transparent 0px,
-    rgb(0 0 0 / 0.06) calc(var(--footer-scrim-rise) * 0.3),
-    rgb(0 0 0 / 0.22) calc(var(--footer-scrim-rise) * 0.62),
-    rgb(0 0 0 / 0.44) var(--footer-scrim-rise),
-    rgb(0 0 0 / 0.7) calc(var(--footer-scrim-rise) + var(--footer-scrim-fade-top) * 0.38),
-    rgb(0 0 0 / 0.92) calc(var(--footer-scrim-rise) + var(--footer-scrim-fade-top) * 0.72),
-    #000 calc(var(--footer-scrim-rise) + var(--footer-scrim-fade-top))
+  /* Затемнение под таб-баром и нижними кнопками: низ экрана → верх кнопок */
+  --footer-scrim-gradient: linear-gradient(
+    to top,
+    #0c0c0c 0%,
+    #0c0c0c00 100%
   );
 
   /* Полупрозрачная плашка: фон + blur (пикер недель, таб-бар) */
   --frosted-plate-bg: rgba(0, 0, 0, 0.5);
   --frosted-plate-blur: 6px;
+  /* Типографика переключалок: segmented picker, период на графике */
+  --tab-switcher-font-size: 13px;
+  --tab-switcher-font-weight: 500;
+  --tab-switcher-line-height: 1.2;
+  --tab-switcher-letter-spacing: 0;
+  --tab-switcher-text-transform: none;
+
+  --tab-nav-island-bg: #2d2d2d66;
+  --tab-nav-blur: 48px;
   --tab-nav-inactive: #868686;
+  --tab-nav-active: #ffffff;
+  --tab-nav-label-size: 10px;
   --tab-nav-border-color: rgba(255, 255, 255, 0.16);
   --tab-nav-border-gradient: linear-gradient(
     to bottom,
-    var(--tab-nav-border-color),
+    #464646,
     transparent
   );
-  /* Высота кнопки нижнего таб-бара (иконка + подпись) */
-  --tab-nav-item-height: 44px;
-  --tab-nav-island-height: var(--tab-nav-item-height);
-  /* Внешняя высота капсулы таб-бара (контент + вертикальный padding островка) */
-  --tab-nav-island-outer-height: calc(
-    var(--tab-nav-item-height) + 2 * var(--floating-island-padding)
-  );
+  /* Высота капсулы таб-бара и зоны вкладок */
+  --tab-nav-island-outer-height: 60px;
+  --tab-nav-item-height: var(--tab-nav-island-outer-height);
+  --tab-nav-island-height: var(--tab-nav-island-outer-height);
   /* От низа экрана до верхнего края таб-островка */
   --tab-nav-island-clearance: calc(
     var(--floating-island-inset-bottom) + var(--tab-nav-island-outer-height)
   );
+  /* Страница упражнения: шапка упражнения */
+  --exercise-page-muscle-to-title-gap: 6px;
+  --exercise-page-title-to-volume-gap: 12px;
+
   /* Страница упражнения: нижняя панель над таб-баром */
   --exercise-page-footer-bottom: calc(
     var(--tab-nav-island-clearance) + var(--safe-bottom) +
@@ -212,18 +232,35 @@
   --workout-list-bottom-inset: calc(
     var(--workout-actions-bottom) + var(--workout-actions-island-height)
   );
-  /* Прогресс: одинаковый зазор от подписи сверху и до «Разминочные» снизу */
+  /* Подпись под заголовком страницы (WorkoutOverviewHeader) */
+  --workout-page-subtitle-size: 14px;
+  --workout-page-subtitle-weight: 500;
+  --workout-page-subtitle-line-height: 1.25;
+  --workout-page-subtitle-color: #bfbfbf;
+  /* Индикатор «N из M» над прогресс-баром (WorkoutOverviewHeader) */
+  --workout-progress-label-size: 13px;
+  --workout-progress-label-weight: 500;
+  --workout-progress-label-line-height: 1.2;
+  --workout-progress-label-color: #868686;
+  /* Прогресс: зазор от подписи страницы до блока прогресса */
   --workout-progress-gap: var(--space-xl);
+  --workout-progress-bar-to-list-gap: 32px;
+  /* Зазор между карточками в листингах упражнений и тренировок */
+  --workout-card-list-gap: var(--space-sm);
   /* Категория мышц на карточке упражнения в листинге */
-  --workout-exercise-muscle-label-size: var(--font-size-sm);
+  --workout-exercise-muscle-label-size: 11px;
+  /* Montserrat Medium */
   --workout-exercise-muscle-label-weight: 500;
   --workout-exercise-muscle-label-line-height: 1;
-  --workout-exercise-muscle-label-color: var(--color-text-secondary);
+  --workout-exercise-muscle-label-color: #888888;
   --workout-exercise-muscle-label-margin-top: 4px;
   /* Объём: подходы × повторения, время */
-  --workout-exercise-volume-label-size: var(--font-size-sm);
+  --workout-exercise-volume-label-size: 11px;
+  /* Montserrat Medium */
   --workout-exercise-volume-label-weight: 500;
-  --workout-exercise-volume-label-line-height: 1.25;
+  --workout-exercise-volume-label-line-height: 1;
+  --workout-exercise-volume-label-margin-top: 6px;
+  --workout-exercise-volume-label-to-muscle-gap: 8px;
   --workout-exercise-volume-label-color: #ffffff;
   --workout-exercise-volume-label-color-completed: #868686;
   /* Подпись «Заменено» под карточкой упражнения */
@@ -231,7 +268,7 @@
   --workout-exercise-replaced-label-weight: var(--progress-label-weight);
   --workout-exercise-replaced-label-line-height: var(--progress-label-line-height);
   --workout-exercise-replaced-label-color: var(--progress-label-color);
-  /* Заголовок секции в листинге («Разминочные») */
+  /* Заголовок группы в каталоге упражнений */
   --workout-section-title-size: var(--progress-label-size);
   --workout-section-title-weight: var(--progress-label-weight);
   --workout-section-title-line-height: var(--progress-label-line-height);
@@ -239,7 +276,7 @@
 
   --program-accent: #c4ff62;
 
-  /* Процент прогресса тренировки (кольцо WorkoutProgressIndicator, числа недели в календаре) */
+  /* Процент в календаре (недельный вид); кольца тренировок — `--program-workout-progress-*` */
   --workout-progress-percent-size: calc(var(--font-size-sm) * 1.32);
   --workout-progress-percent-weight: 600;
   --workout-progress-percent-line-height: 1.2;
@@ -355,15 +392,15 @@
   --segmented-tab-picker-item-padding-x: 12px;
   --segmented-tab-picker-indicator-inset-x: 0px;
   --segmented-tab-picker-active-scale: 1;
-  --segmented-tab-picker-inactive-font-size: var(--action-level2-font-size);
-  --segmented-tab-picker-inactive-font-weight: var(--action-level2-font-weight);
-  --segmented-tab-picker-inactive-line-height: var(--action-level2-line-height);
-  --segmented-tab-picker-inactive-letter-spacing: var(--action-level2-letter-spacing);
+  --segmented-tab-picker-inactive-font-size: var(--tab-switcher-font-size);
+  --segmented-tab-picker-inactive-font-weight: var(--tab-switcher-font-weight);
+  --segmented-tab-picker-inactive-line-height: var(--tab-switcher-line-height);
+  --segmented-tab-picker-inactive-letter-spacing: var(--tab-switcher-letter-spacing);
   --segmented-tab-picker-inactive-color: var(--color-text-secondary);
-  --segmented-tab-picker-active-font-size: var(--action-level2-font-size);
-  --segmented-tab-picker-active-font-weight: var(--action-level2-font-weight);
-  --segmented-tab-picker-active-line-height: var(--action-level2-line-height);
-  --segmented-tab-picker-active-letter-spacing: var(--action-level2-letter-spacing);
+  --segmented-tab-picker-active-font-size: var(--tab-switcher-font-size);
+  --segmented-tab-picker-active-font-weight: var(--tab-switcher-font-weight);
+  --segmented-tab-picker-active-line-height: var(--tab-switcher-line-height);
+  --segmented-tab-picker-active-letter-spacing: var(--tab-switcher-letter-spacing);
   --segmented-tab-picker-active-color: #000000;
   --segmented-tab-picker-height: calc(
     var(--segmented-tab-picker-item-height) +
@@ -371,18 +408,21 @@
   );
 
   /* Страница программы (недели и тренировки) */
+  --program-overview-title-to-progress-label-gap: var(--page-title-gap-below);
+  --program-overview-progress-bar-to-week-title-gap: 40px;
+  --program-weeks-picker-to-header-gap: 32px;
   --program-week-tab-active-padding-x: 16px;
   --program-week-tab-active-width-ratio: 1.55;
   --program-weeks-bottom-inset: calc(
     var(--tab-nav-island-clearance) + var(--safe-bottom) + var(--space-lg)
   );
   --program-workout-progress-high: var(--program-accent, #c4ff62);
-  /* Алиас `--program-workout-progress-label-*` → `--workout-progress-percent-*` */
-  --program-workout-progress-label-size: var(--workout-progress-percent-size);
-  --program-workout-progress-label-weight: var(--workout-progress-percent-weight);
-  --program-workout-progress-label-line-height: var(--workout-progress-percent-line-height);
-  --program-workout-progress-label-letter-spacing: var(--workout-progress-percent-letter-spacing);
-  --program-workout-progress-label-color: var(--workout-progress-percent-color);
+  --program-workout-progress-ring-size: 56px;
+  --program-workout-progress-label-size: 13px;
+  --program-workout-progress-label-weight: 500;
+  --program-workout-progress-label-line-height: 1.2;
+  --program-workout-progress-label-letter-spacing: 0.01em;
+  --program-workout-progress-label-color: var(--color-text-primary);
   /* Подпись дня под названием тренировки («День 1», «День 2»…) */
   --program-workout-day-label-size: var(--font-size-sm);
   --program-workout-day-label-weight: 500;
@@ -395,10 +435,10 @@
   --program-workout-day-label-primary-letter-spacing: var(--text-exercise-list-title-letter-spacing);
   --program-workout-day-label-primary-color: var(--color-text-primary);
   /* Бейдж тяжести недели (DifficultyBadge) */
-  --program-week-difficulty-badge-light-label-size: var(--text-exercise-list-title-size);
-  --program-week-difficulty-badge-light-label-weight: var(--text-exercise-list-title-weight);
-  --program-week-difficulty-badge-light-label-line-height: var(--text-exercise-list-title-line-height);
-  --program-week-difficulty-badge-light-label-letter-spacing: var(--text-exercise-list-title-letter-spacing);
+  --program-week-difficulty-badge-light-label-size: 18px;
+  --program-week-difficulty-badge-light-label-weight: 600;
+  --program-week-difficulty-badge-light-label-line-height: 1.2;
+  --program-week-difficulty-badge-light-label-letter-spacing: 0;
   --program-week-difficulty-badge-bg: rgba(0, 0, 0, 0.12);
   --program-week-difficulty-color-light: var(--program-accent);
   --program-week-difficulty-color-medium: var(--color-difficulty-medium);
@@ -407,6 +447,11 @@
   --program-week-difficulty-border-medium: rgba(133, 126, 0, 0.6);
   --program-week-difficulty-border-heavy: rgba(133, 72, 0, 0.6);
   --program-week-difficulty-icon-inactive-color: rgba(255, 255, 255, 0.22);
+  /* Подпись под заголовком недели (ProgramWeekSection) */
+  --program-week-title-to-description-gap: 12px;
+  --program-week-description-to-list-gap: 24px;
+  --program-week-description-line-height: 1.2;
+  --program-week-description-weight: 500;
 
   /* SearchField — поиск по названию (каталог упражнений и др.) */
   --search-field-padding-y: 14px;

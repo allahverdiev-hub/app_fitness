@@ -1,4 +1,4 @@
-/* Кнопки 2-го уровня (Техника, Заменить) + нижние действия (primary / muted / bar-secondary) */
+/* Кнопки 2-го / 3-го уровня + нижние действия (primary / muted / bar-secondary) */
 
 .level2 {
   display: inline-flex;
@@ -9,7 +9,7 @@
   height: var(--action-level2-height);
   padding: 0 var(--action-level2-padding-x);
   border: none;
-  border-radius: var(--radius-pill);
+  border-radius: var(--action-level2-radius);
   background: var(--action-level2-bg);
   color: var(--color-text-primary);
   font-size: var(--action-level2-font-size);
@@ -71,6 +71,66 @@
   color: #ff453a;
 }
 
+.level3 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--action-level3-gap);
+  min-width: 0;
+  height: var(--action-level3-height);
+  padding: 0 var(--action-level3-padding-x);
+  border: none;
+  border-radius: var(--action-level3-radius);
+  background: var(--action-level3-bg);
+  color: var(--color-text-primary);
+  font-size: var(--action-level3-font-size);
+  font-weight: var(--action-level3-font-weight);
+  line-height: var(--action-level3-line-height);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.level3Grow {
+  flex: 1;
+}
+
+.level3Block {
+  width: 100%;
+}
+
+.level3Label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.level3Icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.level3 svg {
+  width: var(--btn-icon-size);
+  height: var(--btn-icon-size);
+  flex-shrink: 0;
+}
+
+.level3:active {
+  opacity: 0.75;
+}
+
+.level3Danger {
+  color: #ff453a;
+}
+
+.level3Danger svg {
+  color: #ff453a;
+}
+
 /* Нижние действия: серая иконка (muted) + белая капсула (primary) + серая капсула (bar-secondary) */
 
 .primary {
@@ -81,13 +141,14 @@
   height: var(--action-control-height);
   padding: 0 14px;
   border: none;
-  border-radius: var(--radius-pill);
+  border-radius: var(--action-control-radius);
   background: var(--color-primary-btn-bg);
   color: var(--color-primary-btn-text);
-  font-size: var(--action-label-size);
-  font-weight: 700;
+  font-size: var(--action-control-font-size);
+  font-weight: var(--action-control-font-weight);
+  line-height: var(--action-control-line-height);
   font-family: inherit;
-  letter-spacing: 0.02em;
+  letter-spacing: var(--action-control-letter-spacing);
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -107,7 +168,7 @@
   height: var(--action-control-height);
   padding: 0;
   border: none;
-  border-radius: var(--radius-pill);
+  border-radius: var(--action-control-radius);
   background: var(--color-surface-muted);
   color: var(--color-text-primary);
   display: inline-flex;
@@ -135,13 +196,14 @@
   height: var(--action-control-height);
   padding: 0 14px;
   border: none;
-  border-radius: var(--radius-pill);
+  border-radius: var(--action-control-radius);
   background: var(--color-surface-elevated);
   color: var(--color-text-primary);
-  font-size: var(--action-label-size);
-  font-weight: 700;
+  font-size: var(--action-control-font-size);
+  font-weight: var(--action-control-font-weight);
+  line-height: var(--action-control-line-height);
   font-family: inherit;
-  letter-spacing: 0.02em;
+  letter-spacing: var(--action-control-letter-spacing);
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -157,7 +219,7 @@
   height: var(--action-control-height);
   padding: 0;
   border: none;
-  border-radius: 50%;
+  border-radius: var(--action-control-radius);
   background: var(--color-primary-btn-bg);
   color: var(--color-primary-btn-text);
   display: inline-flex;
@@ -170,30 +232,3 @@
   opacity: 0.88;
 }
 
-@media (max-height: 520px) and (orientation: landscape) {
-  .primary,
-  .mutedIcon,
-  .secondary,
-  .primaryCircle {
-    height: 48px;
-  }
-
-  .mutedIcon,
-  .primaryCircle {
-    width: 48px;
-  }
-}
-
-@media (max-width: 379px) {
-  .primary,
-  .mutedIcon,
-  .secondary,
-  .primaryCircle {
-    height: 52px;
-  }
-
-  .mutedIcon,
-  .primaryCircle {
-    width: 52px;
-  }
-}

@@ -1,7 +1,9 @@
 .label {
   margin: var(--workout-exercise-muscle-label-margin-top) 0 0;
+  font-family: var(--font-family);
   font-size: var(--workout-exercise-muscle-label-size);
   font-weight: var(--workout-exercise-muscle-label-weight);
+  font-synthesis: none;
   line-height: var(--workout-exercise-muscle-label-line-height);
   color: var(--workout-exercise-muscle-label-color);
 }

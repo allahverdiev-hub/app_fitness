@@ -1,7 +1,9 @@
 .label {
   margin: 0;
+  font-family: var(--font-family);
   font-size: var(--workout-exercise-volume-label-size);
   font-weight: var(--workout-exercise-volume-label-weight);
+  font-synthesis: none;
   line-height: var(--workout-exercise-volume-label-line-height);
   color: var(--workout-exercise-volume-label-color);
 }

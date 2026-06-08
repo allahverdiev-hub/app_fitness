@@ -17,7 +17,8 @@
   position: sticky;
   top: var(--safe-top);
   z-index: 44;
-  margin: 0 calc(-1 * var(--page-gutter)) var(--space-sm);
+  margin: 0 calc(-1 * var(--page-gutter))
+    var(--program-weeks-picker-to-header-gap);
   padding: 0 var(--page-gutter);
   pointer-events: none;
 }
@@ -46,7 +47,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 0;
   padding: var(--page-top-inset) var(--page-gutter)
     calc(var(--program-weeks-bottom-inset) + var(--space-lg));
 }
@@ -55,4 +56,5 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+  margin-top: var(--program-overview-progress-bar-to-week-title-gap);
 }

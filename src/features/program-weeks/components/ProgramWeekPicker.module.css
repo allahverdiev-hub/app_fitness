@@ -24,4 +24,5 @@
   width: 100%;
   text-align: center;
   white-space: nowrap;
+  text-transform: var(--tab-switcher-text-transform);
 }

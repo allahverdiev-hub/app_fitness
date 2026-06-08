@@ -11,13 +11,10 @@ import type {
   WorkoutListExerciseItem,
   WorkoutOverview,
 } from "@/features/workout-list/types/workoutOverview";
-import { WARMUP_SECTION_TITLE } from "@/features/workout-list/utils/buildExerciseSections";
-
 export type WorkoutSessionExerciseDef = {
   id: string;
   title: string;
   listSubtitle: string;
-  listSection?: string;
   muscleGroup?: string;
   muscles: string;
   sets: number;
@@ -40,7 +37,6 @@ export const workoutSessionExercises: WorkoutSessionExerciseDef[] = [
     id: "ex-1",
     title: "Ходьба на беговой дорожке",
     listSubtitle: "5 мин.",
-    listSection: WARMUP_SECTION_TITLE,
     muscles: "Разминка",
     sets: 1,
     repsRange: "5 мин",
@@ -153,9 +149,6 @@ export const workoutSessionExercises: WorkoutSessionExerciseDef[] = [
 ];
 
 export function toExerciseItem(def: WorkoutSessionExerciseDef): ExerciseItem {
-  const isWarmup =
-    def.isWarmup ?? def.listSection === WARMUP_SECTION_TITLE;
-
   return {
     id: def.id,
     title: def.title,
@@ -170,7 +163,7 @@ export function toExerciseItem(def: WorkoutSessionExerciseDef): ExerciseItem {
       def.description ?? exerciseDescriptionsById[def.id] ?? exerciseDescriptionsById["ex-3"],
     techniqueVideoUrl: defaultTechniqueVideoUrl,
     status: def.status ?? (def.completed ? "completed" : "upcoming"),
-    isWarmup,
+    isWarmup: def.isWarmup,
     warmupVolumeType: def.warmupVolumeType,
     replacedFromTitle: def.replacedFromTitle,
   };
@@ -183,7 +176,6 @@ export function toListExerciseItem(
     id: def.id,
     title: def.title,
     subtitle: def.listSubtitle,
-    section: def.listSection,
     muscleGroup: def.muscleGroup,
     thumbnailSrc: def.thumbnailSrc,
     imageAlt: def.imageAlt,
@@ -233,7 +225,6 @@ function buildWorkoutOverview(): WorkoutOverview {
     id: def.id,
     title: def.title,
     subtitle: def.listSubtitle,
-    section: def.listSection,
     muscleGroup: def.muscleGroup,
     thumbnailSrc: def.thumbnailSrc,
     imageAlt: def.imageAlt,

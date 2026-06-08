@@ -115,7 +115,7 @@ export function WorkoutsFlow({
           {
             sets: def.sets,
             repsRange: def.repsRange,
-            isWarmup: def.isWarmup ?? Boolean(def.listSection),
+            isWarmup: def.isWarmup ?? false,
             warmupVolumeType: def.warmupVolumeType,
           },
         ]),
@@ -360,13 +360,7 @@ export function WorkoutsFlow({
           const def = byId[item.id];
           if (!def) return [];
 
-          const next: WorkoutSessionExerciseDef = { ...def };
-          if (item.section !== undefined) {
-            next.listSection = item.section;
-          } else {
-            delete next.listSection;
-          }
-          return [next];
+          return [{ ...def }];
         });
       });
 
